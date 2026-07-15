@@ -1,0 +1,8 @@
+# Geheimnisse - niemals committen
+.env
+
+# Abgerufene Rohdaten und generierte Reports
+data/*.json
+reports/*
+!data/.gitkeep
+!reports/.gitkeep
