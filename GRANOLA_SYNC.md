@@ -27,13 +27,16 @@ Beispielnotiz: Note-ID 494435994814 (Granola-Notiz vom 28.05.2026, beginnt mit "
 
 Die Abschnittsüberschriften der Notiz entsprechen den **Labels** der Kontakt-Properties (nicht den internen Namen). Bestätigte Zuordnungen:
 
-| Überschrift in der Notiz | Kontakt-Property (intern) |
-|---|---|
-| Pain Points | `problem` |
-| Aktueller Einkaufsprozess (und Status Quo im Einkauf) | `situation` |
-| Umsetzung in Hivebuy (Pain Killer) | `rational_need` |
+| Überschrift in der Notiz | Kontakt-Property (intern) | Besonderheit |
+|---|---|---|
+| Pain Points + Beschreibung des Problems | `problem` | Beide Abschnitte werden zusammen übertragen (Konvention vom Beispielkontakt Gasser), getrennt durch `--` |
+| Aktueller Einkaufsprozess (und Status Quo im Einkauf) | `situation` | Kompletter Abschnitt als Text |
+| Umsetzung in Hivebuy (Pain Killer) | `rational_need` | Kompletter Abschnitt als Text |
+| (BUDGET) Kosten und Angebot | `budget` | Einzeiliges Textfeld: kompakte Zusammenfassung (Betrag + wichtigste Konditionen), nicht der komplette Abschnitt |
+| IT-Systeme | `erp_system_used` | Auswahlfeld! Erlaubte Werte: SAP, Navision, MS Business Central, DATEV, Coupa, Netsuite, Workday, d.velop, Other ERP, None. ERP-Name aus dem Abschnitt lesen und auf die Option mappen; unbekannte ERPs auf "Other ERP". Details zum ERP stehen im Log |
+| Next Steps | `next_step` | Einzeiliges Textfeld: kompakte Zusammenfassung der nächsten Schritte, mit Semikolon getrennt |
 
-Weitere Abschnitte werden nur übertragen, wenn ihre Überschrift exakt dem Label einer existierenden Kontakt-Property entspricht (Prüfung zur Laufzeit über die Property-Definitionen). Kandidaten im Portal: `budget`, `need`, `emotional_need`, `erp_system_used`, `next_step`. Keine erfundenen Zuordnungen; nicht zuordenbare Abschnitte werden im Log vermerkt.
+Weitere Abschnitte werden nur übertragen, wenn ihre Überschrift exakt dem Label einer existierenden Kontakt-Property entspricht (Prüfung zur Laufzeit über die Property-Definitionen). Keine erfundenen Zuordnungen; nicht zuordenbare Abschnitte (z.B. Fazit, Vorstellung, Optimallösung, AUTHORITY, NEED, TIME, COMMITMENT, Metriken, Fragestruktur, Für Along) werden im Log aufgelistet.
 
 ## Lead-Logik
 
@@ -44,13 +47,13 @@ Weitere Abschnitte werden nur übertragen, wenn ihre Überschrift exakt dem Labe
 
 ## Log-Notiz
 
-Jede verarbeitete Granola-Notiz erzeugt genau eine Log-Notiz am Kontakt:
+Jede verarbeitete Granola-Notiz erzeugt genau eine Log-Notiz am Kontakt, als HTML formatiert (Beispiel: Notiz 503965023466 am Kontakt Anna Maria Mai):
 
-- Zeile 1: `🤖 Granola-Sync-Log (granola-sync:<Notiz-ID>)` (der Marker verhindert Doppelverarbeitung)
-- Verarbeitete Notiz (ID, Erstelldatum) und Qualifizierungsergebnis
-- Übertragene Properties mit gekürztem neuen Wert und Hinweis, ob ein alter Wert überschrieben wurde
-- Lead-Aktion (angelegt / Phase gesetzt / unverändert) mit kurzer Begründung
-- Fehler oder übersprungene Schritte
+- Kopf: `<p><strong>🤖 Granola-Sync-Log</strong> (granola-sync:<Notiz-ID>)</p>` (der Marker verhindert Doppelverarbeitung), danach verarbeitete Notiz (ID, Erstelldatum, Meeting) und Qualifizierungsergebnis
+- `<h3>1) Übertragene Properties</h3>` mit `<ul>`-Liste: pro Property ein `<li>` mit **Label** (interner Name), Aktion (überschrieben / neu gesetzt / bestätigt), gekürztem neuen Wert, Quelle (Abschnitt) und ggf. altem Wert
+- `<h3>2) Nicht übertragene Abschnitte</h3>` mit Aufzählung der Abschnitte ohne Property-Pendant
+- `<h3>3) Lead-Pipeline</h3>` mit der Lead-Aktion (angelegt / Phase gesetzt / unverändert / übersprungen) und kurzer Begründung
+- `<h3>4) Hinweis</h3>` "Dieser Eintrag wurde automatisch vom Granola-Notiz-Sync erstellt", plus Fehler oder übersprungene Schritte
 
 ## Betrieb
 
@@ -94,14 +97,23 @@ Ablauf:
   Ist der Marker vorhanden, wurde die Notiz bereits verarbeitet: überspringen.
 
 4. Properties übertragen
-- Zerlege die Granola-Notiz in Abschnitte anhand der Überschriften.
-- Übertrage nur Abschnitte, deren Überschrift (Groß-/Kleinschreibung egal) exakt dem Label einer
-  Kontakt-Property entspricht. Bestätigte Zuordnungen: "Pain Points" -> problem, "Aktueller
-  Einkaufsprozess (und Status Quo im Einkauf)" -> situation, "Umsetzung in Hivebuy (Pain Killer)"
-  -> rational_need. Prüfe weitere Überschriften per search_properties (objectType contacts) auf ein
-  exakt passendes Label. Erfinde keine Zuordnungen; nicht zuordenbare Abschnitte nur im Log nennen.
-- Formatiere Werte als Klartext, Bullet-Punkte als einzelne Zeilen. Bestehende Werte werden immer
-  überschrieben (Vorgabe von Moritz); vermerke im Log, wenn ein vorhandener Wert ersetzt wurde.
+- Zerlege die Granola-Notiz in Abschnitte anhand der Überschriften. Feste Zuordnungen:
+  - problem: Abschnitte "Pain Points" UND "Beschreibung des Problems" zusammen (Pain Points zuerst,
+    getrennt durch eine Zeile "--"), kompletter Text, Bullet-Punkte als einzelne Zeilen.
+  - situation: Abschnitt "Aktueller Einkaufsprozess (und Status Quo im Einkauf)", kompletter Text.
+  - rational_need: Abschnitt "Umsetzung in Hivebuy (Pain Killer)", kompletter Text.
+  - budget: Abschnitt "(BUDGET) Kosten und Angebot" als kompakte einzeilige Zusammenfassung
+    (Betrag plus wichtigste Konditionen), da einzeiliges Textfeld.
+  - erp_system_used: Auswahlfeld! Lies den ERP-Namen aus dem Abschnitt "IT-Systeme" und mappe auf
+    genau eine der Optionen: SAP, Navision, MS Business Central, DATEV, Coupa, Netsuite, Workday,
+    d.velop, Other ERP, None. Unbekannte ERPs -> "Other ERP". Nenne den echten ERP-Namen im Log.
+  - next_step: Abschnitt "Next Steps" als kompakte einzeilige Zusammenfassung, Punkte mit Semikolon
+    getrennt.
+- Weitere Abschnitte nur übertragen, wenn ihre Überschrift exakt dem Label einer Kontakt-Property
+  entspricht (per search_properties prüfen). Erfinde keine Zuordnungen; nicht zuordenbare Abschnitte
+  nur im Log nennen.
+- Bestehende Werte werden immer überschrieben (Vorgabe von Moritz); vermerke im Log den alten Wert
+  bzw. dass das Feld leer war.
 - Schreibe die Werte per manage_crm_objects updateRequest auf den Kontakt.
 
 5. Lead anlegen bzw. bewegen
@@ -122,13 +134,18 @@ Ablauf:
 
 6. Log-Notiz anlegen
 - Lege per manage_crm_objects createRequest eine Notiz an (objectType notes, hs_note_body,
-  hs_timestamp = jetzt in Millisekunden, Association zum Kontakt und, falls vorhanden, zum Lead).
-- Aufbau des Bodys (Deutsch):
-  Zeile 1: "🤖 Granola-Sync-Log (granola-sync:<Notiz-ID>)"
-  Danach: verarbeitete Granola-Notiz (ID, Erstelldatum), Qualifizierungsergebnis, Liste der
-  übertragenen Properties mit neuem Wert (je Property auf ca. 200 Zeichen kürzen) und Hinweis, ob
-  ein alter Wert überschrieben wurde, die Lead-Aktion mit kurzer Begründung, sowie Fehler oder
-  übersprungene Schritte. Der Marker granola-sync:<Notiz-ID> ist Pflicht.
+  hs_timestamp = jetzt, Association zum Kontakt und, falls vorhanden, zum Lead).
+- hs_note_body als HTML formatieren (Deutsch), Vorbild ist Notiz 503965023466 am Kontakt 790278962386:
+  - Kopf: <p><strong>🤖 Granola-Sync-Log</strong> (granola-sync:<Notiz-ID>)</p>, danach ein <p> mit
+    verarbeiteter Notiz (ID, Erstelldatum, Meeting-Titel) und Qualifizierungsergebnis.
+  - <h3>1) Übertragene Properties</h3> mit <ul>: pro Property ein <li> mit <strong>Label</strong>
+    (interner Name), Aktion (überschrieben / neu gesetzt / bestätigt), gekürztem neuen Wert
+    (ca. 200 Zeichen), Quelle (Abschnitt der Notiz) und ggf. altem Wert.
+  - <h3>2) Nicht übertragene Abschnitte</h3> mit Aufzählung.
+  - <h3>3) Lead-Pipeline</h3> mit Aktion und kurzer Begründung.
+  - <h3>4) Hinweis</h3> "Dieser Eintrag wurde automatisch vom Granola-Notiz-Sync erstellt", plus
+    Fehler oder übersprungene Schritte.
+  Der Marker granola-sync:<Notiz-ID> ist Pflicht.
 
 7. Abschluss
 - Keine neuen Granola-Notizen: Lauf still beenden, nichts anlegen.
