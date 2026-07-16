@@ -40,10 +40,26 @@ Weitere Abschnitte werden nur übertragen, wenn ihre Überschrift exakt dem Labe
 
 ## Lead-Logik
 
-- Kein Lead am Kontakt: Lead wird angelegt und mit dem Kontakt assoziiert. Bei `QUALIFIZIERT: JA` wird die Pipeline-Phase mit Label "Qualifiziert" gesetzt, sonst die Standard-Anfangsphase.
-- Lead vorhanden: Bei `QUALIFIZIERT: JA` wird die Phase auf "Qualifiziert" gesetzt (außer der Lead ist bereits dort oder in einer späteren Phase, dann keine Änderung, Begründung im Log). Bei NEIN oder fehlender Zeile keine Phasenänderung, Begründung im Log.
+- Kein Lead am Kontakt: Lead wird angelegt und mit dem Kontakt assoziiert. Bei `QUALIFIZIERT: JA` wird die Pipeline-Phase "Qualified" gesetzt, sonst die Anfangsphase "New".
+- Lead vorhanden: Bei `QUALIFIZIERT: JA` wird die Phase auf "Qualified" gesetzt (außer der Lead ist bereits dort oder in einer späteren Phase, dann keine Änderung, Begründung im Log). Bei NEIN oder fehlender Zeile keine Phasenänderung, Begründung im Log.
 
-**Offener Punkt:** Die HubSpot-MCP-Integration hat aktuell keine Berechtigung auf das Lead-Objekt ("User does not have permissions to view leads"). Bis das in HubSpot freigeschaltet ist (Benutzer-/App-Berechtigung für CRM > Leads), überspringt die Routine den Lead-Schritt und vermerkt das im Log. Property-Sync und Log funktionieren bereits.
+**Technischer Zugang:** Der HubSpot-MCP-Connector bietet das Lead-Objekt nicht an. Der Lead-Schritt läuft daher über die HubSpot-REST-API mit dem Private-App-Token aus der Umgebungsvariable `HUBSPOT_PRIVATE_APP_TOKEN` (per curl). Verifiziert am 16.07.2026 (Lesen, Schreiben und Pipeline-Abfrage funktionieren).
+
+Lead-Pipeline (`lead-pipeline-id`), Objekt-Typ `0-136`:
+
+| Phase (Label) | Stage-ID | Bedeutung |
+|---|---|---|
+| New | `new-stage-id` | Anfangsphase für neue Leads |
+| Process | `attempting-stage-id` | In Bearbeitung |
+| Later | `connected-stage-id` | Zurückgestellt |
+| Qualified | `qualified-stage-id` | Ziel bei QUALIFIZIERT: JA |
+| Lost | `unqualified-stage-id` | Disqualifiziert (wird von der Routine nicht gesetzt) |
+
+API-Aufrufe:
+- Leads eines Kontakts: `GET /crm/v4/objects/0-1/{contactId}/associations/0-136`
+- Lead lesen: `GET /crm/v3/objects/0-136/{leadId}?properties=hs_lead_name,hs_pipeline,hs_pipeline_stage`
+- Phase setzen: `PATCH /crm/v3/objects/0-136/{leadId}` mit `{"properties": {"hs_pipeline_stage": "<stage-id>"}}`
+- Lead anlegen: `POST /crm/v3/objects/0-136` mit `{"properties": {"hs_lead_name": "<Vorname Nachname>", "hs_pipeline_stage": "<stage-id>"}, "associations": [{"to": {"id": <contactId>}, "types": [{"associationCategory": "HUBSPOT_DEFINED", "associationTypeId": 578}]}]}` (578 = Lead zu Primary Contact)
 
 ## Log-Notiz
 
@@ -116,21 +132,27 @@ Ablauf:
   bzw. dass das Feld leer war.
 - Schreibe die Werte per manage_crm_objects updateRequest auf den Kontakt.
 
-5. Lead anlegen bzw. bewegen
+5. Lead anlegen bzw. bewegen (über die HubSpot-REST-API, NICHT über MCP)
+- Der HubSpot-MCP-Connector kann keine Leads. Nutze curl (Bash) mit dem Private-App-Token aus der
+  Umgebungsvariable HUBSPOT_PRIVATE_APP_TOKEN gegen https://api.hubapi.com. Objekt-Typ 0-136,
+  Pipeline "lead-pipeline-id". Stage-IDs: New = new-stage-id, Process = attempting-stage-id,
+  Later = connected-stage-id, Qualified = qualified-stage-id, Lost = unqualified-stage-id.
+  Phasen-Reihenfolge: New -> Process -> Later -> Qualified; Lost ist die Disqualifiziert-Phase.
 - Lies die Qualifizierung aus der Notiz: "QUALIFIZIERT: JA" oder "QUALIFIZIERT: NEIN" (in der Regel
-  die erste Zeile). Fehlt die Zeile, gilt "unbekannt".
-- Suche leads mit associatedWith zum Kontakt (Properties hs_pipeline_stage, hs_lead_name). Lies die
-  verfügbaren Phasen über get_properties(objectType "leads", ["hs_pipeline_stage"]) und finde die
-  Phase, deren Label "Qualifiziert" entspricht.
-- Kein Lead vorhanden: Lege per manage_crm_objects createRequest einen Lead an (hs_lead_name =
-  "Vorname Nachname" des Kontakts, Association zum Kontakt). Bei JA setze hs_pipeline_stage auf die
-  Qualifiziert-Phase, bei NEIN oder unbekannt die Standard-Anfangsphase.
-- Lead vorhanden: Bei JA setze hs_pipeline_stage auf die Qualifiziert-Phase, außer der Lead steht
-  bereits dort oder in einer späteren Phase (dann nichts ändern und im Log begründen). Bei NEIN oder
-  unbekannt keine Phasenänderung; begründe das im Log (Statusänderung nur bei JA).
-- Scheitert der Leads-Zugriff mit einem Berechtigungsfehler: Lead-Schritt überspringen und im Log
-  vermerken: "Lead-Schritt übersprungen: Die HubSpot-Integration hat keine Berechtigung für das
-  Lead-Objekt."
+  die erste Zeile bzw. im Fazit). Fehlt die Zeile, gilt "unbekannt".
+- Leads des Kontakts: GET /crm/v4/objects/0-1/{contactId}/associations/0-136, dann pro Lead
+  GET /crm/v3/objects/0-136/{leadId}?properties=hs_lead_name,hs_pipeline_stage.
+- Kein Lead vorhanden: Lege einen Lead an: POST /crm/v3/objects/0-136 mit
+  {"properties": {"hs_lead_name": "<Vorname Nachname>", "hs_pipeline_stage": "<stage-id>"},
+   "associations": [{"to": {"id": <contactId>}, "types": [{"associationCategory": "HUBSPOT_DEFINED",
+   "associationTypeId": 578}]}]}. Bei JA stage-id = qualified-stage-id, sonst new-stage-id.
+- Lead vorhanden: Bei JA setze die Phase per PATCH /crm/v3/objects/0-136/{leadId} auf
+  qualified-stage-id, außer der Lead steht bereits auf Qualified oder Lost (dann nichts ändern und
+  im Log begründen). Bei NEIN oder unbekannt keine Phasenänderung; begründe das im Log
+  (Statusänderung nur bei JA).
+- Scheitert der API-Zugriff (z.B. Token abgelaufen oder fehlender Scope): Lead-Schritt überspringen
+  und im Log vermerken, inklusive HTTP-Status und Fehlermeldung, damit Moritz den Token erneuern
+  kann.
 
 6. Log-Notiz anlegen
 - Lege per manage_crm_objects createRequest eine Notiz an (objectType notes, hs_note_body,
