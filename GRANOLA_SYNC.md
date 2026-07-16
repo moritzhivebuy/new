@@ -61,6 +61,15 @@ API-Aufrufe:
 - Phase setzen: `PATCH /crm/v3/objects/0-136/{leadId}` mit `{"properties": {"hs_pipeline_stage": "<stage-id>"}}`
 - Lead anlegen: `POST /crm/v3/objects/0-136` mit `{"properties": {"hs_lead_name": "<Vorname Nachname>", "hs_pipeline_stage": "<stage-id>"}, "associations": [{"to": {"id": <contactId>}, "types": [{"associationCategory": "HUBSPOT_DEFINED", "associationTypeId": 578}]}]}` (578 = Lead zu Primary Contact)
 
+## Sonderfälle (festgelegt beim Testlauf am 16.07.2026)
+
+- **Notiz ohne assoziierten Kontakt:** überspringen (kam vor, z.B. Notizen zu Senger und Bistum Essen).
+- **Notiz mit mehreren Kontakten:** Verarbeitung für den Kontakt, auf den sich der Inhalt erkennbar bezieht; die anderen Kontakte werden im Log genannt.
+- **Nicht-Standard-Notizen** (kein Erstgesprächsformat, z.B. Status-Updates): Es wird übertragen, was sich eindeutig zuordnen lässt (typisch: Next Steps / Nächste Schritte, klar genannter ERP-Name). Abschnitte mit abweichenden Überschriften (z.B. "Schmerzpunkte & Bedarf") werden nicht geraten, sondern im Log gelistet. Ein Abschnitt "Pain" gilt als "Pain Points".
+- **Notizen mit dem Wort "granola", aber ohne notes.granola.ai-Link** (z.B. "GRANOLA NICHT MITGESCHRIEBEN"): keine Granola-Notizen, überspringen.
+- **Lead in Phase "Lost":** wird nie automatisch verändert.
+- **Erwähnte Personen ohne eindeutige ERP-/Budget-Angabe:** Feld nicht setzen, Begründung im Log.
+
 ## Log-Notiz
 
 Jede verarbeitete Granola-Notiz erzeugt genau eine Log-Notiz am Kontakt, als HTML formatiert (Beispiel: Notiz 503965023466 am Kontakt Anna Maria Mai):
