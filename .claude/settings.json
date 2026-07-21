@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__HubSpot__search_crm_objects",
+      "mcp__HubSpot__get_crm_objects",
+      "mcp__HubSpot__manage_crm_objects",
+      "mcp__Notion__notion-search",
+      "mcp__Notion__notion-fetch",
+      "mcp__Notion__notion-query-data-sources",
+      "mcp__Notion__notion-create-pages",
+      "mcp__Notion__notion-update-page"
+    ]
+  }
+}
