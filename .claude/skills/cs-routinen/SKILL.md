@@ -119,6 +119,9 @@ mit einem Stacktrace.
   `nicht berechenbar` — nicht `0`.
 * Anteilsangaben immer gegen `hubspot.total_mrr()`, damit Prozentwerte über
   Blöcke und Routinen vergleichbar bleiben.
+* **Jeder Kunde und jeder Deal wird verlinkt**, auf den HubSpot-Record über
+  `hs.company_url()` / `hs.deal_url()`. Auch in den Aufzählungen der
+  Datenqualität, damit man von jedem Befund direkt in den Record springt.
 
 ## Voraussetzungen außerhalb von Claude Code
 
@@ -130,10 +133,11 @@ nicht.
    idealerweise per HubSpot-Workflow aus `contract_start_date` +
    `contract_duration_months_` automatisch fortschreiben. Block 2 und 3 des
    Briefs sind die Arbeitsliste dafür, Spalte *Fortschreibung* der Vorschlag.
-2. **Erledigt (12.08.2026):** Owner-Zuordnung auf **Bettina Fischer**
-   (109171979, aktiv) umgehängt, sie hat jetzt 61 der aktiven Kunden. Jan
-   Vollers und Kinga Chmurczyk kommen in der aktiven Basis nicht mehr vor.
-   Offen bleiben 8 Kunden ganz ohne `hubspot_owner_id`.
+2. **Teilweise erledigt (12.08.2026):** Die *Company*-Zuordnung liegt jetzt bei
+   **Bettina Fischer** (109171979, aktiv) mit 61 aktiven Kunden. Die *Deals*
+   sind nicht mitumgezogen: 36 der 40 offenen Deals an aktiven Kunden laufen
+   weiter auf Jan Vollers (34) und Kinga Chmurczyk (2). Ebenfalls offen: 8
+   Kunden ganz ohne `hubspot_owner_id`. Der Report weist beides aus.
 3. Companies mit `lifecyclestage = 'customer'` **und** gesetztem `churn_date`
    auf einen eigenen Lifecycle-Wert setzen, damit die Basisabfrage nicht
    dauerhaft von einem Zusatzfilter abhängt.
@@ -167,6 +171,10 @@ Punkt 1 vor dem Bau von Routine 1 erledigen, der Rest kann parallel laufen.
 | `NOTICE_PERIOD_MONTHS = 3` | angenommene Kündigungsfrist |
 | `NON_CUSTOMERS` | Ausschlussliste falsch getaggter Companies |
 | `excluded_non_customers()` | die Ausgeschlossenen samt Begründung |
+| `deals()` / `deals_by_company()` | Deals inkl. Company-Verknüpfung |
+| `association_company_ids()` | Company-IDs eines Deals, dedupliziert |
+| `pipeline_labels()` / `stage_label()` | Stage-IDs in lesbare Labels |
+| `company_url()` / `deal_url()` / `md_link()` | Record-Links |
 
 Neue Routinen bauen darauf auf und ergänzen `hubspot.py` statt eigene
 Konvertierungen mitzubringen.

@@ -50,8 +50,22 @@ def enrich(customer: dict[str, Any], stichtag: date, notice_months: int, mrr_bas
         hs.days_between(customer["last_activity"], stichtag) if customer["last_activity"] else None
     )
     row["projected_end"] = project_end(customer, stichtag)
+    row["url"] = hs.company_url(customer["id"])
+    row["link"] = hs.md_link(customer["name"], row["url"])
+    row["deals"] = deals_for(customer["id"])
+    row["open_deals"] = [deal for deal in row["deals"] if not deal["is_closed"]]
     row["flags"] = flags_for(row)
     return row
+
+
+_DEALS_INDEX: dict[str, list[dict[str, Any]]] | None = None
+
+
+def deals_for(company_id: str) -> list[dict[str, Any]]:
+    global _DEALS_INDEX
+    if _DEALS_INDEX is None:
+        _DEALS_INDEX = hs.deals_by_company()
+    return _DEALS_INDEX.get(company_id, [])
 
 
 def project_end(customer: dict[str, Any], stichtag: date) -> date | None:
@@ -119,9 +133,11 @@ def build(stichtag: date, window_days: int, notice_months: int) -> dict[str, Any
     missing.sort(key=lambda row: -(row["mrr"] or 0.0))
 
     duplicates = find_duplicates(rows)
+    listed = in_window + notice_window + expired + missing
 
     return {
         "stichtag": stichtag,
+        "deal_coverage": deal_coverage(rows, listed, stichtag),
         "window_days": window_days,
         "window_end": window_end,
         "notice_months": notice_months,
@@ -133,6 +149,81 @@ def build(stichtag: date, window_days: int, notice_months: int) -> dict[str, Any
         "missing": missing,
         "duplicates": duplicates,
     }
+
+
+def deal_coverage(
+    rows: list[dict[str, Any]], listed: list[dict[str, Any]], stichtag: date
+) -> dict[str, Any]:
+    """Prüfen, ob die Deals an den aktiven Kunden vollständig erfasst sind.
+
+    Die Renewal-Logik selbst hängt an COMPANY-Feldern. Die Deals sind die
+    Gegenprobe: läuft zu einem fälligen Vertrag überhaupt ein Vorgang, und gibt
+    es Deals, die aus der Betrachtung fallen, weil sie an keinem aktiven Kunden
+    hängen.
+    """
+    all_deals = hs.deals()
+    if not all_deals:
+        return {"available": False}
+
+    customer_ids = {row["id"] for row in rows}
+    linked_ids: set[str] = set()
+    unlinked_open: list[dict[str, Any]] = []
+    no_company: list[dict[str, Any]] = []
+
+    for deal in all_deals:
+        if not deal["company_ids"]:
+            no_company.append(deal)
+        matched = [cid for cid in deal["company_ids"] if cid in customer_ids]
+        if matched:
+            linked_ids.add(deal["id"])
+        elif not deal["is_closed"]:
+            unlinked_open.append(deal)
+
+    on_customers = [deal for deal in all_deals if deal["id"] in linked_ids]
+    open_on_customers = [deal for deal in on_customers if not deal["is_closed"]]
+
+    # Offene Deals der gelisteten Kunden, mit dem Kunden als Kontext.
+    listed_open: list[dict[str, Any]] = []
+    for row in listed:
+        for deal in row["open_deals"]:
+            listed_open.append({"customer": row, "deal": deal})
+    listed_open.sort(key=lambda item: (item["deal"]["close_date"] or date.max))
+
+    # Owner der offenen Deals gegen die Owner-Liste prüfen: die Umstellung auf
+    # aktive Kollegen betraf die Companies, nicht zwangsläufig die Deals.
+    owners = hs.owner_info()
+    stale_owners: dict[str, int] = {}
+    for deal in open_on_customers:
+        owner = owners.get(deal["owner_id"] or "")
+        if owner and not owner["active"]:
+            stale_owners[owner["name"]] = stale_owners.get(owner["name"], 0) + 1
+
+    return {
+        "available": True,
+        "deal_owners_inactive": stale_owners,
+        "total": len(all_deals),
+        "on_customers": on_customers,
+        "open_on_customers": open_on_customers,
+        "by_pipeline_open": _count_by(open_on_customers, "pipeline"),
+        "customers_with_deals": len({cid for deal in on_customers for cid in deal["company_ids"] if cid in customer_ids}),
+        "customers_total": len(customer_ids),
+        "unlinked_open": unlinked_open,
+        "no_company": no_company,
+        "multi_company": [deal for deal in all_deals if len(deal["company_ids"]) > 1],
+        "listed_open": listed_open,
+        "overdue_open": [
+            item
+            for item in listed_open
+            if item["deal"]["close_date"] and item["deal"]["close_date"] < stichtag
+        ],
+    }
+
+
+def _count_by(items: list[dict[str, Any]], key: str) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for item in items:
+        counts[item[key]] = counts.get(item[key], 0) + 1
+    return counts
 
 
 def find_duplicates(rows: list[dict[str, Any]]) -> list[list[dict[str, Any]]]:
@@ -283,7 +374,7 @@ def render(report: dict[str, Any], alerts: dict[str, list[dict[str, Any]]]) -> s
         ["Kunde", "Vertragsende", "Tage", "Kündigungsfrist", "MRR", "Anteil", "Laufzeit", "Owner", "Letzte Aktivität", "Hinweise"],
         [
             [
-                row["name"],
+                row["link"],
                 hs.fmt_date(row["contract_end"]),
                 str(row["days_to_end"]),
                 notice_cell(row),
@@ -322,7 +413,7 @@ def render(report: dict[str, Any], alerts: dict[str, list[dict[str, Any]]]) -> s
         ["Kunde", "Frist bis", "Tage bis Frist", "Vertragsende", "MRR", "Anteil", "Laufzeit", "Owner", "Letzte Aktivität"],
         [
             [
-                row["name"],
+                row["link"],
                 hs.fmt_date(row["notice_deadline"]),
                 str(row["days_to_notice"]),
                 hs.fmt_date(row["contract_end"]),
@@ -352,7 +443,7 @@ def render(report: dict[str, Any], alerts: dict[str, list[dict[str, Any]]]) -> s
         ["Kunde", "Vertragsende (CRM)", "Tage überfällig", "Fortschreibung", "MRR", "Anteil", "Owner", "Letzte Aktivität"],
         [
             [
-                row["name"],
+                row["link"],
                 hs.fmt_date(row["contract_end"]),
                 str(abs(row["days_to_end"])),
                 hs.fmt_date(row["projected_end"], dash="nicht berechenbar"),
@@ -379,7 +470,7 @@ def render(report: dict[str, Any], alerts: dict[str, list[dict[str, Any]]]) -> s
         ["Kunde", "Vertragsbeginn", "Laufzeit", "Fortschreibung", "MRR", "Anteil", "Owner", "Letzte Aktivität"],
         [
             [
-                row["name"],
+                row["link"],
                 hs.fmt_date(row["contract_start"]),
                 f"{row['duration_months']} Mon." if row["duration_months"] else "-",
                 hs.fmt_date(row["projected_end"], dash="nicht berechenbar"),
@@ -394,8 +485,77 @@ def render(report: dict[str, Any], alerts: dict[str, list[dict[str, Any]]]) -> s
     if report["missing"]:
         lines += [sum_line(report["missing"], base), ""]
 
+    lines += render_deals(report, names)
     lines += render_data_quality(report, names)
     return "\n".join(lines).rstrip() + "\n"
+
+
+def render_deals(report: dict[str, Any], names: dict[str, dict[str, Any]]) -> list[str]:
+    coverage = report["deal_coverage"]
+    if not coverage.get("available"):
+        return [
+            "## 4. Offene Deals",
+            "",
+            "_Nicht verfügbar: Deals kommen aus der Associations-API und brauchen einen "
+            "API-Token. Im MCP-Cache-Modus bleibt dieser Block leer, statt über Firmennamen "
+            "zu joinen._",
+            "",
+        ]
+
+    lines = [
+        "## 4. Offene Deals auf den gelisteten Kunden",
+        "",
+        "Gegenprobe zu den Blöcken oben: läuft zu einem fälligen Vertrag überhaupt ein "
+        "Vorgang im CRM.",
+        "",
+    ]
+    lines += table(
+        ["Kunde", "Deal", "Pipeline / Stage", "Betrag", "Close-Date", "Owner"],
+        [
+            [
+                item["customer"]["link"],
+                hs.md_link(item["deal"]["name"], item["deal"]["url"]),
+                hs.stage_label(item["deal"]),
+                hs.fmt_eur(item["deal"]["amount"]),
+                deal_close_cell(item["deal"], report["stichtag"]),
+                owner_label({"owner_id": item["deal"]["owner_id"]}, names),
+            ]
+            for item in coverage["listed_open"]
+        ],
+    )
+
+    open_sales = [
+        deal for deal in coverage["open_on_customers"] if deal["pipeline"] == hs.SALES_PIPELINE
+    ]
+    if not open_sales:
+        lines += [
+            f"**Kein einziger offener Deal in der Sales-Pipeline** über alle "
+            f"{coverage['customers_total']} aktiven Kunden. Die "
+            f"{len(coverage['open_on_customers'])} offenen Deals verteilen sich auf "
+            "Onboarding und Upsell. Renewals werden im CRM also nicht als Deal geführt: "
+            "der Vertragsverlängerung steht kein Vorgang gegenüber, an dem sich Fortschritt "
+            "ablesen ließe. Solange das so ist, sind die COMPANY-Felder die einzige "
+            "Renewal-Quelle, und der Report kann nicht zwischen \"noch nicht angefasst\" und "
+            "\"läuft, nur nicht dokumentiert\" unterscheiden.",
+            "",
+        ]
+    if coverage["overdue_open"]:
+        lines += [
+            f"{len(coverage['overdue_open'])} der {len(coverage['listed_open'])} hier "
+            "gelisteten offenen Deals haben ein überschrittenes Close-Date. Entweder ist der "
+            "Vorgang liegengeblieben oder das Datum ist nicht gepflegt.",
+            "",
+        ]
+    return lines
+
+
+def deal_close_cell(deal: dict[str, Any], stichtag: date) -> str:
+    close = deal["close_date"]
+    if close is None:
+        return "-"
+    if close < stichtag:
+        return f"{hs.fmt_date(close)} (überschritten, {hs.days_between(close, stichtag)} T)"
+    return hs.fmt_date(close)
 
 
 def render_alerts(alerts: dict[str, Any], names: dict[str, dict[str, Any]]) -> list[str]:
@@ -422,13 +582,13 @@ def render_alerts(alerts: dict[str, Any], names: dict[str, dict[str, Any]]) -> l
     lines = ["## Alert -- neu seit dem letzten Lauf", ""]
     for row in new_window:
         lines.append(
-            f"- **Neu im Fenster:** {row['name']} -- Vertragsende "
+            f"- **Neu im Fenster:** {row['link']} -- Vertragsende "
             f"{hs.fmt_date(row['contract_end'])} (in {row['days_to_end']} Tagen), "
             f"{hs.fmt_eur(row['mrr'])} EUR MRR, Owner {owner_label(row, names)}."
         )
     for row in new_notice:
         lines.append(
-            f"- **Neu in der Frist:** {row['name']} -- Kündigungsfrist bis "
+            f"- **Neu in der Frist:** {row['link']} -- Kündigungsfrist bis "
             f"{hs.fmt_date(row['notice_deadline'])} (in {row['days_to_notice']} Tagen), "
             f"Vertragsende {hs.fmt_date(row['contract_end'])}, "
             f"{hs.fmt_eur(row['mrr'])} EUR MRR."
@@ -462,7 +622,7 @@ def render_data_quality(report: dict[str, Any], names: dict[str, str]) -> list[s
     if missing_mrr:
         lines.append(
             f"- {len(missing_mrr)} Kunden ohne `company_mrr`: "
-            + ", ".join(row["name"] for row in missing_mrr)
+            + ", ".join(row["link"] for row in missing_mrr)
             + ". Deren Risiko lässt sich nicht quantifizieren."
         )
 
@@ -473,7 +633,7 @@ def render_data_quality(report: dict[str, Any], names: dict[str, str]) -> list[s
     if inactive_owner_rows:
         lines.append(
             f"- {len(inactive_owner_rows)} Kunden ohne `hubspot_owner_id`: "
-            + ", ".join(row["name"] for row in inactive_owner_rows)
+            + ", ".join(row["link"] for row in inactive_owner_rows)
             + "."
         )
 
@@ -508,6 +668,50 @@ def render_data_quality(report: dict[str, Any], names: dict[str, str]) -> list[s
                 "für diese Kunden keinen Adressaten."
             )
 
+    coverage = report["deal_coverage"]
+    if coverage.get("available"):
+        lines.append(
+            f"- **Deal-Abdeckung:** {coverage['total']} Deals im Account, "
+            f"{len(coverage['on_customers'])} davon an aktiven Kunden, "
+            f"{len(coverage['open_on_customers'])} offen. Alle "
+            f"{coverage['customers_with_deals']} von {coverage['customers_total']} aktiven "
+            "Kunden haben mindestens einen Deal, es fehlt also keiner ganz."
+        )
+        if coverage["unlinked_open"]:
+            without_company = sum(1 for deal in coverage["unlinked_open"] if not deal["company_ids"])
+            lines.append(
+                f"- {len(coverage['unlinked_open'])} **offene Deals hängen an keinem aktiven "
+                f"Kunden** und fallen aus jeder kundenbezogenen Auswertung: "
+                f"{without_company} ohne jede Company-Verknüpfung, "
+                f"{len(coverage['unlinked_open']) - without_company} an einer Company, die kein "
+                "aktiver Kunde ist (Neugeschäft, gechurnt oder falsch getaggt)."
+            )
+        if coverage["no_company"]:
+            closed = sum(1 for deal in coverage["no_company"] if deal["is_closed"])
+            lines.append(
+                f"- {len(coverage['no_company'])} Deals haben **gar keine Company-Verknüpfung** "
+                f"({len(coverage['no_company']) - closed} offen, {closed} geschlossen). Sie "
+                "lassen sich keinem Kunden zuordnen und zählen in keiner Kundenauswertung mit."
+            )
+        stale = coverage["deal_owners_inactive"]
+        if stale:
+            lines.append(
+                f"- **{sum(stale.values())} der {len(coverage['open_on_customers'])} offenen Deals an "
+                "aktiven Kunden laufen noch auf inaktive Owner** ("
+                + ", ".join(
+                    f"{name}: {count}" for name, count in sorted(stale.items(), key=lambda i: -i[1])
+                )
+                + "). Die Owner-Umstellung hat die Companies erfasst, die Deals nicht."
+            )
+        if coverage["multi_company"]:
+            lines.append(
+                f"- {len(coverage['multi_company'])} Deals hängen an mehr als einer Company: "
+                + ", ".join(
+                    hs.md_link(deal["name"], deal["url"]) for deal in coverage["multi_company"]
+                )
+                + ". Bei Dubletten ist das ein Hinweis darauf, welche Records zusammengehören."
+            )
+
     for excluded in hs.excluded_non_customers():
         lines.append(
             f"- **{excluded['name']}** (ID {excluded['id']}) ist aus der Basis "
@@ -519,7 +723,7 @@ def render_data_quality(report: dict[str, Any], names: dict[str, str]) -> list[s
         lines.append("- Dubletten-Verdacht unter den aktiven Kunden:")
         for group in report["duplicates"]:
             lines.append(
-                "    - " + " / ".join(f"{row['name']} (ID {row['id']})" for row in group)
+                "    - " + " / ".join(row["link"] for row in group)
             )
 
     lines.append("")

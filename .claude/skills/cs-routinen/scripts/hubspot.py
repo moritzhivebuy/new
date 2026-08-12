@@ -23,6 +23,7 @@ import os
 import re
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -61,6 +62,17 @@ ACTIVITY_CRITICAL_DAYS = 180
 API_BASE = "https://api.hubapi.com"
 COMPANY_SEARCH_PATH = "/crm/v3/objects/companies/search"
 
+#: Für Record-Links. Der Account liegt in der EU-Region, deshalb ``app-eu1``
+#: und nicht ``app`` -- ein Link auf die falsche Region landet auf einer
+#: Fehlerseite. Beides über ``GET /account-info/v3/details`` verifiziert.
+PORTAL_ID = "145132698"
+UI_DOMAIN = "app-eu1.hubspot.com"
+
+#: Deal-Pipelines. IDs sind stabil, Labels dienen nur der Ausgabe.
+SALES_PIPELINE = "default"
+UPSELL_PIPELINE = "853703913"
+ONBOARDING_PIPELINE = "873293029"
+
 #: Alle Properties, die die Routinen auf COMPANY brauchen.
 COMPANY_PROPERTIES = [
     "hs_object_id",
@@ -75,6 +87,20 @@ COMPANY_PROPERTIES = [
     "contracted_users",
     "hubspot_owner_id",
     "hs_last_sales_activity_timestamp",
+]
+
+#: Alle Properties, die die Routinen auf DEAL brauchen.
+DEAL_PROPERTIES = [
+    "dealname",
+    "dealstage",
+    "pipeline",
+    "amount",
+    "closedate",
+    "createdate",
+    "hs_is_closed",
+    "hs_is_closed_won",
+    "hubspot_owner_id",
+    "hs_lastmodifieddate",
 ]
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -243,6 +269,25 @@ def fmt_eur(value: float | None, dash: str = "-") -> str:
 
 def fmt_date(value: date | None, dash: str = "-") -> str:
     return dash if value is None else value.strftime("%d.%m.%Y")
+
+
+def company_url(company_id: str) -> str:
+    return f"https://{UI_DOMAIN}/contacts/{PORTAL_ID}/record/0-2/{company_id}"
+
+
+def deal_url(deal_id: str) -> str:
+    return f"https://{UI_DOMAIN}/contacts/{PORTAL_ID}/record/0-3/{deal_id}"
+
+
+def md_link(label: str, url: str) -> str:
+    """Markdown-Link mit escapten Klammern im Label.
+
+    Notion und Markdown stolpern beide über eckige Klammern im Linktext;
+    Firmennamen wie ``igus SE & Co. KG.`` sind unkritisch, aber der Escape
+    kostet nichts.
+    """
+    safe = label.replace("[", "\\[").replace("]", "\\]")
+    return f"[{safe}]({url})"
 
 
 def fmt_pct(share: float | None, dash: str = "-") -> str:
@@ -513,6 +558,135 @@ def normalize_company(row: dict[str, Any]) -> dict[str, Any]:
         "last_activity": ms_to_date(row.get("hs_last_sales_activity_timestamp")),
         "raw": row,
     }
+
+
+# --------------------------------------------------------------------------
+# Deals
+# --------------------------------------------------------------------------
+
+_DEALS_CACHE: list[dict[str, Any]] | None = None
+_PIPELINES_CACHE: dict[str, dict[str, str]] | None = None
+
+DEALS_SQL = """
+SELECT hs_object_id, dealname, dealstage, pipeline, amount, closedate,
+       createdate, hs_is_closed, hs_is_closed_won, hubspot_owner_id,
+       COMPANY.name
+FROM DEAL
+""".strip()
+
+
+def association_company_ids(record: dict[str, Any]) -> list[str]:
+    """Company-IDs eines Deals, dedupliziert.
+
+    Die Associations-API liefert dieselbe Company mehrfach, einmal je
+    Association-Typ (``deal_to_company`` und ``deal_to_company_unlabeled``).
+    Ohne Deduplizierung zählt fast jeder Deal doppelt: 367 von 413 Deals sehen
+    dann wie Mehrfachverknüpfungen aus, tatsächlich sind es drei.
+    """
+    results = ((record.get("associations") or {}).get("companies") or {}).get("results") or []
+    seen: dict[str, None] = {}
+    for entry in results:
+        identifier = str(entry.get("id") or "").strip()
+        if identifier:
+            seen.setdefault(identifier, None)
+    return list(seen)
+
+
+def deals(refresh: bool = False) -> list[dict[str, Any]]:
+    """Alle Deals mit Company-Verknüpfung, normalisiert.
+
+    Nur im API-Modus verfügbar: die Verknüpfung kommt aus der Associations-API,
+    die MCP-SQL liefert stattdessen ``COMPANY.name`` -- über Namen zu joinen
+    wäre bei den vorhandenen Dubletten unzuverlässig. Ohne Token gibt die
+    Funktion eine leere Liste zurück, und die Routinen lassen den Deal-Teil
+    weg statt falsch zu rechnen.
+    """
+    global _DEALS_CACHE
+    if _DEALS_CACHE is not None and not refresh:
+        return _DEALS_CACHE
+    token = _access_token()
+    if token is None:
+        _DEALS_CACHE = []
+        return _DEALS_CACHE
+
+    rows: list[dict[str, Any]] = []
+    after: str | None = None
+    while True:
+        query = {
+            "limit": "100",
+            "properties": ",".join(DEAL_PROPERTIES),
+            "associations": "companies",
+        }
+        if after:
+            query["after"] = after
+        response = _get_json("/crm/v3/objects/deals?" + urllib.parse.urlencode(query), token)
+        for record in response.get("results", []):
+            rows.append(normalize_deal(record))
+        after = (response.get("paging") or {}).get("next", {}).get("after")
+        if not after:
+            break
+    _DEALS_CACHE = rows
+    return rows
+
+
+def normalize_deal(record: dict[str, Any]) -> dict[str, Any]:
+    props = record.get("properties") or {}
+    identifier = str(record.get("id") or props.get("hs_object_id") or "").strip()
+    return {
+        "id": identifier,
+        "name": html.unescape(str(props.get("dealname") or "")).strip() or "(ohne Namen)",
+        "pipeline": str(props.get("pipeline") or "").strip(),
+        "stage": str(props.get("dealstage") or "").strip(),
+        "amount": to_float(props.get("amount")),
+        "close_date": ms_to_date(props.get("closedate")),
+        "create_date": ms_to_date(props.get("createdate")),
+        "is_closed": str(props.get("hs_is_closed") or "").lower() == "true",
+        "is_won": str(props.get("hs_is_closed_won") or "").lower() == "true",
+        "owner_id": (str(props.get("hubspot_owner_id") or "").strip() or None),
+        "company_ids": association_company_ids(record),
+        "url": deal_url(identifier),
+    }
+
+
+def deals_by_company(refresh: bool = False) -> dict[str, list[dict[str, Any]]]:
+    """Company-ID -> Deals. Ein Deal kann bei mehreren Companies auftauchen."""
+    mapping: dict[str, list[dict[str, Any]]] = {}
+    for deal in deals(refresh=refresh):
+        for company_id in deal["company_ids"]:
+            mapping.setdefault(company_id, []).append(deal)
+    return mapping
+
+
+def pipeline_labels() -> dict[str, dict[str, str]]:
+    """Stage-ID -> ``{"pipeline": Label, "stage": Label}``.
+
+    IDs sind in den Rohdaten nicht lesbar (``1238245574``), im Brief soll
+    "Onboarding / Setup in Progress" stehen.
+    """
+    global _PIPELINES_CACHE
+    if _PIPELINES_CACHE is not None:
+        return _PIPELINES_CACHE
+    token = _access_token()
+    if token is None:
+        _PIPELINES_CACHE = {}
+        return _PIPELINES_CACHE
+    labels: dict[str, dict[str, str]] = {}
+    response = _get_json("/crm/v3/pipelines/deals", token)
+    for pipeline in response.get("results", []):
+        for stage in pipeline.get("stages", []):
+            labels[str(stage.get("id"))] = {
+                "pipeline": pipeline.get("label") or str(pipeline.get("id")),
+                "stage": stage.get("label") or str(stage.get("id")),
+            }
+    _PIPELINES_CACHE = labels
+    return labels
+
+
+def stage_label(deal: dict[str, Any]) -> str:
+    labels = pipeline_labels().get(deal["stage"])
+    if not labels:
+        return f"{deal['pipeline']}/{deal['stage']}"
+    return f"{labels['pipeline']} / {labels['stage']}"
 
 
 def total_mrr(customers: Iterable[dict[str, Any]] | None = None) -> float:

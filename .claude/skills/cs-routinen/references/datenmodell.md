@@ -99,6 +99,41 @@ berechnet sie bei jedem Lauf neu und weist sie im Block *Datenqualität* aus.
   `?archived=true`. Genau die brauchen wir, um verwaiste Zuordnungen zu sehen.
 * `hubspot.owner_info()` lädt beide Seiten und markiert inaktive Owner.
 
+## Deals
+
+* **413 Deals** im Account (12.08.2026), **226** an aktiven Kunden, **40** davon
+  offen. Jeder der 73 aktiven Kunden hat mindestens einen Deal.
+* Drei Pipelines: `default` (Sales Pipeline), `853703913` (Upsell),
+  `873293029` (Onboarding). Stage-IDs sind numerisch und ohne Labels unlesbar,
+  `hubspot.pipeline_labels()` löst sie auf.
+* **Kein offener Deal in der Sales-Pipeline** an einem aktiven Kunden. Die 40
+  offenen sind 33 Onboarding und 7 Upsell. Renewals werden nicht als Deal
+  geführt, es gibt also keine Deal-Quelle für den Renewal-Fortschritt.
+* **Associations liefern Duplikate.** `GET /crm/v3/objects/deals?associations=companies`
+  gibt dieselbe Company zweimal zurück, einmal als `deal_to_company` und einmal
+  als `deal_to_company_unlabeled`. Ohne Deduplizierung sehen 367 von 413 Deals
+  wie Mehrfachverknüpfungen aus; tatsächlich sind es **3**. Dafür gibt es
+  `hubspot.association_company_ids()`.
+* **35 Deals ohne Company-Verknüpfung** (16 offen, 19 geschlossen) und **35
+  offene Deals ohne aktiven Kunden** (16 davon ohne Company, 19 an einer
+  Nicht-Kunden-Company). Das sind zwei verschiedene Mengen mit 16 gemeinsamen
+  Datensätzen, keine identische Gruppe.
+* **36 der 40 offenen Deals an aktiven Kunden haben einen inaktiven Owner**
+  (Jan Vollers 34, Kinga Chmurczyk 2). Die Owner-Umstellung vom 12.08.2026
+  betraf nur die Companies.
+* Die MCP-SQL kann Associations nicht ausgeben, nur `COMPANY.name` als
+  Cross-Object-Spalte. Über Namen zu joinen ist bei den vorhandenen Dubletten
+  unzuverlässig, deshalb sind die Deals nur im API-Modus verfügbar.
+
+## Record-Links
+
+`PORTAL_ID = '145132698'`, `UI_DOMAIN = 'app-eu1.hubspot.com'` (EU-Region, über
+`GET /account-info/v3/details` verifiziert). Ein Link auf `app.hubspot.com`
+statt `app-eu1` landet auf einer Fehlerseite.
+
+* Company: `https://app-eu1.hubspot.com/contacts/145132698/record/0-2/<id>`
+* Deal: `https://app-eu1.hubspot.com/contacts/145132698/record/0-3/<id>`
+
 ## Tickets (Vorgriff Routine 2)
 
 `SUPPORT_PIPELINE = '0'` ist als harte Konstante in `hubspot.py` gesetzt. Nicht

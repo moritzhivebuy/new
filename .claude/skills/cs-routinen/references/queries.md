@@ -102,6 +102,36 @@ ORDER BY churn_date DESC
 
 ---
 
+## `deals` — Deals inkl. Company-Verknüpfung
+
+**Nicht über SQL.** Die Verknüpfung kommt aus der Associations-API; die MCP-SQL
+kann nur `COMPANY.name` als Cross-Object-Spalte ausgeben, und ein Join über
+Firmennamen ist bei den vorhandenen Dubletten unzuverlässig. `hubspot.deals()`
+verwendet deshalb:
+
+```
+GET /crm/v3/objects/deals
+    ?limit=100
+    &properties=dealname,dealstage,pipeline,amount,closedate,createdate,
+                hs_is_closed,hs_is_closed_won,hubspot_owner_id,hs_lastmodifieddate
+    &associations=companies
+```
+
+Achtung: die Antwort enthält **jede Company doppelt**, einmal als
+`deal_to_company` und einmal als `deal_to_company_unlabeled`. Immer über
+`hubspot.association_company_ids()` deduplizieren.
+
+Stage-Labels über `GET /crm/v3/pipelines/deals`.
+
+Zur reinen Sichtprüfung in der Session geht auch:
+
+```sql
+SELECT hs_object_id, dealname, dealstage, pipeline, amount, closedate,
+       hs_is_closed, COMPANY.name
+FROM DEAL
+WHERE hs_is_closed = 'false'
+```
+
 ## Routine 1 und 2
 
 Noch nicht definiert. Die vier Engagement-Quellen (Routine 1) und die
