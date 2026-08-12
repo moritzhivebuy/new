@@ -1,0 +1,6 @@
+# Rohe Query-Caches: jederzeit neu abrufbar, enthalten Kundendaten.
+data/*.json
+# Owner-Mapping darf mit, es ist nur ID -> Name.
+!data/owners.json
+__pycache__/
+*.pyc

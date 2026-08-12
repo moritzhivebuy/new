@@ -1,0 +1,134 @@
+{
+  "owners": [
+    {
+      "ownerId": "1078642322",
+      "name": "dustin@hivebuy.de",
+      "isActive": false
+    },
+    {
+      "ownerId": "109171979",
+      "name": "Bettina Fischer",
+      "isActive": true
+    },
+    {
+      "ownerId": "1204255667",
+      "name": "Tech Striker",
+      "isActive": true
+    },
+    {
+      "ownerId": "1724609850",
+      "name": "Searchconsoleexpert",
+      "isActive": false
+    },
+    {
+      "ownerId": "1773489374",
+      "name": "Moritz Lienert",
+      "isActive": true
+    },
+    {
+      "ownerId": "21888410",
+      "name": "Usman Saleem",
+      "isActive": false
+    },
+    {
+      "ownerId": "252662300",
+      "name": "Grundwerk Digital Software Team",
+      "isActive": false
+    },
+    {
+      "ownerId": "255483530",
+      "name": "Robert Eickmeyer",
+      "isActive": true
+    },
+    {
+      "ownerId": "29360757",
+      "name": "Trustfactory Webmaster",
+      "isActive": false
+    },
+    {
+      "ownerId": "29734007",
+      "name": "David Prochazka",
+      "isActive": false
+    },
+    {
+      "ownerId": "32598807",
+      "name": "Emre Topyürek",
+      "isActive": true
+    },
+    {
+      "ownerId": "33319821",
+      "name": "jan@hivebuy.de",
+      "isActive": false
+    },
+    {
+      "ownerId": "33319925",
+      "name": "Jan Vollers",
+      "isActive": false
+    },
+    {
+      "ownerId": "35568771",
+      "name": "Chris Sonnemann",
+      "isActive": true
+    },
+    {
+      "ownerId": "35629498",
+      "name": "Leonard Diemer",
+      "isActive": true
+    },
+    {
+      "ownerId": "386567878",
+      "name": "Theresa Herrmann",
+      "isActive": true
+    },
+    {
+      "ownerId": "742409339",
+      "name": "growth ecommer",
+      "isActive": false
+    },
+    {
+      "ownerId": "745740",
+      "name": "Albert Schmidbauer",
+      "isActive": false
+    },
+    {
+      "ownerId": "75479340",
+      "name": "Christopher Sorg",
+      "isActive": false
+    },
+    {
+      "ownerId": "77804274",
+      "name": "Dennis Hartmann",
+      "isActive": true
+    },
+    {
+      "ownerId": "783680962",
+      "name": "Carlos Thomsen Grundwerk Digital",
+      "isActive": false
+    },
+    {
+      "ownerId": "78552274",
+      "name": "Kinga Chmurczyk",
+      "isActive": false
+    },
+    {
+      "ownerId": "78597810",
+      "name": "Anna",
+      "isActive": true
+    },
+    {
+      "ownerId": "792085575",
+      "name": "sabuj ali",
+      "isActive": false
+    },
+    {
+      "ownerId": "853566189",
+      "name": "Stefan Kiehne",
+      "isActive": true
+    },
+    {
+      "ownerId": "969541116",
+      "name": "Sabuj Ali",
+      "isActive": false
+    }
+  ]
+}
