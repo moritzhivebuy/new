@@ -67,7 +67,7 @@ Das mit Abstand größte Problem. Beispiele:
 
 → Die E-Mail-Reihenfolge ist ein zu **~97% verlässliches** Signal. Zusammen mit dem Lexikon sind 109 Fälle eindeutig. Weitere **101 Kontakte bleiben unentscheidbar** (kein Lexikontreffer), davon 34 mit `nachname.vorname`-Reihenfolge → sehr wahrscheinlich ebenfalls vertauscht.
 
-**Hochrechnung:** Der Swap kam über einen Import. Bei 3.237 IMPORT-Kontakten im Portal ist von einem **vierstelligen Backlog** auszugehen. Das ist noch nicht vollständig gemessen — die Swap-Erkennung sollte über die gesamte Import-Kohorte laufen, nicht nur über die letzten 500.
+**Portalweit gemessen (Nachtrag, siehe `scripts/dq/`):** Die Swap-Erkennung ist inzwischen über alle 11.157 Kontakte mit vollständigem Namen gelaufen. Ergebnis: **368 eindeutige Swaps** plus 61 Fälle zur Prüfung. Meine ursprüngliche Hochrechnung auf einen vierstelligen Backlog war **zu hoch** — die 21,8% der Stichprobe lassen sich nicht auf die gesamte Import-Kohorte übertragen, weil der betroffene Import nur ein Teil davon ist.
 
 ### 2.2 Kaputte / leere Namensfelder — 7 Kontakte
 
@@ -251,7 +251,7 @@ Erwartetes Ergebnis: ~409 der 423 korrekt, 14 brauchen die Reihenfolgedrehung, d
 
 **Schritt 9: Schreiben** — Felder tauschen, alte Werte in `dq_befund` protokollieren, `dq_status = auto_bereinigt`.
 
-Umfang: 109 bestätigte Swaps allein in den letzten 500. **Die Erkennung über die gesamte Import-Kohorte (3.237 Kontakte) laufen lassen** — dort liegt der eigentliche Backlog.
+Umfang: 109 bestätigte Swaps in den letzten 500, **portalweit 368 eindeutige** plus 61 zur Prüfung (gemessen, nicht geschätzt).
 
 ### Phase 5 — Normalisieren
 
@@ -323,7 +323,7 @@ Aus den Fehlern, die in dieser Analyse selbst aufgetreten sind:
 | 1 | Pre-Flight-Check für Imports (Phase 7) | alle künftigen Imports | S | 🔴 sehr hoch |
 | 2 | Funktionspostfächer taggen (Phase 2) | 52 | S | 🔴 hoch — schützt Phase 3 |
 | 3 | Namen aus E-Mail ableiten (Phase 3) | 423 automatisch | M | 🔴 hoch |
-| 4 | Swap-Korrektur Import-Kohorte (Phase 4) | ~1.000+ geschätzt | M | 🔴 hoch |
+| 4 | Swap-Korrektur portalweit (Phase 4) | 368 gemessen | M | 🔴 hoch |
 | 5 | Feldmapping EXTENSION/CONVERSATIONS (Phase 7) | laufend | M | 🔴 hoch |
 | 6 | 77 Geisterdatensätze löschen (Phase 1) | 77 | S | 🟡 mittel |
 | 7 | Telefon E.164 (Phase 5) | 91 Felder | S | 🟡 mittel |
@@ -334,21 +334,25 @@ Aus den Fehlern, die in dieser Analyse selbst aufgetreten sind:
 
 ---
 
-## 8. Nächster Schritt
+## 8. Umsetzungsstand
 
-Es wurde **nichts in HubSpot geschrieben** — diese Analyse ist rein lesend. Für die Umsetzung brauche ich von Dir eine Entscheidung zu:
+Variante **b** ist gebaut und liegt unter [`scripts/dq/`](scripts/dq/README.md). In Claude Code läuft sie über `/hubspot-dq`, zusätzlich wöchentlich automatisch als Dry-Run.
 
-1. **Umsetzungsvariante** (Empfehlung: b + a)
-2. **Freigabe für Phase 1** (77 Geisterdatensätze löschen) — irreversibel
-3. **Ob die Swap-Erkennung** über die gesamte Import-Kohorte laufen soll (3.237 Kontakte), um den echten Backlog zu messen
+**Offen und Deine Entscheidung:**
 
-Danach ist der sinnvolle erste Lauf: Phase 0–3 als Dry-Run mit CSV-Diff zur Freigabe.
+1. **Schreibrechte.** Das Private-App-Token hat `crm.objects.contacts.read`, aber **nicht** `crm.objects.contacts.write`. Bis das ergänzt ist, läuft nur der Dry-Run. Nötig: `crm.objects.contacts.write` und `crm.schemas.contacts.write` (für die fünf `dq_`-Properties).
+2. **Freigabe der 77 Geisterdatensätze** — irreversibel, läuft nur auf ausdrückliche Aufforderung.
+3. **Fachliche Zuordnung von `contact_typ__channel_`.** Kontakte mit Traffic-Quelle `OFFLINE` sind maschinell nicht als Inbound oder Outbound belegbar; das betrifft vor allem die per Integration angelegten Produktkontakte. Diese Fälle stehen bewusst auf `pruefen`, statt stillschweigend tausende Kontakte als Outbound zu markieren.
 
 ---
 
-## Anhang: Reproduzierbarkeit
+## Anhang: Skripte
 
-Die Auswertungsskripte liegen unter `scripts/`:
+### Bereinigungs-Engine (Variante b)
+
+[`scripts/dq/`](scripts/dq/README.md) — Dry-Run ist der Default, geschrieben wird nur gegen eine freigegebene CSV. 181 Regeltests gegen echte Portal-Fälle unter `scripts/dq/test_rules.py`.
+
+### Auswertungsskripte des Audits
 
 | Skript | Zweck |
 |---|---|

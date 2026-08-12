@@ -8,7 +8,12 @@
       "mcp__Notion__notion-fetch",
       "mcp__Notion__notion-query-data-sources",
       "mcp__Notion__notion-create-pages",
-      "mcp__Notion__notion-update-page"
+      "mcp__Notion__notion-update-page",
+      "Bash(python3 -m scripts.dq.test_rules)",
+      "Bash(python3 -m scripts.dq.run --check-scopes)",
+      "Bash(python3 -m scripts.dq.run --phases:*)",
+      "Bash(python3 -m scripts.dq.run --out:*)",
+      "Bash(python3 -m scripts.dq.run --dry-run:*)"
     ]
   }
 }
