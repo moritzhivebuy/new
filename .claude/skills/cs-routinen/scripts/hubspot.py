@@ -43,6 +43,17 @@ NOTICE_PERIOD_MONTHS = 3
 #: Ab diesem MRR-Anteil an der Gesamtbasis gilt ein Kunde als Einzelrisiko.
 TOP_RISK_MRR_SHARE = 0.05
 
+#: Companies mit ``lifecyclestage = 'customer'``, die fachlich keine Kunden sind.
+#: Sie fliegen aus der Basisabfrage und damit aus allen Routinen und
+#: MRR-Anteilen. Jeder Eintrag ist eine Umgehung falscher CRM-Daten, keine
+#: Dauerlösung: solange hier etwas steht, gehört es im CRM korrigiert. Die
+#: Routine weist die Liste im Block *Datenqualität* aus, damit sie nicht in
+#: Vergessenheit gerät.
+NON_CUSTOMERS: dict[str, str] = {
+    "401316842690": "d.velop -- kein Kunde (Angabe Moritz, 12.08.2026); "
+    "lifecyclestage im CRM noch 'customer'",
+}
+
 #: Schwellen (Tage seit letzter Sales-Aktivität) für die Ampel.
 ACTIVITY_WARN_DAYS = 60
 ACTIVITY_CRITICAL_DAYS = 180
@@ -455,6 +466,7 @@ SEARCH_TRANSLATIONS: dict[str, Any] = {
 }
 
 _ACTIVE_CACHE: list[dict[str, Any]] | None = None
+_EXCLUDED_CACHE: list[dict[str, Any]] = []
 
 
 def active_customers(refresh: bool = False) -> list[dict[str, Any]]:
@@ -464,13 +476,23 @@ def active_customers(refresh: bool = False) -> list[dict[str, Any]]:
     Fenster werden in Python gebildet, damit dieselbe Abfrage auch die Kunden
     ohne oder mit abgelaufenem Vertragsdatum sichtbar macht. Genau die fehlen,
     wenn man das Fenster in SQL filtert.
+
+    Companies aus ``NON_CUSTOMERS`` werden hier entfernt -- vor jeder
+    MRR-Summe, damit Anteile nicht gegen eine falsche Basis laufen.
     """
-    global _ACTIVE_CACHE
+    global _ACTIVE_CACHE, _EXCLUDED_CACHE
     if _ACTIVE_CACHE is not None and not refresh:
         return _ACTIVE_CACHE
-    rows = run_sql(ACTIVE_CUSTOMERS_SQL, "active_customers")
-    _ACTIVE_CACHE = [normalize_company(row) for row in rows]
+    rows = [normalize_company(row) for row in run_sql(ACTIVE_CUSTOMERS_SQL, "active_customers")]
+    _EXCLUDED_CACHE = [row for row in rows if row["id"] in NON_CUSTOMERS]
+    _ACTIVE_CACHE = [row for row in rows if row["id"] not in NON_CUSTOMERS]
     return _ACTIVE_CACHE
+
+
+def excluded_non_customers() -> list[dict[str, Any]]:
+    """Die per ``NON_CUSTOMERS`` entfernten Companies, mit Begründung."""
+    active_customers()
+    return [{**row, "reason": NON_CUSTOMERS[row["id"]]} for row in _EXCLUDED_CACHE]
 
 
 def normalize_company(row: dict[str, Any]) -> dict[str, Any]:

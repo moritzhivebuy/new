@@ -508,11 +508,18 @@ def render_data_quality(report: dict[str, Any], names: dict[str, str]) -> list[s
                 "für diese Kunden keinen Adressaten."
             )
 
+    for excluded in hs.excluded_non_customers():
+        lines.append(
+            f"- **{excluded['name']}** (ID {excluded['id']}) ist aus der Basis "
+            f"ausgeschlossen: {excluded['reason']}. Solange das Feld im CRM nicht "
+            "korrigiert ist, hängt der Ausschluss an einer Liste im Code."
+        )
+
     if report["duplicates"]:
         lines.append("- Dubletten-Verdacht unter den aktiven Kunden:")
         for group in report["duplicates"]:
             lines.append(
-                "    - " + " | ".join(f"{row['name']} (ID {row['id']})" for row in group)
+                "    - " + " / ".join(f"{row['name']} (ID {row['id']})" for row in group)
             )
 
     lines.append("")

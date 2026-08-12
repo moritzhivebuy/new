@@ -12,7 +12,10 @@ Stand der Verifikation: 12.08.2026, gegen den Live-Account geprüft.
 lifecyclestage = 'customer' AND churn_date IS NULL
 ```
 
-* **74 Unternehmen**, **108.199,73 EUR** Summe `company_mrr` (12.08.2026).
+* **74 Unternehmen** laut CRM, **108.199,73 EUR** Summe `company_mrr`
+  (12.08.2026). Nach Abzug der Ausschlussliste (siehe unten) rechnen die
+  Routinen mit **73 Kunden**; die MRR-Basis bleibt gleich, weil der
+  ausgeschlossene Datensatz keinen MRR-Wert hat.
 * `churn_date` ist laut Property-Beschreibung *"Last day of the contract not
   date of the termination letter"*, also das Vertragsende gekündigter Kunden,
   nicht das Datum des Kündigungsschreibens.
@@ -70,12 +73,14 @@ Stelle in `hubspot.py` ändern, nicht in den Routinen.
 ## Bekannte Datenlücken (Stand 12.08.2026)
 
 * **13 aktive Kunden** mit `contract_end_date` in der Vergangenheit.
-* **12 aktive Kunden** ohne `contract_end_date`.
-* Zusammen **25 von 74 Kunden (33,8 %)** und **17.310,00 EUR MRR (16,0 %)** ohne
+* **11 aktive Kunden** ohne `contract_end_date` (12 im CRM, minus d.velop).
+* Zusammen **24 von 73 Kunden (32,9 %)** und **17.310,00 EUR MRR (16,0 %)** ohne
   belastbares Vertragsende.
-* **5 aktive Kunden** ohne `company_mrr`, **5** ohne `hubspot_owner_id`.
-* **23 der 26 im Renewal-Brief gelisteten Kunden** laufen auf **Jan Vollers
-  (Owner-ID 33319925, inaktiv)**.
+* **4 aktive Kunden** ohne `company_mrr`, **8** ohne `hubspot_owner_id`.
+* **d.velop** (401316842690) steht auf `lifecyclestage = 'customer'`, ist aber
+  kein Kunde (Angabe Moritz, 12.08.2026). Der Datensatz hat weder MRR noch Owner
+  noch Vertragsdaten. Bis das Feld im CRM korrigiert ist, greift
+  `hubspot.NON_CUSTOMERS`.
 * Dublettenverdacht: `JMarquardt Audiovisual` (17554843636 / 49463093489),
   `igus` (188745085157 / 401851610339 / 401764367589),
   `rebuy` / `reBuy reCommerce Services` (401457651913 / 18622719466).
@@ -85,6 +90,10 @@ berechnet sie bei jedem Lauf neu und weist sie im Block *Datenqualität* aus.
 
 ## Owner
 
+* Seit dem 12.08.2026 liegt die Zuordnung bei **Bettina Fischer** (109171979,
+  aktiv) mit 61 aktiven Kunden. Vorher lief fast alles auf **Jan Vollers**
+  (33319925), inaktiv. Weitere Owner in der Basis: Robert Eickmeyer
+  (255483530), Dennis Hartmann (77804274), 8 Kunden ohne Zuordnung.
 * `mcp__HubSpot__search_owners` bzw. `GET /crm/v3/owners` liefert
   standardmäßig nur aktive Owner. Ausgeschiedene Kollegen stehen unter
   `?archived=true`. Genau die brauchen wir, um verwaiste Zuordnungen zu sehen.

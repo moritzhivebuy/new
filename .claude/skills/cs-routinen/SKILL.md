@@ -41,6 +41,25 @@ die neu in das Fenster oder neu in die Kündigungsfrist eingetreten sind. Beim
 allerersten Lauf ohne State-Datei gibt es absichtlich keinen Alert, statt die
 komplette Liste als "neu" zu melden.
 
+## Nach Notion veröffentlichen
+
+Die Reports liegen in Notion unter
+[CS-Reports](https://app.notion.com/p/3ba6f8c1d67e817984a1ea4630d1087f)
+(Unterseite von *New: Customer Success*), eine datierte Unterseite pro Lauf.
+
+Notion kennt keine Pipe-Tabellen. `scripts/notion_export.py` übersetzt einen
+Brief in Notion-flavored Markdown (`<table>`-Blöcke, Tabs statt Leerzeichen,
+`*kursiv*` statt `_kursiv_`):
+
+```bash
+python3 scripts/notion_export.py output/2026-08-12-renewals.md --strip-h1
+```
+
+Die Ausgabe geht als `content` an `mcp__Notion__notion-create-pages`, Parent ist
+die Seite `3ba6f8c1-d67e-8179-84a1-ea4630d1087f`, Titel im Format
+`YYYY-MM-DD — Renewals`. `--strip-h1` entfernt die H1, weil Notion den
+Seitentitel schon als Überschrift zeigt.
+
 ## Datenzugriff
 
 `scripts/hubspot.py` kapselt beides; die Routinen sehen keinen Unterschied.
@@ -63,6 +82,11 @@ mit einem Stacktrace.
 * **Basisabfrage**: `lifecyclestage = 'customer' AND churn_date IS NULL`, genau
   einmal implementiert in `hubspot.active_customers()`. Keine Routine formuliert
   sie neu.
+* **Ausschlussliste** `hubspot.NON_CUSTOMERS`: Companies, die im CRM als Kunde
+  getaggt sind, fachlich aber keine sind (aktuell d.velop). Sie fallen vor jeder
+  MRR-Summe heraus und werden im Block *Datenqualität* mit Begründung
+  ausgewiesen. Jeder Eintrag ist eine Umgehung falscher CRM-Daten und gehört an
+  der Quelle korrigiert, nicht dauerhaft in diese Liste.
 * **Kein Zeitfenster in SQL.** Die Fenster entstehen in Python. Filtert man in
   SQL, verschwinden die Kunden mit leerem oder abgelaufenem `contract_end_date`
   aus dem Ergebnis — also ein Drittel der Kundenbasis.
@@ -98,7 +122,7 @@ mit einem Stacktrace.
 
 ## Voraussetzungen außerhalb von Claude Code
 
-Diese vier Punkte begrenzen den Wert der Routinen unabhängig von der
+Diese Punkte begrenzen den Wert der Routinen unabhängig von der
 Implementierung. Die Routine misst sie bei jedem Lauf mit, lösen kann sie sie
 nicht.
 
@@ -106,18 +130,21 @@ nicht.
    idealerweise per HubSpot-Workflow aus `contract_start_date` +
    `contract_duration_months_` automatisch fortschreiben. Block 2 und 3 des
    Briefs sind die Arbeitsliste dafür, Spalte *Fortschreibung* der Vorschlag.
-2. Owner-Zuordnung von **Jan Vollers** (33319925, inaktiv) und **Kinga
-   Chmurczyk** auf aktive Kollegen umhängen. Aktuell laufen 23 der 26 im Brief
-   gelisteten Kunden auf einen inaktiven Owner — der Brief hat für sie keinen
-   Adressaten.
+2. **Erledigt (12.08.2026):** Owner-Zuordnung auf **Bettina Fischer**
+   (109171979, aktiv) umgehängt, sie hat jetzt 61 der aktiven Kunden. Jan
+   Vollers und Kinga Chmurczyk kommen in der aktiven Basis nicht mehr vor.
+   Offen bleiben 8 Kunden ganz ohne `hubspot_owner_id`.
 3. Companies mit `lifecyclestage = 'customer'` **und** gesetztem `churn_date`
    auf einen eigenen Lifecycle-Wert setzen, damit die Basisabfrage nicht
    dauerhaft von einem Zusatzfilter abhängt.
 4. Dubletten bereinigen (igus, JMarquardt Audiovisual, rebuy / reBuy
    reCommerce). Der Brief listet den Verdacht unter *Datenqualität*.
+5. `lifecyclestage` von **d.velop** korrigieren, steht im CRM noch auf
+   `customer`. Bis dahin greift `NON_CUSTOMERS`.
+6. Standard-Kündigungsfrist verbindlich klären. Aktuell drei Monate angenommen,
+   ein Feld dafür existiert in HubSpot nicht.
 
-Punkt 1 und 2 vor dem Bau von Routine 1 erledigen, der Rest kann parallel
-laufen.
+Punkt 1 vor dem Bau von Routine 1 erledigen, der Rest kann parallel laufen.
 
 ## Gemeinsames Modul
 
@@ -138,6 +165,8 @@ laufen.
 | `fmt_eur` / `fmt_date` / `fmt_pct` | deutsche Formatierung |
 | `SUPPORT_PIPELINE = '0'` | harte Konstante für Routine 2 |
 | `NOTICE_PERIOD_MONTHS = 3` | angenommene Kündigungsfrist |
+| `NON_CUSTOMERS` | Ausschlussliste falsch getaggter Companies |
+| `excluded_non_customers()` | die Ausgeschlossenen samt Begründung |
 
 Neue Routinen bauen darauf auf und ergänzen `hubspot.py` statt eigene
 Konvertierungen mitzubringen.
@@ -153,6 +182,7 @@ cs-routinen/
   scripts/
     hubspot.py          # gemeinsamer Zugriff, Konvertierung, Normalisierung
     renewals.py         # Routine 3
+    notion_export.py    # Brief -> Notion-flavored Markdown
   data/                 # MCP-Cache (gitignored), owners.json optional
   output/               # Briefs + Alert-State
 ```
