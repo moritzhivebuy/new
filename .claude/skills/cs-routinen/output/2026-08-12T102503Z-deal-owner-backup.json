@@ -1,0 +1,224 @@
+{
+  "created": "2026-08-12T102503Z",
+  "new_owner_id": "109171979",
+  "new_owner_name": "Bettina Fischer",
+  "note": "Umstellung per MCP; Private-App-Token hat keine Deal-Schreibrechte",
+  "deals": [
+    {
+      "id": "152832215280",
+      "name": "Onboarding: DNS: NET-",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "248437355717",
+      "name": "Onboarding: hmf-germany.com - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "248635313396",
+      "name": "Onboarding: Evangelische Stiftung Neinstedt - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "268805596392",
+      "name": "Onboarding: MediaMarktSaturn - Folgevertrag",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "304803683521",
+      "name": "Onboarding: Peter Kölln - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "309722224866",
+      "name": "Onboarding: DaVita - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "315083952376",
+      "name": "Onboarding: POC: retarus.de - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "320286972146",
+      "name": "Onboarding: Securitas France",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "320388396220",
+      "name": "Onboarding: Securitas Finland - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "320597838049",
+      "name": "Onboarding: BEWITAL Unternehmensgruppe - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "330349382877",
+      "name": "Onboarding: Ruhrmedic - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "360781962449",
+      "name": "Onboarding: Tenowo - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "412790710478",
+      "name": "Onboarding: Pilot: Mosolf - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "413593756893",
+      "name": "Onboarding: HEWI Heinrich Wilke - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "413743365362",
+      "name": "Onboarding: VfL Bochum 1848 - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "444495697121",
+      "name": "Onboarding: NOE-Schaltechnik - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "453388345551",
+      "name": "Onboarding: heo - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "493191795950",
+      "name": "Onboarding: EWF - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "493677321403",
+      "name": "DSC Arminia Bielefeld - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "493692097722",
+      "name": "Onboarding: AcadeMedia Education - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "493753320695",
+      "name": "Onboarding: esz AG calibration & metrology - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "494349742281",
+      "name": "Onboarding: AcadeMedia Education - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "495517041851",
+      "name": "Onboarding: Lürssen Yachts - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "498204626122",
+      "name": "Onboarding: Quantum Systems - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "498857492689",
+      "name": "Onboarding: Lakefields - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "499951111396",
+      "name": "Onboarding: ProtaGene - New Deal",
+      "previous_owner_id": "78552274",
+      "previous_owner_name": "Kinga Chmurczyk"
+    },
+    {
+      "id": "502363061463",
+      "name": "Onboarding: Bosch Global - New Deal",
+      "previous_owner_id": "78552274",
+      "previous_owner_name": "Kinga Chmurczyk"
+    },
+    {
+      "id": "503791190224",
+      "name": "Oberlinhaus - Upsell CoreAgents AI",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "504546011377",
+      "name": "Onboarding: Kistler Instrumente AG - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "504786407638",
+      "name": "Onboarding: Hamberger Flooring- New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "508645872843",
+      "name": "Onboarding: EUROFUNK I Creating safety by technology. - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "510147263685",
+      "name": "Onboarding: A.S. Création Tapeten - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "510214491361",
+      "name": "Onboarding: esz ag calibration & metrology  - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "514886625523",
+      "name": "Onboarding: net group Beteiligungen - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "514894268603",
+      "name": "Onboarding: Wera Werkzeuge - New Deal",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    },
+    {
+      "id": "485132425413",
+      "name": "OUNDA GmbH: Fosa Export Freitextbestellungen",
+      "previous_owner_id": "33319925",
+      "previous_owner_name": "Jan Vollers"
+    }
+  ]
+}
