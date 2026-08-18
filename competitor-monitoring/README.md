@@ -20,23 +20,64 @@ Wiederholbarer Scan von Wettbewerber-Websites, Vergleich mit hivebuy.com,
 
 ## Voraussetzung: Netzwerkzugang
 
-Der Crawler braucht ausgehenden Netzwerkzugang auf die Zieldomains. In einer
-Claude-Code-Umgebung mit restriktiver Netzwerk-Policy schlagen alle Abrufe mit
-`EGRESS_BLOCKED` fehl. Dann in den Environment-Einstellungen die Netzwerk-Policy
-so setzen, dass mindestens diese Hosts erreichbar sind:
+Der Crawler braucht ausgehenden Netzwerkzugang auf die Zieldomains. Ist die
+Netzwerk-Policy der Umgebung zu eng, scheitern alle Abrufe mit `EGRESS_BLOCKED`.
 
+Einstellen auf [claude.ai/code](https://claude.ai/code): über dem Eingabefeld auf
+das Cloud-Symbol mit dem Umgebungsnamen klicken, in der Liste über die Umgebung
+fahren, das Zahnrad rechts anklicken. Im Dialog **Network access** auf **Custom**
+stellen, die Domains unten in **Allowed domains** einfügen und
+**Also include default list of common package managers** aktivieren, sonst
+schlägt `npm install` fehl und es gibt keine Screenshots.
+
+Die Routine läuft in der Umgebung `env_01UiCq4EiQcZ6ZrjiHm5mR52` ("Hubspot"),
+diese Umgebung muss die Freigabe bekommen.
+
+```text
+hivebuy.com
+*.hivebuy.com
+simplesystem.com
+*.simplesystem.com
+onventis.com
+*.onventis.com
+precoro.com
+*.precoro.com
+procure.ai
+*.procure.ai
+lio.ai
+*.lio.ai
+asklio.ai
+*.asklio.ai
+omr.com
+*.omr.com
+capterra.com
+*.capterra.com
+capterra.com.de
+*.capterra.com.de
+trusted.de
+*.trusted.de
+g2.com
+*.g2.com
+gartner.com
+*.gartner.com
+getapp.com
+*.getapp.com
+api.notion.com
 ```
-hivebuy.com, www.hivebuy.com,
-simplesystem.com, company.simplesystem.com,
-onventis.com, precoro.com, procure.ai, lio.ai,
-omr.com, capterra.com.de, trusted.de, g2.com, gartner.com,
-api.notion.com          (nur für den Screenshot-Upload nach Notion)
-```
 
-Doku: https://code.claude.com/docs/en/claude-code-on-the-web
+Ein führendes `*.` deckt nur Subdomains ab, deshalb steht jede Domain zweimal in
+der Liste. `api.notion.com` wird für den Screenshot-Upload nach Notion gebraucht:
+der läuft über das Netzwerk der Session. Der normale Notion- und Slack-Zugriff
+über die Connectors läuft daran vorbei und braucht keine Freigabe.
 
-Ohne Egress bleibt nur suchmaschinenbasiertes Monitoring: deutlich gröber,
-keine Diffs, keine Preis- oder Title-Verfolgung.
+Änderungen greifen erst für **neu gestartete** Sessions, eine laufende Session
+behält ihre Policy. Der nächste Routine-Lauf zieht sie also automatisch, für einen
+sofortigen Test eine neue Session öffnen und dort `/competitor-scan` aufrufen.
+
+Doku: https://code.claude.com/docs/en/cloud-environments#access-levels
+
+Ohne Freigabe bleibt nur suchmaschinenbasiertes Monitoring: deutlich gröber,
+keine Diffs, keine Screenshots, keine Preis- oder Title-Verfolgung.
 
 ## Playwright (empfohlen)
 
@@ -148,28 +189,15 @@ der Lauf bricht selbst ab, wenn der letzte Bericht jünger als 10 Tage ist. Wer
 den Takt ändern will, ändert entweder die Cron-Expression der Routine oder die
 Sperre in `PROMPT.md`.
 
-### ⚠️ Offen: Connectors für die Routine
+### Connectors der Routine
 
-Die Routine hat **keine gespeicherten MCP-Connectors**. Der Versuch, sie mit Notion
-und Slack anzulegen, wurde serverseitig abgelehnt: der `connectors`-Parameter ist
-für diese Organisation nicht freigegeben, und nachträglich lässt sich das über die
-verfügbaren Werkzeuge nicht setzen (`update_trigger` kennt kein Connector-Feld).
+Erledigt: die Routine hat Notion, Slack und HubSpot angebunden (Stand 2026-08-18,
+bestätigt über `mcp_connections` der Routine). Damit kann der geplante Lauf die
+Notion-Seite anlegen und die Slack-DM schicken.
 
-Folge: die gefeuerten Sessions haben keinen Notion- und keinen Slack-Zugriff.
-Bericht, Snapshots und Screenshots landen im Repo, die Kurzfassung in Notion, die
-Slack-DM und der Screenshot-Upload bleiben aus.
-
-Zwei Wege, das zu lösen, beide nur von einem Menschen gehbar:
-
-1. In den Routines-Einstellungen auf claude.ai die Routine
-   "Wettbewerbs-Monitoring Hivebuy (14-tägig)" öffnen und Notion sowie Slack als
-   Connectors ergänzen.
-2. Oder die Routine dort neu anlegen, mit dem Prompt aus `PROMPT.md` und den
-   Connectors Notion und Slack. Dann die bestehende Routine löschen.
-
-Bis dahin bleibt der Bericht im Repo die verlässliche Ausgabe.
-
-Alternativ ad hoc in einer laufenden Session: `/competitor-scan`.
+Hinweis für später: Connectors lassen sich nur von einem Menschen in den
+Routines-Einstellungen auf claude.ai setzen. Der `connectors`-Parameter beim
+Anlegen per Werkzeug ist für diese Organisation nicht freigegeben.
 
 ## Grenzen, bewusst so gesetzt
 
@@ -184,7 +212,6 @@ Alternativ ad hoc in einer laufenden Session: `/competitor-scan`.
 | Lücke | Was es bräuchte |
 |---|---|
 | Netzwerkzugang auf die Zieldomains | Netzwerk-Policy der Environment anpassen. Ohne das: keine Crawls, keine Diffs, keine Screenshots |
-| Notion- und Slack-Zugriff der Routine | Connectors in den Routines-Einstellungen auf claude.ai ergänzen, siehe oben |
 | Traffic, Keyword-Rankings, Backlinks der Wettbewerber | Semrush- oder Ahrefs-API-Key. Ohne das bleibt Sichtbarkeit qualitativ |
 | Eigene Ranking- und Klickdaten als Gegenstück | Search Console anbinden. Der Google-Ads-Connector in diesem Setup ist unautorisiert und liefert nichts |
 | Review-Zeitreihen (OMR, Capterra, G2, Gartner) | Diese Portale blocken Crawler oft. Erst nach dem ersten echten Lauf beurteilbar, notfalls manuell pflegen |
