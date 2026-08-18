@@ -32,6 +32,23 @@
         "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
         "/wp-json/",
         "\\?"
+      ],
+      "shots": [
+        {
+          "name": "home-vollseite",
+          "url": "https://www.hivebuy.com/en/",
+          "fullPage": true
+        },
+        {
+          "name": "home-hero",
+          "url": "https://www.hivebuy.com/en/",
+          "selector": "h1"
+        },
+        {
+          "name": "preise-vollseite",
+          "url": "https://www.hivebuy.com/en/preise-hivebuy",
+          "fullPage": true
+        }
       ]
     },
     {
@@ -64,6 +81,28 @@
       "excludePatterns": [
         "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
         "\\?"
+      ],
+      "shots": [
+        {
+          "name": "home-vollseite",
+          "url": "https://simplesystem.com/de/",
+          "fullPage": true
+        },
+        {
+          "name": "home-hero",
+          "url": "https://simplesystem.com/de/",
+          "selector": "h1"
+        },
+        {
+          "name": "preise-artikel",
+          "url": "https://simplesystem.com/magazin/preise-bei-simple-system",
+          "fullPage": true
+        },
+        {
+          "name": "preis-tabelle",
+          "url": "https://simplesystem.com/magazin/preise-bei-simple-system",
+          "selector": "table"
+        }
       ]
     },
     {
@@ -89,6 +128,18 @@
       "excludePatterns": [
         "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
         "\\?"
+      ],
+      "shots": [
+        {
+          "name": "home-vollseite",
+          "url": "https://www.onventis.com/de/",
+          "fullPage": true
+        },
+        {
+          "name": "home-hero",
+          "url": "https://www.onventis.com/de/",
+          "selector": "h1"
+        }
       ]
     },
     {
@@ -114,6 +165,23 @@
         "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
         "\\?",
         "/blog/page/"
+      ],
+      "shots": [
+        {
+          "name": "home-vollseite",
+          "url": "https://precoro.com/",
+          "fullPage": true
+        },
+        {
+          "name": "preise-vollseite",
+          "url": "https://precoro.com/pricing",
+          "fullPage": true
+        },
+        {
+          "name": "preis-tabelle",
+          "url": "https://precoro.com/pricing",
+          "selector": "text=/per user|pro Nutzer/i"
+        }
       ]
     },
     {
@@ -143,6 +211,18 @@
       "excludePatterns": [
         "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
         "\\?"
+      ],
+      "shots": [
+        {
+          "name": "home-vollseite",
+          "url": "https://www.procure.ai/",
+          "fullPage": true
+        },
+        {
+          "name": "plattform-vollseite",
+          "url": "https://www.procure.ai/platform",
+          "fullPage": true
+        }
       ]
     },
     {
@@ -170,7 +250,20 @@
       "excludePatterns": [
         "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
         "\\?"
+      ],
+      "shots": [
+        {
+          "name": "home-vollseite",
+          "url": "https://www.lio.ai/",
+          "fullPage": true
+        },
+        {
+          "name": "home-hero",
+          "url": "https://www.lio.ai/",
+          "selector": "h1"
+        }
       ]
     }
-  ]
+  ],
+  "$shots_hinweis": "shots: benannte Screenshots pro Site. Ohne 'selector' wird die ganze Seite aufgenommen, mit 'selector' nur dieser Ausschnitt. Erlaubt sind CSS-Selektoren und Playwright-Selektoren wie text=Preise oder text=/regex/i. hideSelectors blendet vor der Aufnahme Elemente aus, etwa Cookie-Banner. Selektoren gegen fremde Seiten sind nicht verifizierbar und können brechen: der Snapshot vermerkt dann einen Fehler zu diesem Shot."
 }

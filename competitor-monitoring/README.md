@@ -10,7 +10,9 @@ Wiederholbarer Scan von Wettbewerber-Websites, Vergleich mit hivebuy.com,
 | Seiten einer Domain systematisch erfassen (Sitemap + Link-Crawl) | ✅ Skript vorhanden |
 | Pro Seite Title, Meta, H1/H2, Wortzahl, Schema.org, hreflang, Preisnennungen, Text-Hash | ✅ |
 | Änderungen zwischen zwei Läufen als Diff (neu / entfernt / geändert) | ✅ |
-| Screenshots der Kernseiten | ✅ (`--screenshots`, benötigt Playwright) |
+| Screenshots: ganze Seiten und einzelne Ausschnitte per Selektor | ✅ getestet, benötigt Playwright |
+| Screenshots in Notion ablegen | ⚠️ implementiert, Upload braucht erreichbares `api.notion.com` |
+| robots.txt auswerten und gesperrte Pfade auslassen | ✅ |
 | Bewertung und Vergleich mit Hivebuy, Handlungsempfehlungen | ✅ durch Claude, Basis sind die Snapshots |
 | Presse, Finanzierung, Reviews, Vergleichsartikel | ✅ per Websuche |
 | Traffic-, Keyword- und Backlink-Zahlen der Wettbewerber | ❌ nur mit Semrush/Ahrefs-API (nicht angebunden) |
@@ -26,8 +28,9 @@ so setzen, dass mindestens diese Hosts erreichbar sind:
 ```
 hivebuy.com, www.hivebuy.com,
 simplesystem.com, company.simplesystem.com,
-onventis.com, precoro.com,
-omr.com, capterra.com.de, trusted.de, g2.com
+onventis.com, precoro.com, procure.ai, lio.ai,
+omr.com, capterra.com.de, trusted.de, g2.com, gartner.com,
+api.notion.com          (nur für den Screenshot-Upload nach Notion)
 ```
 
 Doku: https://code.claude.com/docs/en/claude-code-on-the-web
@@ -42,11 +45,48 @@ Einige Zielseiten (u. a. hivebuy.com selbst) blocken Nicht-Browser-User-Agents
 kommt durch, außerdem wird JS-gerendertes Markup erfasst.
 
 ```bash
-npm install playwright        # Chromium liegt in Claude-Code-Umgebungen bereits unter /opt/pw-browsers
+npm install        # installiert playwright, Chromium liegt bereits unter /opt/pw-browsers
 ```
 
 Ist `playwright` nicht installiert, fällt der Crawler automatisch auf `fetch()`
 mit Browser-User-Agent zurück und protokolliert das im Snapshot (`fetchMode`).
+Dann gibt es allerdings keine Screenshots.
+
+Passt die Chromium-Build-Nummer von Playwright nicht zu der in der Umgebung
+vorhandenen (kommt vor, weil beide unabhängig aktualisiert werden), sucht der
+Crawler die vorhandene Binary selbst unter `$PLAYWRIGHT_BROWSERS_PATH` und
+protokolliert, welche er nutzt. Über `PLAYWRIGHT_CHROMIUM_PATH` lässt sich ein
+Pfad erzwingen.
+
+## Screenshots
+
+Pro Site definiert `shots` in `competitors.json`, was aufgenommen wird:
+
+```json
+{ "name": "preis-tabelle", "url": "https://…/preise", "selector": "table" }
+```
+
+- ohne `selector`: ganze Seite, mit `selector`: nur dieser Ausschnitt
+- erlaubt sind CSS-Selektoren und Playwright-Selektoren wie `text=Preise` oder
+  `text=/pro Nutzer/i`
+- `hideSelectors` blendet vor der Aufnahme Elemente aus, etwa Cookie-Banner
+- ohne `shots` wird von jeder `keyPage` die ganze Seite aufgenommen
+
+Ablage: `snapshots/<site>/screenshots/<datum>/<name>.png`, dazu ein Eintrag pro
+Shot im Snapshot-JSON. Abschalten mit `--no-screenshots`.
+
+Selektoren gegen fremde Seiten sind nicht dauerhaft verlässlich, ein Redesign
+bricht sie. Ein fehlgeschlagener Shot ist im Snapshot als `error` vermerkt und
+stoppt den Lauf nicht. Die aktuell hinterlegten Ausschnitts-Selektoren
+(`table`, `h1`, Text-Anker) sind ungetestet, weil in dieser Umgebung kein
+Netzwerkzugang bestand: beim ersten echten Lauf prüfen und nachziehen.
+
+## robots.txt
+
+Der Crawler lädt robots.txt pro Origin, wertet die Blöcke für `*` aus und ruft
+gesperrte Pfade nicht ab. Übersprungene URLs stehen als `robotsSkipped` im
+Snapshot, die erkannten Regeln unter `robots`. Crawl-Pause: 700 ms, anpassbar
+über `--delay-ms`.
 
 ## Nutzung
 
@@ -110,12 +150,16 @@ Sperre in `PROMPT.md`.
 
 ### ⚠️ Offen: Connectors für die Routine
 
-Die Routine wurde ohne gespeicherte MCP-Connectors angelegt, weil diese Umgebung
-keine Connector-Grants weitergeben darf. Die gefeuerten Sessions haben damit
-**keinen Notion- und keinen Slack-Zugriff**: Bericht und Snapshots landen im Repo,
-die Kurzfassung in Notion und die Slack-DM bleiben aus.
+Die Routine hat **keine gespeicherten MCP-Connectors**. Der Versuch, sie mit Notion
+und Slack anzulegen, wurde serverseitig abgelehnt: der `connectors`-Parameter ist
+für diese Organisation nicht freigegeben, und nachträglich lässt sich das über die
+verfügbaren Werkzeuge nicht setzen (`update_trigger` kennt kein Connector-Feld).
 
-Zwei Wege, das zu lösen:
+Folge: die gefeuerten Sessions haben keinen Notion- und keinen Slack-Zugriff.
+Bericht, Snapshots und Screenshots landen im Repo, die Kurzfassung in Notion, die
+Slack-DM und der Screenshot-Upload bleiben aus.
+
+Zwei Wege, das zu lösen, beide nur von einem Menschen gehbar:
 
 1. In den Routines-Einstellungen auf claude.ai die Routine
    "Wettbewerbs-Monitoring Hivebuy (14-tägig)" öffnen und Notion sowie Slack als
@@ -130,7 +174,20 @@ Alternativ ad hoc in einer laufenden Session: `/competitor-scan`.
 ## Grenzen, bewusst so gesetzt
 
 - Nur öffentlich zugängliche Seiten, keine Logins, keine Umgehung von
-  Zugangsbeschränkungen, moderate Crawl-Rate.
+  Zugangsbeschränkungen, moderate Crawl-Rate, robots.txt wird respektiert.
 - Kein Abruf von Preisen, die nur nach Kontaktaufnahme sichtbar sind.
 - Zahlen aus Marketingtexten der Wettbewerber werden als Behauptung zitiert,
   nicht als Fakt.
+
+## Was noch fehlt
+
+| Lücke | Was es bräuchte |
+|---|---|
+| Netzwerkzugang auf die Zieldomains | Netzwerk-Policy der Environment anpassen. Ohne das: keine Crawls, keine Diffs, keine Screenshots |
+| Notion- und Slack-Zugriff der Routine | Connectors in den Routines-Einstellungen auf claude.ai ergänzen, siehe oben |
+| Traffic, Keyword-Rankings, Backlinks der Wettbewerber | Semrush- oder Ahrefs-API-Key. Ohne das bleibt Sichtbarkeit qualitativ |
+| Eigene Ranking- und Klickdaten als Gegenstück | Search Console anbinden. Der Google-Ads-Connector in diesem Setup ist unautorisiert und liefert nichts |
+| Review-Zeitreihen (OMR, Capterra, G2, Gartner) | Diese Portale blocken Crawler oft. Erst nach dem ersten echten Lauf beurteilbar, notfalls manuell pflegen |
+| Vertriebssicht: gegen wen wird verloren und warum | HubSpot ist angebunden, Deal- und Verlustgründe ließen sich pro Lauf gegen die Website-Signale stellen. Bisher nicht Teil des Scans |
+| Wettbewerber-Besuche auf hivebuy.com | Leadfeeder ist angebunden und könnte zeigen, welche Wettbewerber die eigene Seite ansehen. Bisher nicht Teil des Scans |
+| Repo-Größe über die Zeit | Snapshots und PNGs wachsen pro Lauf. Nach etwa einem Jahr aufräumen oder ältere Läufe ausdünnen |

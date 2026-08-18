@@ -21,7 +21,9 @@ ohne Slack. Der Scan läuft 14-tägig, der Trigger wöchentlich.
 1. `competitor-monitoring/competitors.json` lesen. Für jede Site darin
    (alle Wettbewerber plus `hivebuy` selbst):
    `node competitor-monitoring/scripts/crawl.mjs --site <id> --max-pages 150`
-   Das schreibt `competitor-monitoring/snapshots/<id>/<YYYY-MM-DD>.json`.
+   Das schreibt `competitor-monitoring/snapshots/<id>/<YYYY-MM-DD>.json` und die
+   Screenshots nach `snapshots/<id>/screenshots/<YYYY-MM-DD>/`. Fehlt `playwright`,
+   vorher `npm install` ausführen, sonst gibt es keine Screenshots.
    Scheitern alle Abrufe mit `EGRESS_BLOCKED`, dann ist die Netzwerk-Policy der
    Umgebung zu restriktiv: notiere das im Bericht als Datenlücke, arbeite für
    diesen Lauf nur mit Websuche weiter und weise in der Slack-Nachricht darauf hin.
@@ -42,6 +44,16 @@ ohne Slack. Der Scan läuft 14-tägig, der Trigger wöchentlich.
      (`page_id` 3c06f8c1-d67e-810c-a8ed-d264c4139505), Titel
      "Wettbewerbs-Monitoring <YYYY-MM-DD>". Inhalt: Kurzfassung, Tabelle der
      Signale, Handlungsempfehlungen, Link auf den Bericht im Repo.
+   - **Screenshots in Notion:** Für jeden Screenshot, der eine Änderung zeigt
+     (geänderte Preisseite, neues Hero, neue Landingpage): `create-file-upload`
+     mit dem Dateinamen aufrufen, die PNG per `multipart/form-data` an die
+     zurückgegebene `upload_url` posten (Feldname `file`, alle `upload_headers`
+     mitsenden), dann `create-attachment` mit `source_file_id` und das
+     `markdown_source` in die Notion-Seite einbauen. Ein bis zwei Bilder pro
+     Wettbewerber, nicht alles hochladen.
+     Fällt der Upload aus, weil `api.notion.com` nicht erreichbar ist: Screenshots
+     sind ohnehin im Repo committet, dann in der Notion-Seite auf die Dateipfade
+     im Branch verlinken und den fehlgeschlagenen Upload dort vermerken.
    - **Slack:** DM an Moritz Lienert (`U071B33N4LQ`), maximal 10 Zeilen: pro
      Wettbewerber die relevanteste Änderung, dann der Notion-Link.
    Ohne relevante Veränderungen: nur committen, keine Nachricht, keine Notion-Seite.
@@ -62,3 +74,8 @@ ohne Slack. Der Scan läuft 14-tägig, der Trigger wöchentlich.
   Widerspruch benennen, nicht durch Auswahl auflösen.
 - Rechtliches: nur öffentlich zugängliche Seiten abrufen, keine Logins, keine
   Umgehung von Zugangsbeschränkungen, moderate Crawl-Rate (Default 700 ms Pause).
+  Der Crawler wertet robots.txt aus und überspringt gesperrte Pfade, das Feld
+  `robotsSkipped` im Snapshot zeigt, was ausgelassen wurde. Diese Prüfung nicht
+  deaktivieren.
+- Screenshots sind Belege, keine Deko: nur aufnehmen und in Notion legen, wo sie
+  eine Aussage im Bericht stützen.

@@ -1,0 +1,12 @@
+{
+  "name": "hivebuy-competitor-monitoring",
+  "private": true,
+  "description": "Skripte für das Wettbewerbs-Monitoring (Crawl, Snapshot, Diff, Screenshots)",
+  "scripts": {
+    "crawl": "node competitor-monitoring/scripts/crawl.mjs",
+    "diff": "node competitor-monitoring/scripts/diff.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.62.1"
+  }
+}
