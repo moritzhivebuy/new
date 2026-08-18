@@ -1,0 +1,63 @@
+{
+  "$comment": "Registry für das Wettbewerbs-Monitoring. Ein Eintrag pro Domain. 'role' unterscheidet die eigene Seite von Wettbewerbern.",
+  "sites": [
+    {
+      "id": "hivebuy",
+      "role": "self",
+      "name": "Hivebuy",
+      "hosts": ["hivebuy.com", "www.hivebuy.com"],
+      "bases": ["https://www.hivebuy.com/en/", "https://www.hivebuy.com/blog/"],
+      "sitemaps": ["https://www.hivebuy.com/sitemap.xml"],
+      "keyPages": {
+        "home": "https://www.hivebuy.com/en/",
+        "pricing": "https://www.hivebuy.com/en/preise-hivebuy",
+        "product": "https://hivebuy.com/en/product",
+        "integrations": "https://www.hivebuy.com/en/integrations",
+        "references": "https://www.hivebuy.com/en/kundenreferenzen"
+      },
+      "reviewProfiles": [
+        "https://omr.com/en/reviews/product/hivebuy",
+        "https://www.capterra.com.de/software/1027395/hivebuy",
+        "https://trusted.de/hivebuy"
+      ],
+      "excludePatterns": ["\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$", "/wp-json/", "\\?"]
+    },
+    {
+      "id": "simplesystem",
+      "role": "competitor",
+      "name": "simple system",
+      "hosts": ["simplesystem.com", "www.simplesystem.com", "company.simplesystem.com", "en.company.simplesystem.com"],
+      "bases": ["https://simplesystem.com/de/", "https://simplesystem.com/magazin/", "https://company.simplesystem.com/"],
+      "sitemaps": ["https://simplesystem.com/sitemap.xml", "https://company.simplesystem.com/sitemap.xml"],
+      "keyPages": {
+        "home": "https://simplesystem.com/de/",
+        "pricing": "https://simplesystem.com/magazin/preise-bei-simple-system",
+        "magazine": "https://simplesystem.com/magazin/"
+      },
+      "reviewProfiles": ["https://omr.com/en/reviews/product/simple-system"],
+      "excludePatterns": ["\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$", "\\?"]
+    },
+    {
+      "id": "onventis",
+      "role": "competitor",
+      "name": "Onventis",
+      "hosts": ["onventis.com", "www.onventis.com", "onventis.de", "www.onventis.de"],
+      "bases": ["https://www.onventis.com/de/"],
+      "sitemaps": ["https://www.onventis.com/sitemap_index.xml"],
+      "keyPages": { "home": "https://www.onventis.com/de/" },
+      "reviewProfiles": [],
+      "excludePatterns": ["\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$", "\\?"]
+    },
+    {
+      "id": "precoro",
+      "role": "competitor",
+      "name": "Precoro",
+      "hosts": ["precoro.com", "www.precoro.com"],
+      "bases": ["https://precoro.com/"],
+      "sitemaps": ["https://precoro.com/sitemap.xml"],
+      "keyPages": { "home": "https://precoro.com/", "pricing": "https://precoro.com/pricing" },
+      "reviewProfiles": [],
+      "excludePatterns": ["\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$", "\\?", "/blog/page/"]
+    }
+  ]
+}
