@@ -1,7 +1,7 @@
 # Baseline: simple system vs. Hivebuy
 
 **Datum:** 2026-08-18
-**Erfasste Sites:** simplesystem.com, hivebuy.com
+**Erfasste Sites:** simplesystem.com, hivebuy.com, dazu Kurzprofile procure.ai und lio.ai
 **Datenbasis:** ⚠️ Ausschließlich Websuche und öffentliche Drittquellen. **Kein direkter
 Seitenabruf**, weil die Netzwerk-Policy dieser Umgebung ausgehende Verbindungen
 blockt (`EGRESS_BLOCKED` für simplesystem.com, hivebuy.com und omr.com). Damit
@@ -87,6 +87,42 @@ Die SEO-Strukturfixes (hreflang, `/de/`, Slugs) sind hier nicht wiederholt, sie 
 | Traffic-, Keyword- und Backlink-Zahlen beider Seiten | Keine Semrush/Ahrefs-Anbindung | API-Key hinterlegen oder Daten manuell exportieren |
 | OMR-/Capterra-Reviewstände als Zeitreihe | Kein Abruf der Profile möglich | Review-Profile sind in `competitors.json` hinterlegt und werden mit Egress mitgecrawlt |
 
+## 7. Neu ins Monitoring aufgenommen: Procure Ai und Lio
+
+Beide sind KI-nativ und treffen damit genau die Dimension, in der Hivebuy gegen
+simple system aktuell vorne liegt. Der KI-Vorsprung gilt also gegen simple system,
+nicht gegen den Gesamtmarkt.
+
+### Procure Ai (procure.ai)
+
+| Signal | Beobachtung | Quelle |
+|---|---|---|
+| Positionierung | Europäischer Anbieter einer "AI-native Procurement Automation Platform" | [procure.ai/platform](https://www.procure.ai/platform) |
+| Bausteine | Unified Analytics, Autonomous Operations, Guided Operations, Generative Intake | [procure.ai/platform](https://www.procure.ai/platform) |
+| Funktionsversprechen | Spend- und Lieferantendaten systemübergreifend vereinheitlichen, Intake verbessern, Sparpotenziale in der Spend-Analytics finden, taktische Sourcing-Events und Verhandlungen autonom ausführen | [procure.ai/platform](https://www.procure.ai/platform) |
+| Zielgruppe | Enterprise, nicht Mittelstand | [Gartner Peer Insights](https://www.gartner.com/reviews/product/procure-ai) |
+| Pricing | Subskription nach Unternehmensgröße, Modulen und Use Cases bzw. Agenten, keine öffentlichen Preise | [Capterra](https://www.capterra.com/p/10016095/Procure-Ai/), [GetApp](https://www.getapp.com/operations-management-software/a/procure-ai/) |
+| Relevanz für Hivebuy | ⚠️ Mittel. Segment liegt über Hivebuys Kernzielgruppe, die Sprache ("autonome Beschaffung", "Generative Intake") prägt aber die Erwartung, an der Hivebuy gemessen wird | |
+
+### Lio, vormals askLio (lio.ai)
+
+| Signal | Beobachtung | Quelle |
+|---|---|---|
+| Positionierung | "AI-powered procurement workforce", ausdrücklich keine Assistenzfunktion, sondern virtuelle Belegschaft, die den Beschaffungsprozess eigenständig abwickelt, gesteuert über Agent Operating Procedures | [Beschaffung aktuell](https://beschaffung-aktuell.industrie.de/artikel/asklio-sammelt-30-mio-usd-ein-und-heisst-jetzt-lio/), [Y Combinator](https://www.ycombinator.com/companies/lio) |
+| Agenten | Guided Buying, Invoice Agent, Order Confirmation, Supplier Onboarding, Negotiation Agent, Contract Negotiation Agent, Approvals Agent | [Y Combinator](https://www.ycombinator.com/companies/lio) |
+| Finanzierung | 30 Mio. USD Series A (in EUR mit 25,7 Mio. berichtet), München, Umbenennung von askLio zu Lio | [Beschaffung aktuell](https://beschaffung-aktuell.industrie.de/artikel/asklio-sammelt-30-mio-usd-ein-und-heisst-jetzt-lio/), [Munich Startup](https://www.munich-startup.de/en/117802/lio-raises-25-million-euros/), [Yahoo Finanzen](https://de.finance.yahoo.com/nachrichten/m%C3%BCnchner-startup-lio-technologies-sichert-133000786.html) |
+| Kunden | über 100 Unternehmen, genannt u. a. Munich Re, Brose, Dormakaba, TÜV Süd, Rehau | [Y Combinator](https://www.ycombinator.com/companies/lio) |
+| Technik | Integration in bestehende P2P- und ERP-Systeme, ISO 27001, DSGVO, Microsoft-Partner, Hosting auf Azure Europe | [Y Combinator](https://www.ycombinator.com/companies/lio) |
+| Marktargument | Gegenüberstellung von über 180 Mrd. USD Personalkosten im Einkauf zu rund 10 Mrd. USD Softwarekosten, daraus abgeleitet der Anspruch, Arbeit statt Software zu verkaufen | [Beschaffung aktuell](https://beschaffung-aktuell.industrie.de/artikel/asklio-sammelt-30-mio-usd-ein-und-heisst-jetzt-lio/) |
+| Relevanz für Hivebuy | 🔴 Hoch. Deutschsprachig, agentenbasiert, gut finanziert, sichtbare Industriereferenzen. Der direkteste Wettbewerber um die KI-Erzählung, und die Referenzliste wirkt im Mittelstandsgespräch |
+
+**Konsequenz für Empfehlung 4:** Die KI-Landingpage bleibt richtig, aber das Framing
+"wir haben KI" trägt gegen Lio nicht. Tragfähig ist die Kombination, die Lio und
+Procure Ai nicht bedienen: KI-Agenten **plus** vollständiger P2P-Prozess inklusive
+Rechnung und Vertrag **plus** Einführung in Stunden statt Wochen, für Unternehmen
+ohne eigenes Procurement-Team. Diese drei Punkte gehören zusammen auf eine Seite,
+mit Beleg statt Behauptung.
+
 ## Quellen
 
 - [simple system Startseite (DE)](https://www.simplesystem.com/de/)
@@ -107,3 +143,10 @@ Die SEO-Strukturfixes (hreflang, `/de/`, Slugs) sind hier nicht wiederholt, sie 
 - [Softwareabc24: Hivebuy Bewertungen und Preise](https://www.softwareabc24.de/einkauf-und-beschaffung-software/hivebuy)
 - [Leipziger Zeitung: Wie Hivebuy den Einkauf im Mittelstand revolutioniert](https://www.l-iz.de/wirtschaft/2026/01/hivebuy-einkaufssoftware-beschaffungsprozesse-einfach-digitalisieren-646259)
 - [Wirtschaft in Sachsen: Erfahrungen mit Hivebuy](https://www.wirtschaft-in-sachsen.de/de/hivebuy-erfahrungen-was-steckt-hinter-der-beliebten-einkaufssoftware/)
+- [Procure Ai: Agentic Procurement Automation Platform](https://www.procure.ai/platform)
+- [Gartner Peer Insights: Procure Ai](https://www.gartner.com/reviews/product/procure-ai)
+- [Capterra: Procure Ai](https://www.capterra.com/p/10016095/Procure-Ai/)
+- [GetApp: Procure Ai](https://www.getapp.com/operations-management-software/a/procure-ai/)
+- [Beschaffung aktuell: askLio sammelt 30 Mio. USD ein und heißt jetzt Lio](https://beschaffung-aktuell.industrie.de/artikel/asklio-sammelt-30-mio-usd-ein-und-heisst-jetzt-lio/)
+- [Y Combinator: Lio (formerly askLio)](https://www.ycombinator.com/companies/lio)
+- [Munich Startup: Lio raises 25.7 million euros](https://www.munich-startup.de/en/117802/lio-raises-25-million-euros/)

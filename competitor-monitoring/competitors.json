@@ -5,9 +5,17 @@
       "id": "hivebuy",
       "role": "self",
       "name": "Hivebuy",
-      "hosts": ["hivebuy.com", "www.hivebuy.com"],
-      "bases": ["https://www.hivebuy.com/en/", "https://www.hivebuy.com/blog/"],
-      "sitemaps": ["https://www.hivebuy.com/sitemap.xml"],
+      "hosts": [
+        "hivebuy.com",
+        "www.hivebuy.com"
+      ],
+      "bases": [
+        "https://www.hivebuy.com/en/",
+        "https://www.hivebuy.com/blog/"
+      ],
+      "sitemaps": [
+        "https://www.hivebuy.com/sitemap.xml"
+      ],
       "keyPages": {
         "home": "https://www.hivebuy.com/en/",
         "pricing": "https://www.hivebuy.com/en/preise-hivebuy",
@@ -20,44 +28,149 @@
         "https://www.capterra.com.de/software/1027395/hivebuy",
         "https://trusted.de/hivebuy"
       ],
-      "excludePatterns": ["\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$", "/wp-json/", "\\?"]
+      "excludePatterns": [
+        "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
+        "/wp-json/",
+        "\\?"
+      ]
     },
     {
       "id": "simplesystem",
       "role": "competitor",
       "name": "simple system",
-      "hosts": ["simplesystem.com", "www.simplesystem.com", "company.simplesystem.com", "en.company.simplesystem.com"],
-      "bases": ["https://simplesystem.com/de/", "https://simplesystem.com/magazin/", "https://company.simplesystem.com/"],
-      "sitemaps": ["https://simplesystem.com/sitemap.xml", "https://company.simplesystem.com/sitemap.xml"],
+      "hosts": [
+        "simplesystem.com",
+        "www.simplesystem.com",
+        "company.simplesystem.com",
+        "en.company.simplesystem.com"
+      ],
+      "bases": [
+        "https://simplesystem.com/de/",
+        "https://simplesystem.com/magazin/",
+        "https://company.simplesystem.com/"
+      ],
+      "sitemaps": [
+        "https://simplesystem.com/sitemap.xml",
+        "https://company.simplesystem.com/sitemap.xml"
+      ],
       "keyPages": {
         "home": "https://simplesystem.com/de/",
         "pricing": "https://simplesystem.com/magazin/preise-bei-simple-system",
         "magazine": "https://simplesystem.com/magazin/"
       },
-      "reviewProfiles": ["https://omr.com/en/reviews/product/simple-system"],
-      "excludePatterns": ["\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$", "\\?"]
+      "reviewProfiles": [
+        "https://omr.com/en/reviews/product/simple-system"
+      ],
+      "excludePatterns": [
+        "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
+        "\\?"
+      ]
     },
     {
       "id": "onventis",
       "role": "competitor",
       "name": "Onventis",
-      "hosts": ["onventis.com", "www.onventis.com", "onventis.de", "www.onventis.de"],
-      "bases": ["https://www.onventis.com/de/"],
-      "sitemaps": ["https://www.onventis.com/sitemap_index.xml"],
-      "keyPages": { "home": "https://www.onventis.com/de/" },
+      "hosts": [
+        "onventis.com",
+        "www.onventis.com",
+        "onventis.de",
+        "www.onventis.de"
+      ],
+      "bases": [
+        "https://www.onventis.com/de/"
+      ],
+      "sitemaps": [
+        "https://www.onventis.com/sitemap_index.xml"
+      ],
+      "keyPages": {
+        "home": "https://www.onventis.com/de/"
+      },
       "reviewProfiles": [],
-      "excludePatterns": ["\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$", "\\?"]
+      "excludePatterns": [
+        "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
+        "\\?"
+      ]
     },
     {
       "id": "precoro",
       "role": "competitor",
       "name": "Precoro",
-      "hosts": ["precoro.com", "www.precoro.com"],
-      "bases": ["https://precoro.com/"],
-      "sitemaps": ["https://precoro.com/sitemap.xml"],
-      "keyPages": { "home": "https://precoro.com/", "pricing": "https://precoro.com/pricing" },
+      "hosts": [
+        "precoro.com",
+        "www.precoro.com"
+      ],
+      "bases": [
+        "https://precoro.com/"
+      ],
+      "sitemaps": [
+        "https://precoro.com/sitemap.xml"
+      ],
+      "keyPages": {
+        "home": "https://precoro.com/",
+        "pricing": "https://precoro.com/pricing"
+      },
       "reviewProfiles": [],
-      "excludePatterns": ["\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$", "\\?", "/blog/page/"]
+      "excludePatterns": [
+        "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
+        "\\?",
+        "/blog/page/"
+      ]
+    },
+    {
+      "id": "procureai",
+      "role": "competitor",
+      "name": "Procure Ai",
+      "hosts": [
+        "procure.ai",
+        "www.procure.ai"
+      ],
+      "bases": [
+        "https://www.procure.ai/",
+        "https://www.procure.ai/platform"
+      ],
+      "sitemaps": [
+        "https://www.procure.ai/sitemap.xml"
+      ],
+      "keyPages": {
+        "home": "https://www.procure.ai/",
+        "platform": "https://www.procure.ai/platform"
+      },
+      "reviewProfiles": [
+        "https://www.g2.com/products/procure-ai-procureai/reviews",
+        "https://www.capterra.com/p/10016095/Procure-Ai/",
+        "https://www.gartner.com/reviews/product/procure-ai"
+      ],
+      "excludePatterns": [
+        "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
+        "\\?"
+      ]
+    },
+    {
+      "id": "lio",
+      "role": "competitor",
+      "name": "Lio (vormals askLio)",
+      "hosts": [
+        "lio.ai",
+        "www.lio.ai",
+        "asklio.ai",
+        "www.asklio.ai"
+      ],
+      "bases": [
+        "https://www.lio.ai/"
+      ],
+      "sitemaps": [
+        "https://www.lio.ai/sitemap.xml"
+      ],
+      "keyPages": {
+        "home": "https://www.lio.ai/"
+      },
+      "reviewProfiles": [
+        "https://www.ycombinator.com/companies/lio"
+      ],
+      "excludePatterns": [
+        "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
+        "\\?"
+      ]
     }
   ]
 }

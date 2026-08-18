@@ -89,10 +89,41 @@ die zur Site gehören), `bases` (Startpunkte), `sitemaps`, `keyPages`
 
 ## Regelmäßiger Lauf
 
-Der Zeitplan läuft als Routine (serverseitig, überlebt das Session-Ende) mit dem
-Prompt aus `PROMPT.md`. Empfehlung: 14-tägig, Montagvormittag. Wöchentlich
-lohnt sich nur, wenn die Wettbewerber ihre Seiten wirklich häufig ändern, sonst
-sind die Berichte leer.
+Eingerichtet als Routine (serverseitig, überlebt das Session-Ende) mit dem Prompt
+aus `PROMPT.md`:
+
+| Einstellung | Wert |
+|---|---|
+| Trigger | wöchentlich montags 06:07 UTC (08:07 MESZ, 07:07 MEZ) |
+| Effektiver Takt | 14-tägig, über die 10-Tage-Sperre in `PROMPT.md` |
+| Beobachtet | simple system, Onventis, Precoro, Procure Ai, Lio, dazu hivebuy.com als Referenz |
+| Bericht | `reports/<datum>-monitoring.md`, committet und gepusht |
+| Notion | Unterseite unter [Wettbewerbs-Monitoring](https://app.notion.com/p/3c06f8c1d67e810ca8edd264c4139505) |
+| Slack | DM an Moritz Lienert (`U071B33N4LQ`), nur bei echten Änderungen |
+
+Routine-ID: `trig_01PQsJdUUmm6U7LXvqG3bkB8`, erster Lauf 2026-08-24 06:07 UTC.
+
+Cron kennt kein "jede zweite Woche". Deshalb feuert der Trigger wöchentlich und
+der Lauf bricht selbst ab, wenn der letzte Bericht jünger als 10 Tage ist. Wer
+den Takt ändern will, ändert entweder die Cron-Expression der Routine oder die
+Sperre in `PROMPT.md`.
+
+### ⚠️ Offen: Connectors für die Routine
+
+Die Routine wurde ohne gespeicherte MCP-Connectors angelegt, weil diese Umgebung
+keine Connector-Grants weitergeben darf. Die gefeuerten Sessions haben damit
+**keinen Notion- und keinen Slack-Zugriff**: Bericht und Snapshots landen im Repo,
+die Kurzfassung in Notion und die Slack-DM bleiben aus.
+
+Zwei Wege, das zu lösen:
+
+1. In den Routines-Einstellungen auf claude.ai die Routine
+   "Wettbewerbs-Monitoring Hivebuy (14-tägig)" öffnen und Notion sowie Slack als
+   Connectors ergänzen.
+2. Oder die Routine dort neu anlegen, mit dem Prompt aus `PROMPT.md` und den
+   Connectors Notion und Slack. Dann die bestehende Routine löschen.
+
+Bis dahin bleibt der Bericht im Repo die verlässliche Ausgabe.
 
 Alternativ ad hoc in einer laufenden Session: `/competitor-scan`.
 

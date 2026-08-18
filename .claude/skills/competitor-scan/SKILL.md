@@ -1,6 +1,6 @@
 ---
 name: competitor-scan
-description: Wettbewerbs-Scan für Hivebuy ausführen - Wettbewerber-Websites crawlen, mit dem letzten Snapshot vergleichen, Bericht gegen hivebuy.com schreiben. Nutzen, wenn nach Wettbewerbsanalyse, Competitor-Monitoring, Änderungen bei simple system / Onventis / Precoro oder einem Vergleich mit hivebuy.com gefragt wird.
+description: Wettbewerbs-Scan für Hivebuy ausführen - Wettbewerber-Websites crawlen, mit dem letzten Snapshot vergleichen, Bericht gegen hivebuy.com schreiben. Nutzen, wenn nach Wettbewerbsanalyse, Competitor-Monitoring, Änderungen bei simple system / Onventis / Precoro / Procure Ai / Lio oder einem Vergleich mit hivebuy.com gefragt wird.
 ---
 
 # Wettbewerbs-Scan
