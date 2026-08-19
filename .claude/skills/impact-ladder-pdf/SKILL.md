@@ -143,7 +143,7 @@ Datei: `output/<kunde-slug>-impact-ladder.json`. Alle Felder sind Pflicht, auße
   "naechster_schritt": {
     "text": "Gerne zeigen wir Ihnen die genannten Punkte live in Ihrer eigenen Umgebung.",
     "cta": "Folgetermin vereinbaren",
-    "link": "https://hivebuy.com/demo"
+    "link": "https://www.hivebuy.com/kontakt"
   }
 }
 ```
@@ -153,6 +153,7 @@ Regeln:
 - Immer genau 4 Ladder-Einträge in fester Reihenfolge (1 bis 4).
 - `zahlenbasis` und `annahmen` dürfen leer sein (`[]`), dann werden die Abschnitte im PDF ausgeblendet.
 - Kunde-Slug für Dateinamen: Kleinbuchstaben, Umlaute transkribieren (ä zu ae), Sonderzeichen zu Bindestrich.
+- CTA-Link ist immer `https://www.hivebuy.com/kontakt`, nicht die Demo-Seite (Vorgabe Moritz, 19.08.2026).
 
 ---
 
