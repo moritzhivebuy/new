@@ -179,9 +179,14 @@
           "fullPage": true
         },
         {
-          "name": "preis-tabelle",
-          "url": "https://precoro.com/pricing",
-          "selector": "text=/per user|pro Nutzer/i"
+          "name": "preise-de-vollseite",
+          "url": "https://precoro.com/de/pricing",
+          "fullPage": true
+        },
+        {
+          "name": "home-de-vollseite",
+          "url": "https://precoro.com/de/",
+          "fullPage": true
         }
       ]
     },
