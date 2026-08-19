@@ -1,5 +1,13 @@
 # Wettbewerbs-Monitoring: 2026-08-18
 
+> **Nachtrag 2026-08-19: Snapshots dieses Laufs sind verloren.** Der Lauf wurde
+> nie committet; wiederhergestellt werden konnten nur dieser Bericht,
+> `competitors.json` und `crawl.mjs`. Die unten zitierten Felder aus
+> `snapshots/<id>/2026-08-18.json` existieren im Repo nicht mehr und sind damit
+> nicht mehr nachprüfbar. Die Aussagen bleiben als Beobachtung stehen, taugen
+> aber nicht als Vergleichsbasis. Verbindliche Referenz ist der Lauf vom
+> 2026-08-19, dessen Snapshots vollständig im Repo liegen.
+
 **Zeitraum:** Erste vollständige Datenerhebung. Der Lauf vom selben Tag (`2026-08-18-baseline-simplesystem-vs-hivebuy.md`) scheiterte vollständig am Netzwerk-Egress für den Playwright-Browser; dieser Lauf ersetzt ihn mit echten Daten (Ursache siehe Abschnitt 6).
 **Erfasste Sites:** hivebuy (Referenz), simplesystem, onventis, precoro, procureai, lio
 **Datenbasis:** 724 Seiten gecrawlt (150/150/98/150/150/26), 5 Abruffehler, ergänzend Websuche. Keine Screenshots (siehe Abschnitt 6). Fetch-Modus statt Browser-Modus.

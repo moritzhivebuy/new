@@ -12,9 +12,22 @@ weil die Session keinen Vorkontext hat.
 Du führst den regelmäßigen Wettbewerbs-Scan für Hivebuy durch. Repo
 `moritzhivebuy/new`, Branch `claude/competitor-monitoring-hivebuy-h78tmv`.
 
-**Schritt 0, Sperre:** Prüfe `competitor-monitoring/reports/`. Wenn der neueste
-Bericht weniger als 10 Tage alt ist, brich sofort ab, ohne Commit, ohne Notion,
-ohne Slack. Der Scan läuft 14-tägig, der Trigger wöchentlich.
+**Schritt 0, Sperre:** Die Sperre gilt nur für automatische Läufe. Prüfe zuerst,
+wie dieser Lauf gestartet wurde:
+
+- **Manuell gestartet** (ein Mensch hat den Lauf in dieser Sitzung angefordert,
+  "run now" gedrückt oder den Skill `competitor-scan` aufgerufen): Sperre
+  überspringen, sofort mit dem Ablauf weitermachen. Ein Mensch, der den Lauf
+  auslöst, will Ergebnisse, nicht den Hinweis auf die Sperre. Trägt der Bericht
+  von heute schon einen Dateinamen, hänge `-2`, `-3` usw. an
+  (`<YYYY-MM-DD>-monitoring-2.md`), statt den bestehenden zu überschreiben.
+- **Automatisch gestartet** (Scheduler/Cron-Trigger, kein Mensch in der
+  Sitzung): Prüfe `competitor-monitoring/reports/`. Ist der neueste Bericht
+  weniger als 10 Tage alt, brich sofort ab, ohne Commit, ohne Notion, ohne
+  Slack. Der Scan läuft 14-tägig, der Trigger wöchentlich.
+
+Im Zweifel, wenn die Startart nicht eindeutig ist: als automatisch behandeln und
+die Sperre anwenden.
 
 **Ablauf:**
 
@@ -23,10 +36,19 @@ ohne Slack. Der Scan läuft 14-tägig, der Trigger wöchentlich.
    `node competitor-monitoring/scripts/crawl.mjs --site <id> --max-pages 150`
    Das schreibt `competitor-monitoring/snapshots/<id>/<YYYY-MM-DD>.json` und die
    Screenshots nach `snapshots/<id>/screenshots/<YYYY-MM-DD>/`. Fehlt `playwright`,
-   vorher `npm install` ausführen, sonst gibt es keine Screenshots.
-   Scheitern alle Abrufe mit `EGRESS_BLOCKED`, dann ist die Netzwerk-Policy der
-   Umgebung zu restriktiv: notiere das im Bericht als Datenlücke, arbeite für
-   diesen Lauf nur mit Websuche weiter und weise in der Slack-Nachricht darauf hin.
+   vorher `npm install --no-fund --no-audit` ausführen, sonst gibt es keine
+   Screenshots.
+   Scheitern alle Abrufe mit `EGRESS_BLOCKED` oder `403` vom Proxy, dann ist die
+   Netzwerk-Policy der Umgebung zu restriktiv: notiere das im Bericht als
+   Datenlücke, arbeite für diesen Lauf nur mit Websuche weiter und weise in der
+   Slack-Nachricht ausdrücklich die gesperrten Hosts aus.
+   Scheitert dagegen nur der Browser (`net::ERR_CONNECTION_RESET` auf allen
+   Hosts, während `curl` dieselben Hosts mit 200 erreicht), ist das **kein**
+   Policy-Problem, sondern der TLS-1.3-Handshake von Chromium am MITM-Proxy.
+   `crawl.mjs` deckelt deshalb TLS auf 1.2 (`--ssl-version-max=tls1.2`), siehe
+   README, Abschnitt "Chromium und der Egress-Proxy". Nicht erneut als
+   Netzwerksperre diagnostizieren und nicht auf `--no-browser` ausweichen, ohne
+   die TLS-Deckelung geprüft zu haben, sonst fehlen wieder alle Screenshots.
 2. Für jede Site mit älterem Snapshot:
    `node competitor-monitoring/scripts/diff.mjs --site <id>`
    Der Änderungsbericht ist die faktische Grundlage, nicht deine Erinnerung.

@@ -43,6 +43,9 @@ const sha = (s) => createHash('sha256').update(s).digest('hex').slice(0, 16);
 
 /* ---------------------------------------------------------------- fetching */
 
+/** Chromium läuft hier als root im Container, ohne Sandbox startet er sonst nicht. */
+const CHROMIUM_ARGS = ['--no-sandbox', '--disable-dev-shm-usage'];
+
 /**
  * Playwright bringt eine eigene Chromium-Build-Nummer mit. Passt die nicht zu dem
  * Chromium, das in der Umgebung liegt, schlägt der Standard-Launch fehl. Dann
@@ -69,7 +72,14 @@ async function makeFetcher(useBrowser) {
     try {
       const { chromium } = await import('playwright');
       const httpsProxy = process.env.HTTPS_PROXY || process.env.https_proxy;
-      const launchOpts = httpsProxy ? { proxy: { server: httpsProxy } } : {};
+      const launchOpts = { args: [...CHROMIUM_ARGS] };
+      if (httpsProxy) {
+        launchOpts.proxy = { server: httpsProxy };
+        // Der MITM-Proxy setzt Chromiums TLS-1.3-Handshake zurück (ERR_CONNECTION_RESET
+        // auf jedem Host, während curl und fetch() über denselben Proxy 200 liefern).
+        // TLS auf 1.2 zu deckeln umgeht das; die Zertifikatsprüfung bleibt aktiv.
+        launchOpts.args.push('--ssl-version-max=tls1.2');
+      }
       let browser;
       try {
         browser = await chromium.launch(launchOpts);
