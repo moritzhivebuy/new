@@ -30,6 +30,7 @@ function args(argv) {
     else if (a === '--delay-ms') out.delayMs = Number(argv[++i]);
     else if (a === '--screenshots') out.screenshots = true;
     else if (a === '--no-screenshots') out.screenshots = false;
+    else if (a === '--no-browser') out.noBrowser = true;
     else if (a === '--out') out.out = argv[++i];
     else if (a === '--config') out.config = argv[++i];
     else if (a === '--date') out.date = argv[++i];
@@ -67,13 +68,15 @@ async function makeFetcher(useBrowser) {
   if (useBrowser !== false) {
     try {
       const { chromium } = await import('playwright');
+      const httpsProxy = process.env.HTTPS_PROXY || process.env.https_proxy;
+      const launchOpts = httpsProxy ? { proxy: { server: httpsProxy } } : {};
       let browser;
       try {
-        browser = await chromium.launch();
+        browser = await chromium.launch(launchOpts);
       } catch (launchErr) {
         const executablePath = await resolveChromiumPath();
         if (!executablePath) throw launchErr;
-        browser = await chromium.launch({ executablePath });
+        browser = await chromium.launch({ ...launchOpts, executablePath });
         process.stderr.write(`[info] Chromium aus der Umgebung genutzt: ${executablePath}\n`);
       }
       const ctx = await browser.newContext({ userAgent: UA, locale: 'de-DE', viewport: { width: 1440, height: 900 } });
@@ -325,7 +328,7 @@ async function robotsForOrigins(fetcher, origins, opts) {
 }
 
 async function crawlSite(site, opts) {
-  const fetcher = await makeFetcher();
+  const fetcher = await makeFetcher(opts.noBrowser ? false : undefined);
   const excludes = (site.excludePatterns ?? []).map((p) => new RegExp(p, 'i'));
   const allowedHost = (h) => site.hosts.some((sh) => h === sh || h.endsWith(`.${sh}`));
   const inScope = (u) => {

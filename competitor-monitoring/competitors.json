@@ -18,7 +18,7 @@
       ],
       "keyPages": {
         "home": "https://www.hivebuy.com/en/",
-        "pricing": "https://www.hivebuy.com/en/preise-hivebuy",
+        "pricing": "https://www.hivebuy.com/en/pricing",
         "product": "https://hivebuy.com/en/product",
         "integrations": "https://www.hivebuy.com/en/integrations",
         "references": "https://www.hivebuy.com/en/kundenreferenzen"
@@ -46,7 +46,7 @@
         },
         {
           "name": "preise-vollseite",
-          "url": "https://www.hivebuy.com/en/preise-hivebuy",
+          "url": "https://www.hivebuy.com/en/pricing",
           "fullPage": true
         }
       ]
@@ -62,7 +62,7 @@
         "en.company.simplesystem.com"
       ],
       "bases": [
-        "https://simplesystem.com/de/",
+        "https://simplesystem.com/",
         "https://simplesystem.com/magazin/",
         "https://company.simplesystem.com/"
       ],
@@ -71,7 +71,7 @@
         "https://company.simplesystem.com/sitemap.xml"
       ],
       "keyPages": {
-        "home": "https://simplesystem.com/de/",
+        "home": "https://simplesystem.com/",
         "pricing": "https://simplesystem.com/magazin/preise-bei-simple-system",
         "magazine": "https://simplesystem.com/magazin/"
       },
@@ -85,12 +85,12 @@
       "shots": [
         {
           "name": "home-vollseite",
-          "url": "https://simplesystem.com/de/",
+          "url": "https://simplesystem.com/",
           "fullPage": true
         },
         {
           "name": "home-hero",
-          "url": "https://simplesystem.com/de/",
+          "url": "https://simplesystem.com/",
           "selector": "h1"
         },
         {
@@ -116,13 +116,13 @@
         "www.onventis.de"
       ],
       "bases": [
-        "https://www.onventis.com/de/"
+        "https://www.onventis.com/"
       ],
       "sitemaps": [
-        "https://www.onventis.com/sitemap_index.xml"
+        "https://www.onventis.de/wpms-sitemap.xml"
       ],
       "keyPages": {
-        "home": "https://www.onventis.com/de/"
+        "home": "https://www.onventis.com/"
       },
       "reviewProfiles": [],
       "excludePatterns": [
@@ -132,12 +132,12 @@
       "shots": [
         {
           "name": "home-vollseite",
-          "url": "https://www.onventis.com/de/",
+          "url": "https://www.onventis.com/",
           "fullPage": true
         },
         {
           "name": "home-hero",
-          "url": "https://www.onventis.com/de/",
+          "url": "https://www.onventis.com/",
           "selector": "h1"
         }
       ]
