@@ -31,6 +31,7 @@ function args(argv) {
     else if (a === '--screenshots') out.screenshots = true;
     else if (a === '--no-screenshots') out.screenshots = false;
     else if (a === '--no-browser') out.noBrowser = true;
+    else if (a === '--shots-only') out.shotsOnly = true;
     else if (a === '--out') out.out = argv[++i];
     else if (a === '--config') out.config = argv[++i];
     else if (a === '--date') out.date = argv[++i];
@@ -380,7 +381,9 @@ async function crawlSite(site, opts) {
   const pages = [];
   const errors = [];
 
-  while (queue.length && pages.length < opts.maxPages) {
+  // --shots-only: nur die Screenshots neu aufnehmen, etwa nach einem korrigierten
+  // Selektor. Der Seiten-Crawl entfällt, der bestehende Snapshot bleibt erhalten.
+  while (!opts.shotsOnly && queue.length && pages.length < opts.maxPages) {
     const url = queue.shift();
     if (visited.has(url)) continue;
     visited.add(url);
@@ -471,6 +474,15 @@ for (const site of targets) {
   console.error(`\n=== ${site.name} (${site.id}) ===`);
   const snapshot = await crawlSite(site, { ...opts, outDir, date });
   const file = resolve(outDir, `${date}.json`);
-  await writeFile(file, `${JSON.stringify(snapshot, null, 2)}\n`);
-  console.error(`-> ${snapshot.pageCount} Seiten, ${snapshot.errors.length} Fehler, geschrieben nach ${file}`);
+  if (opts.shotsOnly) {
+    // Nur das Screenshot-Feld ersetzen, die gecrawlten Seiten des Laufs behalten.
+    const prev = JSON.parse(await readFile(file, 'utf8'));
+    prev.screenshots = snapshot.screenshots;
+    await writeFile(file, `${JSON.stringify(prev, null, 2)}\n`);
+    const failed = snapshot.screenshots.filter((s) => s.error).length;
+    console.error(`-> ${snapshot.screenshots.length - failed} Shots erneuert, ${failed} fehlerhaft, ${file} aktualisiert`);
+  } else {
+    await writeFile(file, `${JSON.stringify(snapshot, null, 2)}\n`);
+    console.error(`-> ${snapshot.pageCount} Seiten, ${snapshot.errors.length} Fehler, geschrieben nach ${file}`);
+  }
 }

@@ -72,7 +72,8 @@
       ],
       "keyPages": {
         "home": "https://simplesystem.com/",
-        "pricing": "https://simplesystem.com/magazin/preise-bei-simple-system",
+        "pricing": "https://simplesystem.com/preise",
+        "pricingArticle": "https://simplesystem.com/magazin/preise-bei-simple-system",
         "magazine": "https://simplesystem.com/magazin/"
       },
       "reviewProfiles": [
@@ -99,9 +100,9 @@
           "fullPage": true
         },
         {
-          "name": "preis-tabelle",
-          "url": "https://simplesystem.com/magazin/preise-bei-simple-system",
-          "selector": "table"
+          "name": "preise-vollseite",
+          "url": "https://simplesystem.com/preise",
+          "fullPage": true
         }
       ]
     },
