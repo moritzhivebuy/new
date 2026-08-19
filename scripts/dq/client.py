@@ -169,6 +169,28 @@ class HubSpotClient:
     def create_property(self, definition: dict, object_type: str = "contacts") -> dict:
         return self._request("POST", f"/crm/v3/properties/{object_type}", definition)
 
+    def sync_property_options(self, definition: dict,
+                              object_type: str = "contacts") -> list[str]:
+        """Fehlende Enum-Werte an einer bestehenden Property nachziehen.
+
+        Vorhandene Werte bleiben unberuehrt -- ein PATCH mit reduzierter
+        Optionsliste wuerde bereits gesetzte Werte unbrauchbar machen.
+        Gibt die neu hinzugefuegten Werte zurueck.
+        """
+        name = definition["name"]
+        current = self._request("GET", f"/crm/v3/properties/{object_type}/{name}")
+        have = {o["value"] for o in current.get("options", [])}
+        wanted = definition.get("options", [])
+        missing = [o for o in wanted if o["value"] not in have]
+        if not missing:
+            return []
+        merged = {o["value"]: o for o in current.get("options", [])}
+        for o in wanted:                      # Labels/Reihenfolge mit angleichen
+            merged[o["value"]] = o
+        self._request("PATCH", f"/crm/v3/properties/{object_type}/{name}",
+                      {"options": list(merged.values())})
+        return [o["value"] for o in missing]
+
     def batch_update(self, updates: list[dict], object_type: str = "contacts") -> list[dict]:
         """updates: [{"id": "123", "properties": {...}}, ...]"""
         done = []

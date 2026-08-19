@@ -5,7 +5,9 @@ Kein Netzwerk, keine Abhaengigkeiten. Exit-Code 1 bei Fehlern.
 """
 from __future__ import annotations
 
-from .rules import (HIGH, LOW, MEDIUM, Convention, classify_mailbox, clean_name_field,
+from .rules import (HIGH, LOW, MEDIUM, Convention, classify_contact_type,
+                    TYP_FUNKTION, TYP_PERSON, TYP_SAMMEL,
+                    classify_mailbox, clean_name_field, starts_with_given,
                     is_given,
                     clean_salutation, derive_channel, derive_country_language, derive_name,
                     detect_swap, is_ghost, learn_conventions, proper_case, to_e164)
@@ -39,6 +41,79 @@ for addr in ["kristin.schmelzer@neinstedt.de", "hardy.kuebler@hypovbg.at",
              "ringo.lischke@ipb-halle.de", "yannick.lueckert@pima.de",
              "ghalia.saidavilindberg@academedia.se", "m.priller-passreiter@hamberger.de"]:
     check(f"Person nicht als Rolle geflaggt: {addr}", classify_mailbox(addr).is_role, False)
+
+
+# ===========================================================================
+# Phase 02 -- dreistufiger Kontakttyp
+# ===========================================================================
+# Persoenliche Adresse bleibt Person.
+for addr, fn, ln in [("kristin.schmelzer@neinstedt.de", "Kristin", "Schmelzer"),
+                     ("oliver.brandt@spitalfmi.ch", "Oliver", "Brandt")]:
+    check(f"Person: {addr}", classify_contact_type(addr, fn, ln).kontakt_typ, TYP_PERSON)
+
+# Sammeladresse MIT echtem Ansprechpartner -> personalisierbar.
+SAMMEL = [("info@lupberger.de", "Armin", "Lupberger"),
+          ("zentrale@minimax.de", "Viktor", "Oberst"),
+          ("info.de@geze.com", "Johanna", "Noack"),
+          ("info@optik-geuter.de", "Dieter", "Born"),
+          ("info@truma.com", "Johannes", "Drollmann"),
+          ("einkauf@brandgeister.de", "Jörg", "Führer"),
+          ("einkauf@inonet.com", "Stefan", "Voppichler")]
+for addr, fn, ln in SAMMEL:
+    v = classify_contact_type(addr, fn, ln)
+    check(f"Sammelpostfach: {addr}", v.kontakt_typ, TYP_SAMMEL)
+    check(f"Sammelpostfach HIGH: {addr}", v.confidence, HIGH)
+
+# Sammeladresse OHNE Ansprechpartner -> Funktionspostfach.
+for addr in ["bestellung@reichelt.de", "eprocurement@bti.de", "info@eib-office.de"]:
+    check(f"Funktionspostfach ohne Name: {addr}",
+          classify_contact_type(addr, "", "").kontakt_typ, TYP_FUNKTION)
+
+# Organisationsname in den Namensfeldern ist KEIN Ansprechpartner.
+ORGA = [("einkauf@dns-net.de", "Team", "Einkauf Verteiler"),
+        ("info@bpunkt5.de", "B", "5"),
+        ("buchhaltung@vfl-bochum.de", "Rechnungsadresse", "VfL Bochum"),
+        ("sales03@metalropemesh.com", "Hebei", "MSD Metals"),
+        ("info@meilenstein-augenoptik.de", "Meilenstein", "Augenoptik")]
+for addr, fn, ln in ORGA:
+    check(f"Orga statt Person: {addr} ({fn} {ln})",
+          classify_contact_type(addr, fn, ln).kontakt_typ, TYP_FUNKTION)
+
+# Rechtsform im Namensfeld ebenfalls nicht als Ansprechpartner zaehlen.
+check("GmbH im Namensfeld -> Funktionspostfach",
+      classify_contact_type("info@x.de", "Muster", "Handel GmbH").kontakt_typ, TYP_FUNKTION)
+# Nur Vorname ohne Nachname reicht nicht.
+check("halber Name -> Funktionspostfach",
+      classify_contact_type("info@x.de", "Armin", "").kontakt_typ, TYP_FUNKTION)
+
+# Titel davor und Zweitvorname dahinter duerfen den Personencheck nicht kippen.
+check("Titel + Doppelvorname", starts_with_given("Dr. Jens-Uwe"), True)
+check("Vorname + Zweitvorname", starts_with_given("Mohamed Wahied"), True)
+check("Organisationsbegriff", starts_with_given("Team"), False)
+check("Rechnungsadresse", starts_with_given("Rechnungsadresse"), False)
+check("Firmenname als Vorname", starts_with_given("Ounda"), False)
+# is_given bleibt streng, damit Swaps nicht kippen.
+check("is_given bleibt streng bei Doppelnachnamen", is_given("Straib-Lorenz"), False)
+
+# Echte Personen hinter Sammeladressen, vorher faelschlich Funktionspostfach.
+for addr, fn, ln in [("mail@brillen-mitte.berlin", "Yvette", "Köhler"),
+                     ("info@innolytics.de", "Dr. Jens-Uwe", "Meyer"),
+                     ("info@swr.de", "Thore", "Streit"),
+                     ("info@klinikum-oldenburg.de", "Jule", "Falke"),
+                     ("info@tigriestradingbv.nl", "Mohamed Wahied", "Ishak"),
+                     ("service@playbay.eu", "Lubos", "Hornicek"),
+                     ("info@steidinger-optik.de", "Mitja", "Stutz")]:
+    check(f"Person hinter Sammeladresse: {addr}",
+          classify_contact_type(addr, fn, ln).kontakt_typ, TYP_SAMMEL)
+
+# Diese bleiben korrekt Funktionspostfach.
+for addr, fn, ln in [("kundenservice@conrad.de", "Conrad", "Electronic SE"),
+                     ("info@ruppert-augenoptik.de", "Ounda", "Ruppert"),
+                     ("support@aircall.io", "Echo", "Test"),
+                     ("einkauf@dns-net.de", "Team", "Einkauf Verteiler"),
+                     ("rechnung@ewf.de", "Rechnungen", "Ewf")]:
+    check(f"bleibt Funktionspostfach: {addr} ({fn} {ln})",
+          classify_contact_type(addr, fn, ln).kontakt_typ, TYP_FUNKTION)
 
 
 # ===========================================================================

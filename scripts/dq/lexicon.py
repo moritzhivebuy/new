@@ -119,7 +119,22 @@ weronika werner wesley wibke wieland wiktor wilfried wilhelm wilhelmine will wil
 willy wim winfried wladimir wolf wolfgang wolfram xavier xenia yannick yannic yannis
 yasemin yasin yasmin yavuz yildiz ylva yoana yolanda yordan yuliya yulia yunus yusuf
 yvonne zafer zana zdenko zehra zeljko zeynep zita zoe zoltan zora zoran zuzana
+
+alessio alston amelia aurelio dinu elian emilio fiete finja frieda greta hanne
+hennes henny ilja janne jano jaron jolie jonte josie jule juna juri
+kian levi lias lieke loris luan lubos mads maila mareike marlon mattes
+merit mitja nikolas noel oke pepe piet quirin raik samu sepp shkelzen
+thalia thore tilda till tjark tomke vico wiebke wilko yannik yven yvette
+zoey
+baerbel bjoern boerge doerte doerthe goeran goetz gruen joerg jorg joergen joern juerg
+kaethe kaete koert maerit moenika noerbert roediger ruediger schoen soenke soeren thoerge
+toerge oeznur oezlem oezkan oemer oender oezcan uenal uemit gueler guelay guel guelten
+gueltekin muege sueleyman huelya nuerten seher soelen tuelay tuerkan uelkue
 """.split())
+
+# Die Liste wird gegen fold() abgefragt: Umlaute liegen als ae/oe/ue vor
+# ("Jörg" -> "joerg"). Wer Namen ergaenzt, muss diese Schreibweise nutzen,
+# sonst greift der Treffer nicht.
 
 
 # ---------------------------------------------------------------------------

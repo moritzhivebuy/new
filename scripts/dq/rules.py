@@ -50,6 +50,22 @@ def is_given(token: str) -> bool:
     return len(parts) > 1 and all(p in GIVEN for p in parts)
 
 
+def starts_with_given(value: str) -> bool:
+    """Beginnt das Feld mit einem bekannten Vornamen?
+
+    Weicher als `is_given`, weil hier eine andere Frage beantwortet wird:
+    nicht "ist dieses Token genau ein Vorname" (dort muss die Regel streng
+    sein, sonst entstehen falsche Swaps), sondern "sieht das nach einem
+    Menschen aus". Titel davor und Zweitvornamen dahinter sind erlaubt:
+    "Dr. Jens-Uwe" und "Mohamed Wahied" zaehlen beide.
+    """
+    if not value:
+        return False
+    tokens = [t for t in re.split(r"[\s]+", value.strip()) if t
+              and fold(t).rstrip(".") not in TITLES]
+    return bool(tokens) and is_given(tokens[0])
+
+
 def split_local(email: str) -> list[str]:
     """Local Part in Namenstokens zerlegen. Plus-Adressierung und
     angehaengte Ziffern fallen weg."""
@@ -144,6 +160,67 @@ def classify_mailbox(email: str) -> MailboxVerdict:
                 return MailboxVerdict(True, MEDIUM, f"kryptisches Kuerzel: {t}")
 
     return MailboxVerdict(False, HIGH, "kein Rollenmuster erkennbar")
+
+
+# Kontakttypen (Werte der Property kontakt_typ).
+TYP_PERSON = "Person"
+TYP_FUNKTION = "Funktionspostfach"
+TYP_SAMMEL = "Sammelpostfach"
+
+
+@dataclass
+class TypeVerdict:
+    kontakt_typ: str
+    confidence: str
+    reason: str
+
+
+def classify_contact_type(email: str, firstname: str = "",
+                          lastname: str = "") -> TypeVerdict:
+    """Kontakttyp aus Adresse UND vorhandenem Namen bestimmen.
+
+    Drei Stufen, weil die Adresse allein zu wenig sagt:
+
+    - `Person`           -- persoenliche Adresse
+    - `Funktionspostfach`-- Sammeladresse ohne bekannten Ansprechpartner
+    - `Sammelpostfach`   -- Sammeladresse MIT Ansprechpartner
+                            ("info@lupberger.de" / Armin Lupberger)
+
+    Die dritte Stufe ist der Unterschied zwischen "nicht ansprechbar" und
+    "ansprechbar, aber die Adresse ist geteilt". Fuer Mailings zaehlt das:
+    ein Sammelpostfach mit Ansprechpartner laesst sich personalisieren.
+
+    Ein Name gilt nur dann als Ansprechpartner, wenn der Vorname im Lexikon
+    steht und in den Namensfeldern keine Rollen- oder Firmenbegriffe stehen.
+    Sonst landen "Team Einkauf Verteiler" oder "Hebei MSD Metals" als
+    angebliche Personen in der ansprechbaren Gruppe.
+    """
+    box = classify_mailbox(email)
+    if not box.is_role:
+        return TypeVerdict(TYP_PERSON, box.confidence, box.reason)
+
+    fn, ln = (firstname or "").strip(), (lastname or "").strip()
+    if not (fn and ln):
+        return TypeVerdict(TYP_FUNKTION, box.confidence,
+                           f"{box.reason}; kein Ansprechpartner hinterlegt")
+
+    name_tokens = {fold(t) for t in re.split(r"[\s\-]+", f"{fn} {ln}") if t}
+    role_hit = sorted(name_tokens & ROLE_TOKENS)
+    if role_hit:
+        return TypeVerdict(TYP_FUNKTION, box.confidence,
+                           f"{box.reason}; Namensfeld enthaelt Rollenbegriff: "
+                           f"{', '.join(role_hit)}")
+    if _COMPANY.search(f"{fn} {ln}"):
+        return TypeVerdict(TYP_FUNKTION, box.confidence,
+                           f"{box.reason}; Namensfeld enthaelt Firmenbezeichnung")
+    if not starts_with_given(fn):
+        return TypeVerdict(TYP_FUNKTION, MEDIUM,
+                           f"{box.reason}; '{fn}' ist kein bekannter Vorname "
+                           f"-- vermutlich Organisation statt Person")
+
+    return TypeVerdict(TYP_SAMMEL, box.confidence,
+                       f"{box.reason}; Ansprechpartner {fn} {ln} hinterlegt "
+                       f"-- personalisierbar")
 
 
 # ---------------------------------------------------------------------------

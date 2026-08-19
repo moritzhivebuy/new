@@ -6,6 +6,7 @@ gegen eine freigegebene CSV.
 """
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass, field
 
 from . import rules
@@ -24,9 +25,13 @@ DQ_PROPERTIES = [
                  {"label": "Unbrauchbar", "value": "unbrauchbar", "displayOrder": 4}]},
     {"name": "kontakt_typ", "label": "Kontakt Typ", "type": "enumeration",
      "fieldType": "select", "groupName": "contactinformation",
-     "description": "Echte Person oder Sammel-/Funktionspostfach.",
+     "description": "Persönliche Adresse, Sammeladresse mit Ansprechpartner, "
+                    "oder Sammeladresse ohne Ansprechpartner.",
      "options": [{"label": "Person", "value": "Person", "displayOrder": 0},
-                 {"label": "Funktionspostfach", "value": "Funktionspostfach", "displayOrder": 1}]},
+                 {"label": "Sammelpostfach mit Ansprechpartner",
+                  "value": "Sammelpostfach", "displayOrder": 1},
+                 {"label": "Funktionspostfach (kein Ansprechpartner)",
+                  "value": "Funktionspostfach", "displayOrder": 2}]},
     {"name": "name_quelle", "label": "Namensquelle", "type": "enumeration",
      "fieldType": "select", "groupName": "contactinformation",
      "description": "Woher Vor- und Nachname stammen. 'manuell' wird von der "
@@ -190,25 +195,37 @@ def phase01_ghosts(client: HubSpotClient) -> PhaseResult:
 # ===========================================================================
 def phase02_mailboxes(client: HubSpotClient) -> PhaseResult:
     r = PhaseResult("02", "Funktionspostfächer trennen")
+    # Bewusst ALLE Kontakte mit E-Mail, nicht nur die noch untaggten: aendert
+    # sich die Einstufungslogik, muessen bereits getaggte neu bewertet werden.
+    # Unveraenderte Einstufungen fallen unten durch die Idempotenzpruefung raus.
     contacts = client.search_all_by_id(
         _props(client),
-        [{"filters": _filters(client, [
-            {"propertyName": "email", "operator": "HAS_PROPERTY"},
-            {"propertyName": "kontakt_typ", "operator": "NOT_HAS_PROPERTY"}])}])
+        [{"filters": [{"propertyName": "email", "operator": "HAS_PROPERTY"}]}])
     r.scanned = len(contacts)
+    counts: Counter = Counter()
     for c in contacts:
         email = _p(c, "email")
-        v = rules.classify_mailbox(email)
-        if not v.is_role:
+        v = rules.classify_contact_type(email, _p(c, "firstname"), _p(c, "lastname"))
+        if v.kontakt_typ == rules.TYP_PERSON:
             continue
+        cur = _p(c, "kontakt_typ")
+        if cur == v.kontakt_typ:
+            continue                      # schon korrekt getaggt, idempotent
+        counts[v.kontakt_typ] += 1
         target = r.changes if v.confidence == HIGH else r.flags
-        target.append(Change(c["id"], "02", "kontakt_typ", _p(c, "kontakt_typ"),
-                             "Funktionspostfach", v.confidence, v.reason, email))
+        target.append(Change(c["id"], "02", "kontakt_typ", cur,
+                             v.kontakt_typ, v.confidence, v.reason, email))
+        # Ein Sammelpostfach mit Ansprechpartner braucht keine Nacharbeit,
+        # ein Funktionspostfach ohne Ansprechpartner ist der Endzustand.
+        status = {rules.TYP_FUNKTION: "funktionspostfach",
+                  rules.TYP_SAMMEL: "ok"}[v.kontakt_typ]
         target.append(Change(c["id"], "02", "dq_status", _p(c, "dq_status"),
-                             "funktionspostfach" if v.confidence == HIGH else "pruefen",
+                             status if v.confidence == HIGH else "pruefen",
                              v.confidence, v.reason, email))
-    r.notes.append(f"{r.auto_count} eindeutige Funktionspostfächer, "
-                   f"{r.review_count} zur Prüfung")
+    r.notes.append(f"{counts[rules.TYP_FUNKTION]} Funktionspostfächer ohne "
+                   f"Ansprechpartner, {counts[rules.TYP_SAMMEL]} Sammelpostfächer "
+                   f"mit Ansprechpartner ({r.auto_count} automatisch, "
+                   f"{r.review_count} zur Prüfung)")
     return r
 
 
@@ -230,8 +247,12 @@ def phase03_derive(client: HubSpotClient,
             continue
         email = _p(c, "email")
 
-        # Funktionspostfaecher bekommen NIE einen Personennamen (Leitplanke 02).
-        if _p(c, "kontakt_typ") == "Funktionspostfach" or rules.classify_mailbox(email).is_role:
+        # Sammel- und Funktionspostfaecher bekommen NIE einen abgeleiteten
+        # Personennamen (Leitplanke 02). Doppelt geprueft: ueber das schon
+        # gesetzte Tag und unabhaengig davon ueber die Adresse selbst, damit
+        # die Regel auch greift, wenn Phase 02 noch nicht gelaufen ist.
+        if _p(c, "kontakt_typ") in (rules.TYP_FUNKTION, rules.TYP_SAMMEL) \
+                or rules.classify_mailbox(email).is_role:
             skipped_role += 1
             continue
 
