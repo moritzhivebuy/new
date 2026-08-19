@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Impact Ladder</title>
+<style>
+  @font-face { font-family: 'IvyOra Display'; src: url('../assets/fonts/IvyOraDisplay-Regular.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'DM Sans'; src: url('../assets/fonts/DMSans-Regular.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'DM Sans'; src: url('../assets/fonts/DMSans-Medium.woff2') format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'DM Sans'; src: url('../assets/fonts/DMSans-Bold.woff2') format('woff2'); font-weight: 700; }
+  :root {
+    --hb-dark: #204540;
+    --hb-teal: #228C7D;
+    --hb-neon: #F1FF45;
+    --hb-offwhite: #FBFBFB;
+    --hb-border: #E3E9E7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--hb-offwhite); }
+  body {
+    font-family: 'DM Sans', Helvetica, Arial, sans-serif;
+    font-size: 10pt;
+    line-height: 1.5;
+    color: var(--hb-dark);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .hero {
+    background: linear-gradient(135deg, #228C7D 0%, #204540 100%);
+    color: #FFFFFF;
+    padding: 14mm 16mm 12mm 16mm;
+  }
+  .hero img.logo { height: 7mm; margin-bottom: 10mm; }
+  .hero .eyebrow {
+    font-size: 9pt; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--hb-neon); margin-bottom: 3mm;
+  }
+  .hero h1 {
+    font-family: 'IvyOra Display', 'Frank Ruhl Libre', Georgia, serif;
+    font-weight: 400; font-size: 28pt; line-height: 1.15;
+  }
+  .hero .meta { margin-top: 5mm; font-size: 9pt; opacity: 0.85; }
+  .content { padding: 10mm 16mm 6mm 16mm; }
+  h2.section {
+    font-size: 10pt; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--hb-teal);
+    margin: 8mm 0 4mm 0;
+  }
+  .content > h2.section:first-child { margin-top: 0; }
+  .potenzial {
+    display: flex; gap: 4mm; align-items: flex-start;
+    padding: 3mm 0; border-bottom: 1px solid var(--hb-border);
+  }
+  .potenzial:last-of-type { border-bottom: none; }
+  .potenzial .dot {
+    flex: 0 0 auto; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--hb-teal); margin-top: 6px;
+  }
+  .potenzial .titel { font-weight: 700; }
+  .potenzial .beschreibung { font-size: 9.5pt; }
+  .level {
+    background: #FFFFFF; border: 1px solid var(--hb-border);
+    border-left: 3px solid var(--hb-teal); border-radius: 8px;
+    padding: 5mm 6mm; margin-bottom: 4mm;
+    break-inside: avoid; page-break-inside: avoid;
+  }
+  .level-head { display: flex; align-items: center; gap: 4mm; margin-bottom: 3mm; }
+  .level-badge {
+    flex: 0 0 auto; width: 8mm; height: 8mm; border-radius: 50%;
+    background: var(--hb-dark); color: var(--hb-neon);
+    font-weight: 700; font-size: 11pt;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .level h3 {
+    font-family: 'IvyOra Display', 'Frank Ruhl Libre', Georgia, serif;
+    font-weight: 400; font-size: 14pt;
+  }
+  .level ul { list-style: none; margin-bottom: 3mm; }
+  .level ul li {
+    position: relative; padding-left: 5mm; margin-bottom: 1.5mm;
+  }
+  .level ul li::before {
+    content: ""; position: absolute; left: 0; top: 6px;
+    width: 2.2mm; height: 2.2mm; border-radius: 1px;
+    background: var(--hb-teal);
+  }
+  .impact { display: flex; align-items: baseline; gap: 3mm; }
+  .impact .chip {
+    flex: 0 0 auto; background: var(--hb-neon); color: var(--hb-dark);
+    font-weight: 700; font-size: 8pt; letter-spacing: 0.5px;
+    text-transform: uppercase; border-radius: 3px; padding: 1px 6px;
+  }
+  .impact .text { font-weight: 500; }
+  .summary {
+    background: var(--hb-dark); color: #FFFFFF; border-radius: 8px;
+    border-left: 4px solid var(--hb-neon);
+    padding: 6mm 7mm; margin-top: 2mm;
+    break-inside: avoid; page-break-inside: avoid;
+  }
+  .summary p {
+    font-family: 'IvyOra Display', 'Frank Ruhl Libre', Georgia, serif;
+    font-size: 13pt; line-height: 1.4;
+  }
+  .facts { display: flex; gap: 8mm; margin-top: 4mm; }
+  .facts .col { flex: 1; }
+  .facts h4 { font-size: 8.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--hb-teal); margin-bottom: 1.5mm; }
+  .facts ul { list-style: none; font-size: 8.5pt; color: #3E5B56; }
+  .facts ul li { margin-bottom: 1mm; }
+  .next {
+    background: #FFFFFF; border: 1px solid var(--hb-border); border-radius: 8px;
+    padding: 5mm 6mm; margin-top: 6mm;
+    display: flex; align-items: center; justify-content: space-between; gap: 6mm;
+    break-inside: avoid; page-break-inside: avoid;
+  }
+  .next .cta {
+    flex: 0 0 auto; background: var(--hb-neon); color: var(--hb-dark);
+    font-weight: 700; font-size: 10pt; text-decoration: none;
+    border-radius: 6px; padding: 3mm 6mm; white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+  <div class="hero">
+    <img class="logo" src="../assets/logo-hivebuy-white.svg" alt="Hivebuy">
+    <div class="eyebrow">Impact Ladder</div>
+    <h1>Was Hivebuy für {{customer.name}} bewirkt</h1>
+    <div class="meta">Erstellt für {{customer.ansprechpartner}} · Basierend auf unserem Gespräch am {{customer.gespraechsdatum}} · Stand: {{date}}</div>
+  </div>
+  <div class="content">
+    <h2 class="section">Aktuelle Optimierungspotenziale</h2>
+    {{#each potenziale}}
+    <div class="potenzial">
+      <div class="dot"></div>
+      <div>
+        <div class="titel">{{titel}}</div>
+        <div class="beschreibung">{{beschreibung}}</div>
+      </div>
+    </div>
+    {{/each}}
+    <h2 class="section">Impact Ladder: Nutzen auf vier Ebenen</h2>
+    {{#each ladder}}
+    <div class="level">
+      <div class="level-head">
+        <div class="level-badge">{{nummer}}</div>
+        <h3>{{ebene}}</h3>
+      </div>
+      <ul>
+        {{#each bullets}}<li>{{this}}</li>{{/each}}
+      </ul>
+      <div class="impact">
+        <span class="chip">Impact</span>
+        <span class="text">{{impact}}</span>
+      </div>
+    </div>
+    {{/each}}
+    <h2 class="section">Executive Summary</h2>
+    <div class="summary"><p>{{executive_summary}}</p></div>
+    {{#if zahlenbasis.length}}
+    <div class="facts">
+      <div class="col">
+        <h4>Zahlenbasis aus dem Gespräch</h4>
+        <ul>
+          {{#each zahlenbasis}}<li>{{text}} ({{status}})</li>{{/each}}
+        </ul>
+      </div>
+      {{#if annahmen.length}}
+      <div class="col">
+        <h4>Annahmen und offene Punkte</h4>
+        <ul>
+          {{#each annahmen}}<li>{{this}}</li>{{/each}}
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+    {{/if}}
+    <div class="next">
+      <div>{{naechster_schritt.text}}</div>
+      <a class="cta" href="{{naechster_schritt.link}}">{{naechster_schritt.cta}}</a>
+    </div>
+  </div>
+</body>
+</html>

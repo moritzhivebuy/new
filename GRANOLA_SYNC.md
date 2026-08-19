@@ -138,6 +138,20 @@ bestehenden "Hivebuy Sales-Assistent":
 Hivebuy-Teilnehmenden der Notiz abgeleitet (die das Gespräch geführt hat) und der fehlende Owner als
 Prüfpunkt vermerkt.
 
+## Impact Ladder PDF (Teil d2)
+
+Direkt nach dem Antwortvorschlag wird für dasselbe Erstgespräch die Skill `impact-ladder-pdf`
+ausgeführt (`.claude/skills/impact-ladder-pdf/SKILL.md`). Sie erzeugt ein zweiseitiges PDF im
+Hivebuy-Design, das den Nutzen auf vier Ebenen zeigt: Mitarbeitende, Einkauf, Finance, Management.
+
+Ablauf: Inhalte als JSON nach `output/<kunde-slug>-impact-ladder.json` schreiben, dann
+`node scripts/render.js output/<kunde-slug>-impact-ladder.json`. Layout, Farben und Typografie kommen
+ausschließlich aus `template/template.html` und werden nie von Claude verändert. Analyse-Regeln,
+Sprachregeln, Agentennamen und QA-Checkliste stehen in der SKILL.md.
+
+Der Pfad des PDFs wird im Antwortvorschlag am Kontakt als eigener Abschnitt genannt und in der
+Slack-DM mitgeschickt. Das PDF liegt im Container, es wird nicht automatisch an den Kunden gesendet.
+
 ## Slack-Benachrichtigung (Teil e)
 
 Nach dem Anlegen des Antwortvorschlags erhält der Kontakt-Owner eine Slack-DM.
@@ -239,9 +253,13 @@ Ablauf pro Lauf:
 - Aufbau, Tonalität und der Along-Board-Satz mit Platzhalter wie in GRANOLA_SYNC.md.
 - Granola-Notiz hat Vorrang vor den HubSpot-Daten, Widersprüche als Prüfpunkt nennen.
 
+7b. Impact Ladder PDF erzeugen (immer direkt nach dem Antwortvorschlag)
+- Skill impact-ladder-pdf ausführen: JSON schreiben, dann node scripts/render.js.
+- PDF-Pfad im Antwortvorschlag am Kontakt vermerken und in der Slack-DM nennen.
+
 8. Slack-DM an den Kontakt-Owner
 - Owner-E-Mail über /crm/v3/owners/{id}, Slack-User über slack_search_users, Fallback Moritz
-  (U071B33N4LQ). Inhalt wie in GRANOLA_SYNC.md.
+  (U071B33N4LQ). Inhalt wie in GRANOLA_SYNC.md, inklusive PDF-Pfad.
 
 9. Abschluss
 - Keine neuen Granola-Notizen: Lauf still beenden, nichts anlegen, nichts melden.

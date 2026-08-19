@@ -1,0 +1,98 @@
+{
+  "customer": {
+    "name": "Bäcker Görtz",
+    "ansprechpartner": "Oliver Huthert",
+    "gespraechsdatum": "17.08.2026"
+  },
+  "date": "19.08.2026",
+  "potenziale": [
+    {
+      "titel": "C-Artikel-Bestellungen laufen manuell",
+      "beschreibung": "Rund 15 Bereichsleiter senden Links oder E-Mails, der Einkauf bestellt von Hand."
+    },
+    {
+      "titel": "Neue Lieferanten nicht vorab hinterlegbar",
+      "beschreibung": "Für Bedarfe aus unbekannten Onlineshops fehlt ein standardisierter Weg."
+    },
+    {
+      "titel": "Keine Vorkontierung, kein Bestellbezug",
+      "beschreibung": "Kontierung entsteht erst nachträglich, der Rechnungsprüfung fehlt der Bestellbezug."
+    },
+    {
+      "titel": "Pakete finden den Besteller nicht",
+      "beschreibung": "Am zentralen Wareneingang fehlt die Zuordnung zu Besteller und Standort."
+    }
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Zentrale Suche über alle freigegebenen Punch-out-Kataloge (Intake Agent, Recommendation Agent).",
+        "Single Sign-on aus dem Intranet-Portal, Bestellstatus jederzeit sichtbar (Status Agent)."
+      ],
+      "impact": "Die Bereichsleiter bestellen selbständig, ohne Schulungsaufwand."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Freigaben regelbasiert nach Warengruppe, Wert und Kostenstelle, Bestellung löst danach automatisch aus (Approval Agent).",
+        "Bedarfe bei unbekannten Lieferanten kommen als strukturierte Anfrage zur Prüfung (Parsing Agent)."
+      ],
+      "impact": "Der Einkauf wird von geringwertigen Bestellungen frei und behält die Lieferantenkontrolle."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Warengruppe, Kostenstelle und Sachkonto werden bei der Artikelauswahl vorbelegt (Category Agent, Accounting Agent).",
+        "Bestellungen erreichen Business Central mit Bestellnummer, Rechnungen sind automatisch zuordenbar (Invoice Agent)."
+      ],
+      "impact": "Die Rechnungsprüfung für C-Artikel bekommt einen Bestellbezug."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Auswertbare Übersicht über die Beschaffung außerhalb der gelisteten Artikel (Analytics Agent).",
+        "Bestellungen nur über freigegebene Lieferanten und dokumentierte Freigabewege (Compliance Agent)."
+      ],
+      "impact": "Der unstrukturierte Teil der Beschaffung über 260 Filialen wird sichtbar und steuerbar."
+    }
+  ],
+  "executive_summary": "Hivebuy entlastet den Einkauf von der manuellen Abwicklung nicht gelisteter Artikel, schafft über Vorkontierung und Bestellbezug eine saubere Basis für die Rechnungsprüfung und macht die Beschaffung außerhalb der Kasse steuerbar.",
+  "zahlenbasis": [
+    {
+      "text": "260 Filialen",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 15 bestellberechtigte Bereichsleiter",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 2.000 Mitarbeitende, ca. 3.000 inklusive Franchise",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 90 Prozent der Filialbedarfe über die Kasse automatisiert",
+      "status": "belegt"
+    },
+    {
+      "text": "ERP Microsoft Business Central und Navision",
+      "status": "belegt"
+    }
+  ],
+  "annahmen": [
+    "Anzahl der C-Artikel-Bestellungen pro Monat wurde nicht genannt.",
+    "Zeitaufwand pro manueller Bestellung ist nicht quantifiziert.",
+    "Entscheiderkreis über Herrn Huthert hinaus ist offen.",
+    "Name des digitalen Rechnungsworkflows ist nicht bekannt."
+  ],
+  "naechster_schritt": {
+    "text": "Gerne zeigen wir Ihnen die genannten Punkte live in Ihrer eigenen Umgebung, sobald das Thema bei Ihnen ansteht.",
+    "cta": "Folgetermin vereinbaren",
+    "link": "https://hivebuy.com/demo"
+  }
+}
