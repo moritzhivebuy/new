@@ -21,7 +21,7 @@ Nach jedem Kundengespräch entsteht zusätzlich zur Follow-up-E-Mail eine Impact
 ├── assets/
 │   ├── logo-hivebuy-white.svg
 │   └── fonts/
-│       ├── IvyOraDisplay-Regular.woff2   (lizenzpflichtig, siehe Setup-Status)
+│       ├── FrankRuhlLibre-Regular.woff2
 │       ├── DMSans-Regular.woff2
 │       ├── DMSans-Medium.woff2
 │       └── DMSans-Bold.woff2
@@ -184,14 +184,14 @@ Neon-Gelbgrün nie als Textfarbe auf hellem Grund und nie großflächig als Hint
 
 | Element | Font | Größe |
 |---|---|---|
-| Dokumenttitel (H1) | IvyOra Display | 28 pt |
-| Ebenen-Titel (H3) | IvyOra Display | 14 pt |
+| Dokumenttitel (H1) | Frank Ruhl Libre | 28 pt |
+| Ebenen-Titel (H3) | Frank Ruhl Libre | 14 pt |
 | Sektionslabel (H2) | DM Sans Bold, Versalien, 1 px Letter-Spacing | 10 pt |
 | Fließtext, Bullets | DM Sans Regular | 10 pt, Zeilenhöhe 1,5 |
 | Impact-Zeile | DM Sans Medium | 10 pt |
 | Kleintext (Zahlenbasis, Annahmen) | DM Sans Regular | 8,5 pt |
 
-Fallback-Kette: IvyOra Display, dann Frank Ruhl Libre, dann Georgia. DM Sans, dann Helvetica, Arial.
+Fallback-Kette: Frank Ruhl Libre, dann Georgia. DM Sans, dann Helvetica, Arial.
 
 ### Layout
 
@@ -224,7 +224,7 @@ Hinweis Folgeseiten: Der Seitenrand oben ist 0 mm, damit das Kopfband auf Seite 
 - [ ] Alle Zahlen stammen aus den Gesprächsnotizen oder sind als Annahme markiert.
 - [ ] Keine generischen Vorteile, keine Kundenquerverweise, keine namentlichen Lieferanten.
 - [ ] Keine Gedankenstriche im gesamten Text.
-- [ ] IvyOra und DM Sans korrekt gerendert (kein Fallback sichtbar), Logo vorhanden.
+- [ ] Frank Ruhl Libre und DM Sans korrekt gerendert (kein Fallback sichtbar), Logo vorhanden.
 - [ ] Neon-Gelbgrün nur bei Impact-Chips, Nummern-Badges und CTA.
 - [ ] Maximal 2 Seiten, keine Karte über einen Seitenumbruch zerschnitten.
 - [ ] Dateiname: `JJJJ-MM-TT-impact-ladder-<kunde-slug>.pdf`.
@@ -237,15 +237,13 @@ Hinweis Folgeseiten: Der Seitenrand oben ist 0 mm, damit das Kopfband auf Seite 
 | Asset | Status |
 |---|---|
 | `puppeteer`, `handlebars` | installiert, Puppeteer bringt eigenen Chrome mit |
-| `DMSans-Regular/Medium/Bold.woff2` | vorhanden, von Google Fonts (Latin-Subset, deutsche Umlaute enthalten) |
-| `logo-hivebuy-white.svg` | vorhanden, weiße Variante des offiziellen Logos von hivebuy.com |
-| `IvyOraDisplay-Regular.woff2` | **fehlt**, lizenzpflichtige Schrift und nicht frei beziehbar |
+| `FrankRuhlLibre-Regular.woff2` | vorhanden, Serif fuer H1, Ebenen-Titel und Executive Summary |
+| `DMSans-Regular/Medium/Bold.woff2` | vorhanden, Latin-Subset mit deutschen Umlauten |
+| `logo-hivebuy-white.svg` | vorhanden, weisse Variante des offiziellen Logos von hivebuy.com |
 
-Solange IvyOra Display fehlt, greift die im Design dokumentierte Fallback-Kette. Frank Ruhl Libre ist
-dafür als Systemschrift installiert, die Überschriften erscheinen also in einer passenden Serif und
-nicht in einer beliebigen Ersatzschrift. Sobald die IvyOra-Datei unter
-`assets/fonts/IvyOraDisplay-Regular.woff2` liegt, übernimmt sie automatisch, ohne Änderung am
-Template. Der QA-Punkt zu den Schriften ist bis dahin bewusst offen.
+Frank Ruhl Libre ersetzt IvyOra Display als Serif des Dokuments (Entscheidung Moritz, 19.08.2026).
+Die Schrift steht unter der Open Font License und liegt als woff2 im Repo, das PDF ist damit ohne
+weitere Lizenzschritte reproduzierbar.
 
 ## Integration in die Follow-up-Routine
 

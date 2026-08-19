@@ -1,0 +1,98 @@
+{
+  "customer": {
+    "name": "Woolworth",
+    "ansprechpartner": "Martin Berelsmann",
+    "gespraechsdatum": "02.07.2026"
+  },
+  "date": "19.08.2026",
+  "potenziale": [
+    {
+      "titel": "Angebotsvergleiche entstehen in Excel",
+      "beschreibung": "Angebote werden nebeneinandergelegt und von Hand verglichen, das kostet Zeit und ist fehleranfällig."
+    },
+    {
+      "titel": "Filialanforderungen werden manuell bearbeitet",
+      "beschreibung": "Anforderungen laufen über das Ticketsystem und werden von Hand entschieden."
+    },
+    {
+      "titel": "Kein strukturierter Datensatz je Bestellung",
+      "beschreibung": "Auswertungen und Filialmeldungen entstehen per PDF oder durch händisches Zusammensuchen."
+    },
+    {
+      "titel": "Medienbrüche und doppelte Artikeldaten",
+      "beschreibung": "Zwischen Filialkommunikation, Ticketsystem und ERP bricht der Prozess, Artikel existieren mehrfach."
+    }
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Bedarfe werden direkt und strukturiert erfasst, statt als Freitext im Ticketsystem zu landen (Intake Agent).",
+        "Der Bearbeitungsstand ist jederzeit einsehbar, Nachfragen beim Einkauf entfallen (Status Agent)."
+      ],
+      "impact": "Anforderungen kommen vollständig an, ohne Rückfragen und ohne Medienbruch."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Bis zu fünf Angebote hochladen, Positionen und Preise werden automatisch ausgelesen und verglichen (Comparison Agent).",
+        "Freigaben laufen regelbasiert nach Betrag, Warengruppe und Lieferant (Approval Agent)."
+      ],
+      "impact": "Der Angebotsvergleich in Excel entfällt, der Einkauf arbeitet nur noch an Ausnahmen."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Jede Position wird bei der Auswahl automatisch vorkontiert, kein manuelles Buchen auf Sachkonten (Category Agent, Accounting Agent).",
+        "Die Bestellung wird ohne Eintippen im ERP angelegt, Rechnungen sind der Bestellung zuordenbar (Invoice Agent)."
+      ],
+      "impact": "Der Medienbruch zum ERP verschwindet, die Rechnungsprüfung bekommt einen Bestellbezug."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Ein standardisierter Datensatz je Bestellung, unabhängig vom Bestellweg, Auswertungen jederzeit abrufbar (Analytics Agent).",
+        "Bestellungen laufen nur über freigegebene Lieferanten und dokumentierte Freigabewege (Compliance Agent)."
+      ],
+      "impact": "Die Beschaffungsprozesse skalieren mit dem wachsenden Filialnetz, ohne zusätzliche Handarbeit."
+    }
+  ],
+  "executive_summary": "Hivebuy nimmt dem internen Einkauf die manuellen Angebotsvergleiche und die Ticketbearbeitung ab, schafft über automatische Vorkontierung und ERP-Anbindung eine saubere Datenbasis und macht die Beschaffung so skalierbar, wie es das geplante Filialwachstum verlangt.",
+  "zahlenbasis": [
+    {
+      "text": "ca. 14.000 Mitarbeitende",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 1.000 Filialen, weiteres Wachstum geplant",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 80 Prozent Eigenmarke und Fernostware im direkten Einkauf",
+      "status": "belegt"
+    },
+    {
+      "text": "Filialanforderungen laufen über ein Ticketsystem",
+      "status": "belegt"
+    },
+    {
+      "text": "mehrere Hundert bis Tausend Bestellungen pro Monat",
+      "status": "annahme"
+    }
+  ],
+  "annahmen": [
+    "Anzahl der Bestellungen pro Monat wurde nicht genannt.",
+    "ERP und Rechnungssystem wurden nicht benannt.",
+    "Der Entscheider im internen Einkauf ist noch offen.",
+    "Die Zahl der künftigen Nutzer ist nicht bestimmt."
+  ],
+  "naechster_schritt": {
+    "text": "Gerne stellen wir die genannten Punkte Ihrem internen Einkauf in einem kurzen Termin vor.",
+    "cta": "Folgetermin vereinbaren",
+    "link": "https://hivebuy.com/demo"
+  }
+}
