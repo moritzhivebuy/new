@@ -46,7 +46,9 @@ class HubSpotClient:
     # -- HTTP ---------------------------------------------------------------
     def _request(self, method: str, path: str, body: dict | None = None,
                  params: dict | None = None) -> dict:
-        if method != "GET" and not self.allow_write and "/search" not in path:
+        # /search und /batch/read sind POSTs, aber reine Lesevorgaenge.
+        read_only_post = path.endswith("/search") or path.endswith("/batch/read")
+        if method != "GET" and not self.allow_write and not read_only_post:
             raise WriteBlocked(f"{method} {path} im Dry-Run-Modus blockiert")
 
         url = BASE + path
