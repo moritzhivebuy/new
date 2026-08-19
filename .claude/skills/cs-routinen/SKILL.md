@@ -57,6 +57,19 @@ WHERE COMPANY.lifecyclestage = 'customer' GROUP BY COMPANY.name
 
 Firmennamen aus TICKET/CALL/MEETING_EVENT/CONTACT-Queries kommen kleingeschrieben und HTML-entkodiert zurück (z. B. "büfa gmbh & co. kg"), die COMPANY-Basis-Query liefert Original-Schreibweise ("BÜFA GmbH & Co. KG"). Vor dem Join normalisieren über `html.unescape().strip().lower()`.
 
+**Achtung bei der Namens-Aggregation:** Bei Dubletten (siehe Liste oben, z. B. igus SE & Co. KG.) führt das Zusammenführen über den Firmennamen dazu, dass eine der beiden Company-IDs beim manuellen Zuordnen versehentlich leer bleibt, auch wenn sie einen eigenen Kontakt mit echter Aktivität hat (gefunden 19.08.2026: igus SE & Co. KG., ID `401851610339`, wurde fälschlich als "nie erfasst" eingestuft, hatte aber einen eigenen Kontakt mit Touch am 22.06.2026). Für Firmen mit bekannten Namensdubletten die Kontakt- und Ticket-Touch-Quellen wenn möglich direkt über die Company-ID abfragen (`associatedWith` companies EQUAL `{id}`), nicht über den aggregierten Namen.
+
+### Verifikationsschritt: Aircall-Telefonnummer-Abgleich
+
+Für jeden in Rot oder Gelb gemeldeten Kunden zusätzlich prüfen, ob ein Call existiert, der von Aircall geloggt, aber nicht korrekt der Company oder einem ihrer Kontakte zugeordnet wurde (Telefonnummer stimmt, Verknüpfung fehlt oder zeigt auf "unbekannter Kontakt"). Vorgehen:
+
+1. Alle Kontakte der Company holen inklusive `phone` und `mobilephone`.
+2. Für jede Nummer im CALL-Objektbestand suchen (`search_crm_objects`, `objectType=CALL`, `query=<nummer>`), Titel und Zeitstempel der Treffer mit dem aktuell verwendeten last_touch vergleichen.
+3. **Wichtig:** die Suche matcht nur exakte Tokens, keine Teilstrings. Ein Aufruf mit `query="5698328"` findet einen Call nicht, dessen Body `+493455698328` enthält, derselbe Call wird aber gefunden, wenn `query="+493455698328"` exakt im kompakten Format übergeben wird (Ländervorwahl mit `+`, keine Leerzeichen, keine Klammern, keine Bindestriche). Vor einer Serie von Nummern-Suchen mit einer bekannt-positiven Nummer testen, ob das Format überhaupt trifft, sonst sind negative Ergebnisse nicht aussagekräftig.
+4. Ohne Angabe, wer telefoniert hat, lässt sich ein per Namen/Nummer nicht auffindbarer Call nicht weiter eingrenzen (Beispiel: S-Markt & Mehrwert, erinnertes Telefonat Anfang Juli 2026, in HubSpot nicht auffindbar, weder als Call, Notiz noch E-Mail, auch nicht über die Telefonnummern der sechs bekannten Kontakte). Das ist dann entweder eine echte CRM-Lücke (Call nie geloggt) oder ein Hinweis, dass eine andere Person als der Account-Owner telefoniert hat, in dem Fall den genauen Anrufer erfragen und dessen Calls im Zeitraum gezielt filtern, statt den gesamten Call-Bestand des Accounts durchzugehen.
+
+Durchgeführt am 19.08.2026 für alle 15 zu dem Zeitpunkt gemeldeten Kunden: ein echter Fund (igus SE & Co. KG., siehe oben, aber über die Kontakt-Ebene, nicht über den Telefonnummer-Abgleich), sonst keine versteckte Aircall-Aktivität gefunden.
+
 ### Risikostufen
 
 | Stufe | Bedingung |
@@ -86,6 +99,7 @@ Nach jedem Lauf eine Nachricht an `#customer-experience` (Channel-ID `C04DAC5AVK
 ### Änderungshistorie
 
 - **19.08.2026:** Erstfassung nach Korrektur eines Lauf-1-Fehlers (nur COMPANY-Ebene, `createdate` statt Ticket-Aktivität). Von 39 zuvor gemeldeten Kunden blieben nach Fix und 6-Monats-Filter 15 übrig. Cadence von wöchentlich auf monatlich geändert (Wunsch Moritz). Slack-Versand und 6-Monats-Renewal-Filter neu eingeführt.
+- **19.08.2026 (Nachlauf):** systematischer Verifikationsschritt (Company-ID statt Namens-Aggregation, Aircall-Telefonnummer-Abgleich) auf alle 15 gemeldeten Kunden angewendet, siehe oben. Ein Fund: igus SE & Co. KG. (`401851610339`) von Rot auf Gelb korrigiert.
 
 ## Routine 2: Tickets
 
