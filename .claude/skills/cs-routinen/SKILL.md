@@ -28,6 +28,8 @@ Diese Datei ist die maßgebliche Quelle für die drei CS-Reporting-Routinen. Die
 
 **Cadence:** monatlich. **Ziel-Channel:** Slack `#customer-experience`, mit Erwähnung von Bettina Fischer, Leonard Diemer und Moritz Lienert (Slack-User-IDs unten). **Notion:** CS-Reports, Seitentitel `YYYY-MM-DD — Engagement`, Icon 🚦.
 
+**Deliverables:** ausschließlich Notion-Unterseite und Slack-Nachricht. Kein claude.ai-Artifact (Wunsch Moritz, 19.08.2026, ein zuvor erstelltes Artifact wird nicht weiter gepflegt).
+
 ### Definition
 
 Ein Kunde ist "engaged", wenn `last_touch` innerhalb der letzten 30 Tage liegt. `last_touch` ist das Maximum aus fünf Quellen:
