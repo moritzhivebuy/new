@@ -26,32 +26,51 @@ Der Token hat also CRM- und Account-Rechte, aber keinen CMS-Zugriff.
 
 ## Was hinzugefügt werden muss
 
+Nicht geraten. HubSpot nennt die benötigten Scopes im 403-Body selbst, im Feld
+`errors[].context.requiredGranularScopes`. Ich habe jeden Endpoint einzeln abgefragt,
+Lesen und Schreiben getrennt. Das Ergebnis:
+
+| Operation | Erforderlich, ODER-verknüpft |
+|---|---|
+| `GET` site-pages | `content.site_pages.read` oder `content` |
+| **`PATCH` site-pages** | **nur `content`** |
+| `PATCH` site-page Entwurf | nur `content` |
+| `POST` push-live (publizieren) | nur `content` |
+| `GET` landing-pages | `content.landing_pages.read` oder `content` |
+| `PATCH` landing-pages | `content.landing_pages.write` oder `content` |
+| **`GET` blog posts** | **nur `content`** |
+| **`PATCH` blog posts** | **nur `content`** |
+| `POST` blogpost publizieren | nur `content` |
+| `GET` url-redirects | nur `content` |
+| `POST` url-redirect anlegen | nur `content` |
+| `GET` domains | `cms.domains.read` oder `cms.domains.write` oder `content` |
+
 ### Pflicht: `content`
 
-Das ist der eine Scope, der fast alles freischaltet. Er deckt in einem:
+**Das ist der einzige Scope, den du brauchst, und er ist unvermeidbar.**
 
-- Blogposts lesen und schreiben (`/cms/v3/blogs/posts`)
-- Website-Seiten lesen und schreiben (`/cms/v3/pages/site-pages`)
-- Landing Pages lesen und schreiben (`/cms/v3/pages/landing-pages`)
-- URL-Weiterleitungen (`/cms/v3/url-redirects`)
+Die granularen Varianten wie `content.site_pages.read` existieren, reichen aber nicht:
 
-In der Scope-Auswahl der Private App findest du ihn im CMS-Bereich. HubSpot listet ihn
-teils unter dem technischen Namen `content`, teils mit einem Label wie
-"Website- und Landingpages" plus "Blog". Wenn beide Varianten angeboten werden, nimm
-alle CMS-Content-Einträge, die Lesen **und** Schreiben umfassen.
+- Für **Blogposts** gibt es überhaupt keine granulare Alternative, weder lesen noch
+  schreiben. Nur `content`.
+- Für **`PATCH` site-pages** ebenfalls nicht. Ein `content.site_pages.write` gibt es
+  nicht, HubSpot verlangt dort `content`.
+
+Da beide Aufgaben zum Umfang gehören, führt kein Weg an `content` vorbei.
 
 ### Empfohlen: `cms.domains.read`
 
-Nur Lesen. Damit kann ich die Domain- und Spracheinstellung prüfen, die hinter dem
-`de-de`-Problem auf 45 Seiten steckt. Ohne diesen Scope kann ich das Symptom im HTML
-sehen, aber nicht die Ursache in der Konfiguration.
+Nur Lesen. Damit sehe ich die Domain- und Spracheinstellung, die hinter dem
+`de-de`-Problem auf 45 Seiten steckt. `content` deckt es auch ab, aber wenn du den
+Scope ohnehin einzeln setzen kannst, ist die Leseform sauberer.
 
 ### Optional: `business-intelligence`
 
-Damit komme ich ohne die MCP-Werkzeuge an Traffic-Daten. Nützlich, weil ich damit auch
-die **Traffic-Quellen** auswerten könnte, die im MCP-Report fehlten. Genau die Frage,
-ob `/ki-beschaffungsplattform` bezahlten oder organischen Traffic hat, ließe sich damit
-beantworten.
+Für Traffic-Daten ohne die MCP-Werkzeuge, inklusive der **Traffic-Quellen**, die im
+MCP-Report fehlten. Damit ließe sich die offene Frage beantworten, ob
+`/ki-beschaffungsplattform` bezahlten oder organischen Traffic hat.
+
+Diesen Scope habe ich nicht gegengeprüft, den Namen also mit Vorbehalt.
 
 ### Nicht empfehlen: `cms.source_code.write`
 
@@ -60,6 +79,23 @@ Damit könnte ich theoretisch die Templates anfassen, also Canonical, H1 und `x-
 Quellcode des Themes, und er greift nur bei Templates im Entwickler-Dateisystem, nicht
 bei per Design Manager gebauten Vorlagen. Template-Arbeit bleibt besser Handarbeit mit
 Vorschau und Versionierung.
+
+### Was der Token heute schon hat
+
+26 Scopes, alle aus CRM, Automation, Files und Marketing-Campaigns, darunter
+`crm.objects.contacts.read`, `files.write`, `marketing.campaigns.write`, `oauth`.
+**Kein einziger CMS-Scope.** Deshalb schlagen alle acht CMS-Endpoints mit 403 fehl.
+
+### Kein vollständiger Trockenlauf ohne `content`
+
+Ich hatte einen Lese-zuerst-Ansatz vorgeschlagen. Das funktioniert nur teilweise: mit
+`content.site_pages.read` und `content.landing_pages.read` könnte ich Seiten lesen,
+**Blogposts aber nicht**, weil es dort keinen granularen Lese-Scope gibt. Ein
+Trockenlauf über alle 88 Seiten ist damit nicht möglich.
+
+Sicherheit stellen wir also anders her: du erteilst `content`, und ich zeige jede Charge
+vor der Ausführung. Der erste Schreibzugriff geht auf **eine** Seite, danach prüfe ich
+das Ergebnis live, bevor irgendetwas in Serie läuft.
 
 ---
 
@@ -75,14 +111,11 @@ Vorschau und Versionierung.
    Einstellungen der Claude-Code-Umgebung ersetzen, **nicht in den Chat schreiben**.
 7. Neue Session starten, damit die Variable greift.
 
-### Alternative, wenn du vorsichtiger vorgehen willst
+### Zur Vorsicht
 
-Falls HubSpot bei einem Eintrag getrennte Lese- und Schreibrechte anbietet: erst nur
-Lesen erteilen. Dann kann ich einen vollständigen Trockenlauf erzeugen, also für jede
-der 88 Seiten den Ist- und Sollwert nebeneinander, ohne etwas zu verändern. Du prüfst
-die Liste, und erst danach kommt der Schreib-Scope dazu.
-
-Bei `content` ist mir keine getrennte Variante bekannt, das ist ein kombinierter Scope.
+Ein reiner Lese-Trockenlauf ist nicht möglich, siehe oben: Blogposts haben keinen
+granularen Lese-Scope. Stattdessen: erster Schreibzugriff auf genau eine Seite, danach
+Live-Kontrolle, dann Chargen mit Vorabbestätigung.
 
 ---
 
