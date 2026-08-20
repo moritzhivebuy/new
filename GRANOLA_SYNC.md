@@ -206,12 +206,13 @@ Ablauf:
    beim Upload als Base64 im Tool-Aufruf übergeben wird und die unverkleinerte Datei über der
    Ausgabegrenze liegt.
 3. Upload per `mcp__Google_Drive__create_file` mit
-   `contentMimeType=application/vnd.openxmlformats-officedocument.presentationml.presentation`.
-   Drive konvertiert die Datei dabei in eine bearbeitbare Google-Slides-Präsentation.
-4. Freigabe per `mcp__Google_Drive__share_file`. Das Tool erwartet eine E-Mail-Adresse, einen
-   Domain-Modus gibt es nicht. Für "alle Hivebuy-Mitarbeitenden" ist deshalb eine Google-Gruppe
-   nötig (Gruppenadresse noch zu klären), alternativ setzt der Owner die Domainfreigabe einmalig
-   in der Drive-Oberfläche am Zielordner.
+   `contentMimeType=application/vnd.openxmlformats-officedocument.presentationml.presentation`
+   und `parentFolderId=0APJQKQ-OeVKNUk9PVA`. Drive konvertiert die Datei dabei in eine
+   bearbeitbare Google-Slides-Präsentation.
+4. **Keine Freigabe per Tool nötig.** Moritz hat am 20.08.2026 am Zielordner
+   (https://drive.google.com/drive/folders/0APJQKQ-OeVKNUk9PVA) "alle bei Hivebuy können
+   bearbeiten" gesetzt. Neue Dateien im Ordner erben das. `share_file` wird also nicht aufgerufen,
+   das wäre eine zusätzliche, unnötige Rechteänderung.
 5. Slides-Link zusätzlich zum PDF in Antwortvorschlag und Slack-DM nennen.
 
 **Wichtig:** Das PDF aus `template/template.html` bleibt die verbindliche Fassung für den Kunden,
