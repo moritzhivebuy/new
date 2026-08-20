@@ -30,10 +30,31 @@ sondern eine Grenze der Schnittstelle.
 
 ---
 
-## Phase 1: was ich sofort übernehmen kann
+## Phase 1: blockiert, ich kann es doch nicht ausführen
 
-Sag einmal Bescheid, dann arbeite ich das in Chargen ab und zeige dir jede Charge
-vorher.
+**Korrektur vom 2026-08-20, nach dem Versuch.** Ich hatte zugesagt, die 14
+Blogpost-Metas und die Meta von `/ki-beschaffungsplattform` selbst zu setzen. Das geht
+nicht.
+
+Beide Content-Werkzeuge, `manage_blog_post` und `manage_landing_page`, antworten in
+meiner Session mit `requires approval`, und die Freigabe kommt nicht durch. Das gilt
+auch für die reinen Lesezugriffe wie `GET_POST`. Die Analytics- und CRM-Abfragen liefen
+dagegen ohne Freigabe, deshalb war die Grenze vorher nicht sichtbar.
+
+Praktisch heißt das: **ich kann in HubSpot nichts schreiben, auch nicht bei Blogposts
+und Landing Pages.** Meine Einschätzung in der Tabelle oben war zu optimistisch, sie
+beschrieb die Rechte des Objekttyps, nicht die Freigabe des Werkzeugs.
+
+Damit verschieben sich die 14 Blogpost-Metas und die Landing-Page-Meta nach Phase 2,
+also zu dir. Fertig aufbereitet mit Editor-Links liegen sie in:
+
+- `blogpost-metas-zum-einsetzen.md` und `.csv`, 14 Posts, nach Ist-Länge sortiert,
+  jeweils mit direktem Link in die HubSpot-Einstellungen des Posts
+
+Falls die Freigabe in einer neuen Session erteilt wird, kann ich es übernehmen. Bis
+dahin ist es Handarbeit.
+
+### Was ursprünglich hier stand, als Referenz
 
 ### 1.1 Meta-Descriptions der 14 Blogposts
 
@@ -269,10 +290,17 @@ unkritisch in der Reihenfolge, die Texte liegen fertig vor.
 
 ## Was ich konkret als nächstes machen kann
 
-Sag ein Wort, und ich starte mit den 14 Blogpost-Metas und der Meta von
-`/ki-beschaffungsplattform`. Ich gehe in Chargen von fünf vor, zeige dir jede Charge
-vorher zur Bestätigung, und teste am ersten Post, ob nach der Änderung ein separates
-Publizieren nötig ist.
+Ausführen kann ich in HubSpot nichts, siehe Phase 1. Was ich beitragen kann, ist
+Vorbereitung und Kontrolle:
+
+- **Werte fertig aufbereiten**, wie bei den Metas und Titles bereits geschehen. Sag,
+  welche Gruppe du als nächstes angehst, dann liefere ich die Liste im gleichen Format.
+- **Nach deiner Umsetzung gegenprüfen.** Das kann ich zuverlässig, es sind reine
+  HTTP-Abrufe. Bei den Redirects hat das funktioniert, alle sechs habe ich verifiziert.
+  Sag Bescheid, wenn eine Charge steht, dann crawle ich die betroffenen Seiten und
+  melde, was noch nicht greift.
+- **Search Console kann ich nicht einsehen.** Für Index-Status arbeite ich mit
+  `site:`-Abfragen, das ist gröber, reicht aber um zu sehen, ob eine Seite raus ist.
 
 Alles andere in dieser Liste kann ich nicht ausführen, nur vorbereiten. Wo es hilft,
 schreibe ich dir die konkreten Werte vorab auf, wie bei den Titles und Metas schon
