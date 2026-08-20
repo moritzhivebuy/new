@@ -334,10 +334,22 @@ in the listing template, not the whole head.
 `/blog` is paginated, which is where a missing canonical does the most damage: every
 pagination state becomes a near-duplicate of the same page.
 
-### 3.3 Meta descriptions: 88 of 180 pages need work
+### 3.3 Meta descriptions: 83 pages, now fixed
 
-All 180 sitemap URLs were crawled. This is far more widespread than the 25 page sample
-in the first pass suggested.
+**Status 2026-08-20: done.** 83 pages were rewritten through the CMS API and verified
+live. 176 of 180 sitemap pages now sit in the 70 to 165 character range, up from 91.
+Zero remain over length. See `ergebnis-2026-08-20.md`.
+
+**Correction to the figures first published here.** My crawl regex was
+`content=["\']([^"\']*)`, which stops at the first quote character, including an
+apostrophe inside a double-quoted attribute. Any meta containing an apostrophe was
+truncated and scored as too short. Real distribution was 80 too long, 1 too short, 2
+absent, so 83 rather than 88. Three pages I had missed were genuinely over length:
+`/en/about-us` at 227, `/en/` at 201, `/en/analytics-reportings` at 182.
+
+The corrected pattern uses a backreference: `content=(["\'])(.*?)\1`.
+
+The numbers below are the corrected pre-fix state.
 
 | Verdict | Pages | Share |
 |---|---|---|
