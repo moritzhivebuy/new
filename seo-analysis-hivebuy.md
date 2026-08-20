@@ -164,6 +164,55 @@ The English blog is also a shell: `/en/blog` returns 200, but
 `/en/blog/ki-im-einkauf` and `/en/blog/beschaffungsprozess-optimieren` both return
 404. So `/blog` advertises an English alternate that has no English articles behind it.
 
+**Global validation of the hreflang graph.** A second full crawl checked every
+language link across all 180 sitemap URLs. Where hreflang exists it is genuinely
+correct, which is rare on bilingual sites:
+
+| Check | Result |
+|---|---|
+| Language pairs | 59 |
+| Self-reference present | 118 of 118, 100 % correct |
+| Reciprocity, A points to B and back | 0 errors |
+| hreflang targets resolve and sit in the sitemap | 0 errors |
+| `x-default` set | **0 of 180 pages** |
+| `html lang` consistent | **three different values in use** |
+| English slugs actually translated | **18 of 59** |
+
+Structure: 121 German pages, 59 English pages, 59 pairs, 62 German pages with no
+English counterpart, zero English pages without a German one. The 62 unpaired German
+pages correctly omit hreflang because no English version exists. What matters is which
+pages they are: 45 blog posts, 9 webinars, the whitepaper and webinar hubs, the help
+centre. The product layer is bilingual, the demand-generation layer is not.
+
+Three further defects beyond the `de-de` and blog-post gaps in the table above:
+
+1. **`/en/helpcenter` is paired with `/hilfecenter-videos`, not `/hilfecenter`.** The
+   German help centre hub sits outside the language structure entirely, and both German
+   pages share the title `Hivebuy Hilfecenter`.
+2. **`html lang` contradicts hreflang.** 45 German pages declare `lang="de-de"` while
+   their hreflang says `de`. Three listing pages are outright wrong: `/webinare` and
+   `/whitepaper-blog` declare `lang="en"` on German pages, `/en/blog` declares `de-de`.
+3. **`x-default` is absent everywhere**, so Google chooses the fallback for unmatched
+   locales itself.
+
+Full analysis and the global instruction are in `language-variants-anweisung.md`.
+
+### 2.4b Landing pages are excluded from the sitemap
+
+No HubSpot landing page appears in `sitemap.xml`. That includes
+`/ki-beschaffungsplattform`, the single largest marketing page at 26,715 views, and
+every `/lp_*` campaign page.
+
+For short-lived campaign pages that exclusion is reasonable. For
+`/ki-beschaffungsplattform` it is not: the page carries the AI positioning, draws more
+traffic than any other marketing URL, and is built as a landing page while functioning
+as a core content page. It is also the page with no hreflang and a 236 character meta
+description.
+
+**Action:** move `/ki-beschaffungsplattform` to a website page, or add it to the
+sitemap explicitly, and give it the same hreflang and meta treatment as the rest of the
+product layer.
+
 ### 2.5 Canonical and sitemap disagree on umlaut encoding
 
 The sitemap is correct here: it percent-encodes all seven affected URLs, for example
@@ -527,8 +576,11 @@ co-market with named integration partners; pursue inclusion in
 7. **Rebuild `/ki-beschaffungsplattform` for conversion.** Add the webinar or demo
    offer. A 0.06 percent rate on 26,715 views is the largest single opportunity here.
 8. **Consolidate the six demo landing pages** to one plus redirects.
-9. **Add hreflang to blog posts and to the two big landing pages**, and standardise on
-   `de` rather than mixing `de` and `de-de`.
+9. **Fix the language variant layer.** Unify `html lang` on `de` and `en` (45 pages
+   currently say `de-de`), repair the three listing pages whose `lang` contradicts
+   their tree, repair the `/en/helpcenter` to `/hilfecenter` pairing, and add
+   `x-default` pointing at the English version. Do not touch the 59 pairs themselves,
+   they are correct. See `language-variants-anweisung.md`.
 10. **Decide the English blog.** Either publish English articles under `/en/blog/` or
     remove the `hreflang="en"` pointer from `/blog`.
 
