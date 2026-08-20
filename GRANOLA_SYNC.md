@@ -23,15 +23,35 @@ Portal: 145132698 (Hivebuy)
 
 ## Erkennung einer Granola-Notiz
 
-- Notiz (objectType `notes`) enthält im Body einen Link auf `notes.granola.ai`.
+- Der Body enthält einen Link auf `notes.granola.ai`.
 - Qualifizierung steht meist in der ersten Zeile bzw. im Fazit: `QUALIFIZIERT: JA` bzw. `QUALIFIZIERT: NEIN`.
 
+**Wichtig, zwei Ablageformen:** Granola-Zusammenfassungen landen im Portal in **zwei** Objekttypen und
+beide müssen durchsucht werden:
+
+| Objekttyp | Body-Property | Bestand am 20.08.2026 |
+|---|---|---|
+| `notes` | `hs_note_body` | 356 |
+| `meetings` | `hs_meeting_body` | 87 |
+
+`calls` enthalten keine Granola-Inhalte. Die Meeting-Variante entsteht, wenn die Zusammenfassung über
+"Meeting protokollieren" im CRM abgelegt wird, oft mit Titel-Präfix `[Granola]`. Sie war ursprünglich
+nicht berücksichtigt, dadurch wurde Meeting 513289640152 (Josef Pichler, NAVAX, 20.08.2026) nicht
+erfasst, obwohl es ein Erstgespräch mit `QUALIFIZIERT: JA` war. Seit dem 20.08.2026 sucht die Routine
+in beiden Objekttypen.
+
 **Wichtig, Suchsyntax:** Die Suche muss mit Wildcards arbeiten: `CONTAINS_TOKEN` mit dem Wert
-`*notes.granola.ai*`. Ohne Wildcards (`granola`) findet HubSpot einen Teil der Notizen nicht. Das ist
+`*notes.granola.ai*`. Ohne Wildcards (`granola`) findet HubSpot einen Teil der Einträge nicht. Das ist
 beim Testlauf aufgefallen: die ungenaue Suche lieferte als "neueste" Notiz den 08.07., tatsächlich
 existierten Notizen bis zum 17.08.
 
+**Wichtig, Erstgespräch-Erkennung bei Meetings:** Bei der Meeting-Variante ist der Meeting-Titel
+(`hs_meeting_title`) direkt am Objekt verfügbar, das Präfix `[Granola]` wird für die
+"Kennenlernen"-Prüfung ignoriert.
+
 ## Auszuschließende Notizen
+
+Gilt für beide Objekttypen (`notes` und `meetings`).
 
 - Eigene Log-Notizen (enthalten `granola-sync:`) und eigene Antwortvorschläge (enthalten `granola-reply:`).
 - Notizen ohne assoziierten Kontakt.
@@ -149,8 +169,27 @@ Ablauf: Inhalte als JSON nach `output/<kunde-slug>-impact-ladder.json` schreiben
 ausschließlich aus `template/template.html` und werden nie von Claude verändert. Analyse-Regeln,
 Sprachregeln, Agentennamen und QA-Checkliste stehen in der SKILL.md.
 
+### Auslieferung des PDFs (offener Punkt)
+
 Der Pfad des PDFs wird im Antwortvorschlag am Kontakt als eigener Abschnitt genannt und in der
 Slack-DM mitgeschickt. Das PDF liegt im Container, es wird nicht automatisch an den Kunden gesendet.
+
+**Problem:** Ein Pfad im Container hilft dem Owner nicht, er kann die Datei nicht selbst
+herunterladen (gemeldet von Moritz am 20.08.2026 zum Fall NAVAX).
+
+**Geplante Lösung:** PDF per Files-API nach HubSpot hochladen und als Anhang an die
+Antwortvorschlag-Notiz hängen, damit der Owner es direkt aus dem Kontakt heraus öffnen kann:
+
+1. `POST /files/v3/files` (multipart) mit `folderPath=/impact-ladder` und
+   `options={"access":"PRIVATE","overwrite":true}`, Antwort enthält die File-ID.
+2. Beim Anlegen der Notiz `hs_attachment_ids` auf diese File-ID setzen.
+3. Statt des Container-Pfads den HubSpot-Dateilink in Notiz und Slack-DM nennen.
+
+**Blocker:** Der Private App Token hat die Files-Scopes nicht. Der Upload wird mit
+`MISSING_SCOPES` abgewiesen, benötigt wird einer von `files.write`, `files` oder
+`files.ui_hidden.write`. Auch der MCP-Connector und die Slack-Tools bieten keinen Datei-Upload.
+Sobald der Scope in den Einstellungen der Private App ergänzt ist, wird Schritt 1 bis 3 aktiviert.
+Bis dahin bleibt es beim Container-Pfad, und das PDF muss manuell weitergegeben werden.
 
 ## Slack-Benachrichtigung (Teil e)
 
@@ -165,6 +204,7 @@ Vergleich in Kleinbuchstaben). Bekannte Zuordnungen:
 | 255483530 | Robert Eickmeyer | robert@hivebuy.de | U030FCELYPR |
 | 32598807 | Emre Topyürek | emre@hivebuy.de | U0AHY4E0YHY |
 | 1773489374 | Moritz Lienert | moritz@hivebuy.de | U071B33N4LQ |
+| 77804274 | Dennis Hartmann | dennis@hivebuy.de | U08G4AB71QR |
 
 **Fallback:** Kein Owner am Kontakt oder kein Slack-Treffer, dann geht die DM an Moritz
 (U071B33N4LQ) mit Hinweis auf den fehlenden Owner.
@@ -220,23 +260,28 @@ Nachrichten in Slack-Channels.
 
 Ablauf pro Lauf:
 
-1. Neue Granola-Notizen finden
-- Suche notes mit hs_createdate GTE (jetzt minus 3 Stunden) UND hs_note_body CONTAINS_TOKEN
-  "*notes.granola.ai*". Die Wildcards sind Pflicht, ohne sie findet HubSpot Notizen nicht.
+1. Neue Granola-Einträge finden
+- Suche in ZWEI Objekttypen, beide sind Pflicht:
+  a) notes mit hs_createdate GTE (jetzt minus 3 Stunden) UND hs_note_body CONTAINS_TOKEN
+     "*notes.granola.ai*"
+  b) meetings mit hs_createdate GTE (jetzt minus 3 Stunden) UND hs_meeting_body CONTAINS_TOKEN
+     "*notes.granola.ai*"
+  Die Wildcards sind Pflicht, ohne sie findet HubSpot Einträge nicht.
 - Nutze dafür die HubSpot-REST-API per curl mit HUBSPOT_PRIVATE_APP_TOKEN und fordere nur die
   benötigten Properties an, damit die Antwort klein bleibt.
 - Überspringe: eigene Log-Notizen (granola-sync:), eigene Antwortvorschläge (granola-reply:),
   Notizen ohne Kontakt, Notizen am internen Kontakt Hivebuy GmbH (#365219269839) und Notizen ohne
   echten notes.granola.ai-Link.
 
-2. Pro Notiz: Kontakt und Kontext laden
-- Kontakt über GET /crm/v4/objects/notes/{noteId}/associations/contacts.
+2. Pro Eintrag: Kontakt und Kontext laden
+- Kontakt über GET /crm/v4/objects/{notes|meetings}/{objectId}/associations/contacts, je nach
+  Objekttyp des Eintrags.
 - Kontakt-Properties, Firma, Deals, weitere Notizen, Calls, Meetings und E-Mails laden, soweit für
   einen guten Vorschlag nötig.
 
 3. Duplikat-Check
-- Notizen des Kontakts prüfen: existiert bereits granola-sync:<Notiz-ID>, ist die Notiz verarbeitet
-  und wird übersprungen.
+- Notizen des Kontakts prüfen: existiert bereits granola-sync:<Objekt-ID>, ist der Eintrag verarbeitet
+  und wird übersprungen. Die Objekt-ID ist die ID der Notiz bzw. des Meetings.
 
 4. Properties übertragen
 - Mapping, Textbereinigung und Konfliktregel exakt wie in GRANOLA_SYNC.md.
@@ -249,7 +294,8 @@ Ablauf pro Lauf:
 - Struktur und Marker wie in GRANOLA_SYNC.md.
 
 7. Antwortvorschlag anlegen (nur bei Erstgesprächen)
-- Nur wenn der Meeting-Titel "Kennenlernen" enthält.
+- Nur wenn der Meeting-Titel "Kennenlernen" enthält. Bei der Meeting-Variante steht der Titel in
+  hs_meeting_title, ein Präfix wie "[Granola]" wird ignoriert.
 - Aufbau, Tonalität und der Along-Board-Satz mit Platzhalter wie in GRANOLA_SYNC.md.
 - Granola-Notiz hat Vorrang vor den HubSpot-Daten, Widersprüche als Prüfpunkt nennen.
 

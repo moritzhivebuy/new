@@ -1,0 +1,98 @@
+{
+  "customer": {
+    "name": "NAVAX Software",
+    "ansprechpartner": "Josef Pichler",
+    "gespraechsdatum": "20.08.2026"
+  },
+  "date": "20.08.2026",
+  "potenziale": [
+    {
+      "titel": "Medienbrüche zwischen Jira, E-Mail und ERP",
+      "beschreibung": "Bedarfe entstehen als Ticket, laufen per E-Mail weiter und werden im ERP erneut erfasst."
+    },
+    {
+      "titel": "Der Prozess hängt an einer Person",
+      "beschreibung": "Bestellung und Rechnungsfreigabe laufen allein über Herrn Pichler, im Urlaub bleibt alles liegen."
+    },
+    {
+      "titel": "Kein Audit-Trail für Nachweispflichten",
+      "beschreibung": "Wer wann was bestellt und freigegeben hat, ist nachträglich nicht belegbar."
+    },
+    {
+      "titel": "Sieben Gesellschaften, kein gemeinsamer Standard",
+      "beschreibung": "Deutschland und Österreich arbeiten unterschiedlich, Verträge liegen nicht systematisch ab."
+    }
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Bedarfe werden strukturiert und vollständig erfasst, statt als Jira-Ticket und E-Mail (Intake Agent).",
+        "Anfragen und Freigaben laufen direkt in Microsoft Teams, der Status ist jederzeit sichtbar (MS Teams Agent, Status Agent)."
+      ],
+      "impact": "Auch wer selten bestellt, findet den Weg ohne Schulung und ohne Rückfragen."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Freigaben regelbasiert nach Betrag, Warengruppe und Gesellschaft, mit konfigurierbarer Vertretung (Approval Agent).",
+        "Verträge zentral hinterlegt, mit Erinnerung an Verlängerung und Kündigungsfrist (Contract Agent)."
+      ],
+      "impact": "Die täglichen ein bis zwei Stunden Handarbeit entfallen, der Prozess läuft auch im Urlaub weiter."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Kostenstelle, Warengruppe und Sachkonto werden bereits bei der Anforderung vorbelegt (Category Agent, Accounting Agent).",
+        "Bestellungen entstehen in Business Central, Rechnungen werden automatisch zugeordnet, wiederkehrende Positionen laufen ohne Handgriff (Invoice Agent)."
+      ],
+      "impact": "Der Medienbruch zum ERP verschwindet, auch bei Rechnungen mit bis zu 300 Positionen."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Ein Standard und eine Auswertung über alle sieben Gesellschaften in Deutschland und Österreich (Analytics Agent).",
+        "Vollständiger Audit-Trail für ISO 27001, DSGVO und die Nachweispflichten im Bankenumfeld (Compliance Agent)."
+      ],
+      "impact": "Nachweise sind auf Knopfdruck belegbar, der Einkauf ist nicht länger von einer Person abhängig."
+    }
+  ],
+  "executive_summary": "Hivebuy löst die manuelle Kette aus Ticket, E-Mail und ERP-Nacherfassung auf, macht Freigaben und Vertretungen digital nachvollziehbar und schafft über die Business-Central-Anbindung einen gemeinsamen Standard für alle sieben Gesellschaften.",
+  "zahlenbasis": [
+    {
+      "text": "ca. 300 bis 350 Mitarbeitende, 7 Gesellschaften",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 100 bis 150 künftige Nutzer im System",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 1 bis 2 Stunden manuelle Einkaufsarbeit pro Tag",
+      "status": "belegt"
+    },
+    {
+      "text": "ERP Microsoft Dynamics 365 Business Central, Ticketsystem Jira",
+      "status": "belegt"
+    },
+    {
+      "text": "Rechnungen mit bis zu 300 Positionen, ca. 20 davon variabel",
+      "status": "belegt"
+    }
+  ],
+  "annahmen": [
+    "Anzahl der Bestellungen pro Monat wurde nicht genannt.",
+    "Der finale Entscheider in der Geschäftsleitung ist nicht benannt.",
+    "Der Zeitpunkt für die Einbindung Österreichs ist offen.",
+    "Der Aufwand der IT für Schnittstelle und SSO ist nicht geschätzt."
+  ],
+  "naechster_schritt": {
+    "text": "Im Folgetermin am 3. September gehen wir Testzugang, Angebot und die Einbindung Ihrer IT gemeinsam durch.",
+    "cta": "Folgetermin vereinbaren",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}
