@@ -197,21 +197,42 @@ Three further defects beyond the `de-de` and blog-post gaps in the table above:
 
 Full analysis and the global instruction are in `language-variants-anweisung.md`.
 
-### 2.4b Landing pages are excluded from the sitemap
+### 2.4b Landing pages: excluded from the sitemap but left indexable
 
-No HubSpot landing page appears in `sitemap.xml`. That includes
-`/ki-beschaffungsplattform`, the single largest marketing page at 26,715 views, and
-every `/lp_*` campaign page.
+No HubSpot landing page appears in `sitemap.xml`. That includes every `/lp_*` campaign
+page and `/ki-beschaffungsplattform`.
 
-For short-lived campaign pages that exclusion is reasonable. For
-`/ki-beschaffungsplattform` it is not: the page carries the AI positioning, draws more
-traffic than any other marketing URL, and is built as a landing page while functioning
-as a core content page. It is also the page with no hreflang and a 236 character meta
-description.
+The exclusion itself is correct: these are paid-ads landing pages and do not belong in
+a sitemap. The defect is the inconsistency around it. **All of them are fully
+indexable**, with no `noindex` and a self-referencing canonical. A sitemap is a
+suggestion, not an exclusion, so Google indexes them anyway.
 
-**Action:** move `/ki-beschaffungsplattform` to a website page, or add it to the
-sitemap explicitly, and give it the same hreflang and meta treatment as the rest of the
-product layer.
+Confirmed: a `site:` query returns `https://www.hivebuy.com/lp_kostenlose_demo_0825`
+with the title `Hivebuy eProcurement System - Kostenlose Demo Vereinbaren`.
+
+Consequence: four demo landing pages sharing an identical title compete with each other
+in the index and with `/produktdemo` and `/kontakt` for the same demo intent. `/kontakt`
+converts at 7.1 percent, `/lp_kostenlose_demo_0825` at 0.29 percent. Every time Google
+serves the landing page instead of `/kontakt`, that gap is the cost.
+
+**Action:** set `noindex, follow` on all `/lp_*` pages. Keep `follow` so the internal
+links to product pages still pass equity, `/lp_video_integrationen` alone carries six
+of them. Do not add them to the sitemap.
+
+This also dissolves the landing page consolidation item in section 5.2: separate
+campaign variants are legitimate for ads, they were only a problem because they were
+competing in the organic index.
+
+**Open decision on `/ki-beschaffungsplattform`.** It sits outside `/lp_`, draws 26,715
+views, carries the AI positioning, and links three times into the product pages. If it
+is ads-only it should be `noindex` like the rest, and its 0.06 percent conversion rate
+becomes a paid-media finding rather than an SEO one: 26,715 paid clicks for 16 form
+submissions. If it is meant to rank for "KI-Beschaffungsplattform" it should become a
+website page in the sitemap with hreflang and a trimmed meta description.
+
+This cannot be resolved from the available data. The HubSpot content analytics pull
+carries no traffic-source dimension, so whether those 26,715 views are paid or organic
+is unknown here. See section 10, limitation 1.
 
 ### 2.5 Canonical and sitemap disagree on umlaut encoding
 
@@ -461,7 +482,7 @@ cluster.
 or remove the English blog, and link the cluster from `/produkt`, `/loesungen`, and
 `/preise-hivebuy`.
 
-### 5.2 Six competing demo landing pages
+### 5.2 Six demo landing pages, competing only because they are indexable
 
 | Slug | Title |
 |---|---|
@@ -472,8 +493,13 @@ or remove the English blog, and link the cluster from `/produkt`, `/loesungen`, 
 | `lp_kostenlose_demo_0825` | `Hivebuy eProcurement System - Kostenlose Demo Vereinbaren` |
 | `lp_beschaffung` | `Hivebuy eProcurement System - Kostenlose Demo Vereinbaren` |
 
-Four share an identical title. Consolidate to one canonical demo page and redirect the
-rest, keeping only genuine live campaign variants.
+Four share an identical title. **Correction to an earlier draft of this report:** these
+are paid-ads landing pages, and separate variants per campaign are entirely legitimate.
+They do not need consolidating.
+
+The problem is only that they are indexable, so they compete in organic results with
+each other and with `/produktdemo` and `/kontakt`. Fix the indexability per section
+2.4b and the duplication stops mattering.
 
 ### 5.3 Portal hygiene
 
@@ -575,7 +601,11 @@ co-market with named integration partners; pursue inclusion in
    including `/lösungen` and `/kundenreferenzen`.
 7. **Rebuild `/ki-beschaffungsplattform` for conversion.** Add the webinar or demo
    offer. A 0.06 percent rate on 26,715 views is the largest single opportunity here.
-8. **Consolidate the six demo landing pages** to one plus redirects.
+8. **Set `noindex, follow` on all `/lp_*` landing pages.** They are ads pages and
+   correctly absent from the sitemap, but they are indexable, and
+   `/lp_kostenlose_demo_0825` is confirmed in Google's index competing with `/kontakt`
+   for demo intent. Keep `follow` to preserve the internal links. No consolidation
+   needed once they are out of the index.
 9. **Fix the language variant layer.** Unify `html lang` on `de` and `en` (45 pages
    currently say `de-de`), repair the three listing pages whose `lang` contradicts
    their tree, repair the `/en/helpcenter` to `/hilfecenter` pairing, and add
