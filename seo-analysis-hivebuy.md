@@ -246,26 +246,65 @@ Suggested rewrites for the two money pages:
 /en/pricing      ->  Pricing & Plans | Procurement Software | Hivebuy
 ```
 
-### 3.2 Missing canonical
+### 3.2 Missing canonical on four listing pages
 
-`/blog` has **no canonical tag at all**. Every other page tested has one. Given the
-blog hub is paginated and tag-filtered, this is the one place a canonical matters most.
+A full crawl of all 180 sitemap URLs found exactly four pages with **no canonical tag
+at all**, and they are all listing pages:
 
-### 3.3 Meta descriptions
+```
+/blog            /en/blog            /webinare            /whitepaper-blog
+```
 
-| Page | Length | Verdict |
+Blog posts themselves do emit a canonical, and the rest of the standard head is
+present on the listing pages (`og:url`, `og:title`, `twitter:*`, JSON-LD, and
+`rel="next"` on `/blog`). So the canonical specifically is being suppressed or omitted
+in the listing template, not the whole head.
+
+`/blog` is paginated, which is where a missing canonical does the most damage: every
+pagination state becomes a near-duplicate of the same page.
+
+### 3.3 Meta descriptions: 88 of 180 pages need work
+
+All 180 sitemap URLs were crawled. This is far more widespread than the 25 page sample
+in the first pass suggested.
+
+| Verdict | Pages | Share |
 |---|---|---|
-| `/` | 158 | Good |
-| `/en/` | **20** | Effectively missing on the English homepage |
-| `/ki-beschaffungsplattform` | **236** | Will truncate. Highest-traffic page. |
-| `/lp_kostenlose_demo_0825` | **228** | Will truncate |
-| `/preise-hivebuy` | 148 | Good |
-| `/kontakt` | 148 | Good |
-| `/blog/ki-im-einkauf` | 169 | Slightly long |
+| Within 70 to 165 characters | 92 | 51 % |
+| **Over 165 characters** | **75** | **42 %** |
+| Under 70 characters | 11 | 6 % |
+| Absent entirely | 2 | 1 % |
 
-**Limitation:** HubSpot does not expose meta description as a readable property on
-`SITE_PAGE` or `LANDING_PAGE` objects, so lengths were measured by fetching live HTML
-for a 25 page sample rather than all 243 content objects. A full pass needs a crawler.
+The over-length group is not a formatting quirk. The worst cases run to 480, 477, and
+468 characters, all on blog posts. At that length the text is almost certainly being
+auto-generated from the article body because no meta description field is filled in.
+HubSpot falls back to page content when the field is empty, and that fallback is what
+Google sees.
+
+Worst offenders:
+
+| Page | Length |
+|---|---|
+| `/blog/einkaufssoftware-4-bereiche-fuer-optimierung` | 480 |
+| `/blog/einkaufssoftware-vorteile-unternehmen` | 477 |
+| `/blog/hivebuy-im-procurement-summit-magazin` | 468 |
+| `/blog/3-herausforderungen-bei-der-einfuehrung-von-einkaufssoftware` | 440 |
+| `/blog/wie-waehle-ich-die-richtige-einkaufssoftware-5-wichtige-kriterien-zur-auswahl` | 407 |
+| `/webinar-tennispoint` | 352 |
+| `/kundenbericht-thermondo` | 336 |
+
+Absent entirely: `/en/career` and `/deine-karriere-bei-hivebuy`.
+
+Shortest: `/webinare` at 8 characters, `/whitepaper-blog` at 10, `/en/testzugang` at 11,
+`/en/helpcenter` and `/en/resources` at 16, `/hilfecenter` at 19, and the English
+homepage `/en/` at 20.
+
+Written replacements for all 88 pages, each between 110 and 160 characters, are in
+`meta-descriptions-vorschlaege.md` and `meta-descriptions-vorschlaege.csv`.
+
+**Note on method:** HubSpot exposes no readable meta description property on
+`SITE_PAGE` or `LANDING_PAGE` objects, so these lengths come from the rendered HTML of
+all 180 sitemap URLs. Content objects outside the sitemap were not measured.
 
 ### 3.4 Double-escaped ampersand on three English pages
 
@@ -287,10 +326,26 @@ path introduced the entity.
 
 **Fix:** edit the three title fields and replace `&amp;` with `&`. No template change.
 
-### 3.5 Heading structure
+### 3.5 Heading structure: 56 pages, but only four templates
 
-`/workflows-einkauf` emits **two H1 elements**. Every other page tested emits exactly
-one. Worth a template check on the German department pages.
+The full crawl shows only 124 of 180 pages emit exactly one H1. The first pass caught
+just `/workflows-einkauf` because the sample was too small.
+
+| H1 count | Pages | Pattern |
+|---|---|---|
+| 0 | 25 | Case studies, savings calculator, `/lösungen`, `/kundenreferenzen`, help centre |
+| 1 | 124 | Correct |
+| 2 | 24 | Every integration page (DE and EN), blog listings, `/finanzabteilung` |
+| 3 | 1 | `/anbindungsanleitung-sap-business-one` |
+| 4 | 6 | Every `ki-agenten` page (DE and EN) |
+
+The grouping is the good news: these are not 56 independent mistakes but roughly four
+templates. Fix the integration template, the case study template, the `ki-agenten`
+template, and the listing template, and 56 pages resolve at once.
+
+Highest priority within that set: the 25 pages with **no H1 at all**, which includes
+`/lösungen` and `/kundenreferenzen`, both commercially important, and the six
+`ki-agenten` pages with four H1 each, which sit on the strategically central AI line.
 
 ### 3.6 Inconsistent title decoration
 
@@ -447,18 +502,28 @@ co-market with named integration partners; pursue inclusion in
 
 ### Critical, do this week
 
-1. **301 the five dead legacy pages.** `/old` and `/homepage-old` to `/`, `/en/old`
-   to `/en/`, `/loesungen-old` to `/lösungen`, `/en/lösungen-old` to `/en/lösungen`.
-   Recovers roughly 15,200 views per six months currently hitting 404s.
-2. **Add a canonical tag to `/blog`** and replace the `blog` placeholder title.
-3. **Write a real meta description for `/en/`.** 20 characters today.
+1. ~~**301 the five dead legacy pages.**~~ **DONE, verified 2026-08-20.** All six
+   redirects resolve correctly: `/old` and `/homepage-old` to `/`, `/en/old` to
+   `/en/`, `/loesungen-old` and `/en/lösungen-old` to the umlaut solutions pages, plus
+   the ASCII fallback `/loesungen` to `/lösungen`. Recovers roughly 15,200 views per
+   six months that were hitting 404s.
+2. **Add a canonical tag to the blog listing template.** Affects four pages: `/blog`,
+   `/en/blog`, `/webinare`, `/whitepaper-blog`. Replace the placeholder titles
+   (`blog`, `Webinare`, `Whitepaper`) at the same time. See `blog-fix-anleitung.md`.
+3. **Fix the 88 meta descriptions.** 75 over length, 11 too short, 2 absent. Written
+   replacements for every one are in `meta-descriptions-vorschlaege.csv`. Start with
+   `/en/` (20 characters), `/ki-beschaffungsplattform` (236), and the five blog posts
+   over 400.
 4. **Replace `&amp;` with `&`** in the title field of `/en/management`,
    `/en/industrien/dienstleistungen`, and `/en/case_study_tennis-point`.
 
 ### High, next 30 days
 
 5. **Rewrite `/preise-hivebuy` and `/en/pricing` titles.** Highest intent, zero keyword.
-6. **Trim the two over-length meta descriptions** (236 and 228 characters).
+6. **Fix the H1 templates.** 56 pages are wrong, but they trace to roughly four
+   templates: integrations (2 H1), case studies and `/lösungen` (0 H1), `ki-agenten`
+   (4 H1), and the listing template. Start with the 25 pages that have no H1 at all,
+   including `/lösungen` and `/kundenreferenzen`.
 7. **Rebuild `/ki-beschaffungsplattform` for conversion.** Add the webinar or demo
    offer. A 0.06 percent rate on 26,715 views is the largest single opportunity here.
 8. **Consolidate the six demo landing pages** to one plus redirects.
@@ -477,7 +542,8 @@ co-market with named integration partners; pursue inclusion in
 14. **Make `/en/` slugs consistently English**, with 301s from the German-slugged
     `/en/` URLs.
 15. **Internally link the blog cluster** from `/produkt`, `/loesungen`, `/preise-hivebuy`.
-16. **Fix the double H1** on `/workflows-einkauf` and audit the department templates.
+16. **Fix the remaining H1 outliers** after the template work in item 6:
+    `/anbindungsanleitung-sap-business-one` (3 H1) and `/finanzabteilung` (2 H1).
 17. **Shorten the 28 titles over 60 characters.**
 18. **Clean up portal junk**: temporary slugs, test pages, lorem ipsum posts, `/untitled`.
 19. **Investigate the app error pages** drawing 4,091 combined views
