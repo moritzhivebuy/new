@@ -223,16 +223,17 @@ This also dissolves the landing page consolidation item in section 5.2: separate
 campaign variants are legitimate for ads, they were only a problem because they were
 competing in the organic index.
 
-**Open decision on `/ki-beschaffungsplattform`.** It sits outside `/lp_`, draws 26,715
-views, carries the AI positioning, and links three times into the product pages. If it
-is ads-only it should be `noindex` like the rest, and its 0.06 percent conversion rate
-becomes a paid-media finding rather than an SEO one: 26,715 paid clicks for 16 form
-submissions. If it is meant to rank for "KI-Beschaffungsplattform" it should become a
-website page in the sitemap with hreflang and a trimmed meta description.
+**`/ki-beschaffungsplattform`: decided 2026-08-20.** Confirmed by the site owner as a
+landing page, so it goes to `noindex` with the rest. It sits outside `/lp_`, draws
+26,715 views and links three times into the product pages, which is why it looked
+ambiguous from the data alone.
 
-This cannot be resolved from the available data. The HubSpot content analytics pull
-carries no traffic-source dimension, so whether those 26,715 views are paid or organic
-is unknown here. See section 10, limitation 1.
+That settles the SEO question and opens a paid-media one: 26,715 paid clicks producing
+16 form submissions is a 0.06 percent conversion rate. That belongs to the ads budget
+rather than this report, but the number is large enough that it should not be lost.
+
+Its 236 character meta description should still be trimmed. A `noindex` page can still
+be shown in ad previews and shared links.
 
 ### 2.5 Canonical and sitemap disagree on umlaut encoding
 
