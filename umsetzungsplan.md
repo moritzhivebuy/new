@@ -9,24 +9,30 @@ depriorisiert, `/ki-beschaffungsplattform` gilt als Landing Page und geht auf `n
 
 Ich habe im HubSpot-Portal geprüft, was ich per API tatsächlich ändern kann:
 
-| Objekttyp | Lesen | Schreiben | Konsequenz |
+Zwei Grenzen, die ich in dieser Reihenfolge entdeckt habe. Die zweite habe ich erst
+beim Ausführungsversuch gefunden, sie hebt die erste auf.
+
+| Objekttyp | Objektrechte | Werkzeug freigegeben | Ergebnis |
 |---|---|---|---|
-| `BLOG_POST` | ja | **ja** | Titel und Meta-Description kann ich setzen |
-| `LANDING_PAGE` | ja | **ja** | Metadaten inklusive Title, Meta, Slug, Sprache |
-| `SITE_PAGE` | ja | **nein** | 72 Seiten kann ich nicht anfassen |
-| Templates, Blog-Einstellungen, Redirects, Spracheinstellungen | nein | nein | nur über die HubSpot-Oberfläche |
+| `BLOG_POST` | Schreiben erlaubt | **nein** | kann ich nicht ändern |
+| `LANDING_PAGE` | Schreiben erlaubt | **nein** | kann ich nicht ändern |
+| `SITE_PAGE` | **Schreiben gesperrt** | kein Werkzeug vorhanden | kann ich nicht ändern |
+| Templates, Blog-Einstellungen, Redirects, Sprachen | nicht per API erreichbar | | nur Oberfläche |
 
 `SITE_PAGE` steht im Portal auf `writeAccess: NOT_AVAILABLE`, und es existiert kein
-Site-Page-Werkzeug. Das ist keine Berechtigungsfrage, die man mir erteilen könnte,
-sondern eine Grenze der Schnittstelle.
+Site-Page-Werkzeug. Unabhängig davon sind `manage_blog_post` und `manage_landing_page`
+in meiner Session nicht freigegeben, auch nicht für Lesezugriffe.
 
-**Realistische Aufteilung der 88 Meta-Descriptions:**
+**Fazit: ich kann in HubSpot nichts ändern.** Lesen kann ich über Analytics und CRM,
+prüfen kann ich über HTTP-Abrufe der Live-Seiten. Schreiben nicht.
 
-| Gruppe | Anzahl | Wer |
-|---|---|---|
-| Blogposts | 14 | **ich** |
-| Site Pages | 72 | **du** |
-| Listing-Seiten `/webinare`, `/whitepaper-blog` | 2 | **du**, sitzt in den Blog-Einstellungen |
+**Aufteilung der 88 Meta-Descriptions:**
+
+| Gruppe | Anzahl | Wer | Vorlage |
+|---|---|---|---|
+| Blogposts | 14 | du | `blogpost-metas-zum-einsetzen.md`, mit Editor-Links |
+| Site Pages | 72 | du | `meta-descriptions-vorschlaege.csv` |
+| Listing-Seiten `/webinare`, `/whitepaper-blog` | 2 | du | Blog-Einstellungen |
 
 ---
 
@@ -269,8 +275,8 @@ sonst untergeht.
 | # | Was | Wer | Aufwand | Wirkung |
 |---|---|---|---|---|
 | 1 | `noindex` auf 11 Landing Pages | du | 20 min | hoch |
-| 2 | 14 Blogpost-Metas | **ich** | auf Zuruf | mittel |
-| 3 | Meta `/ki-beschaffungsplattform` | **ich** | auf Zuruf | mittel |
+| 2 | 14 Blogpost-Metas | du | 45 min | mittel |
+| 3 | Meta `/ki-beschaffungsplattform` | du | 5 min | mittel |
 | 4 | 3 `&amp;`-Titles, 2 Money-Titles, `/en/` Meta | du | 20 min | hoch |
 | 5 | Canonical im Listing-Template | Dev | 30 min | hoch |
 | 6 | Spracheinstellung `de`, 3 falsche Seiten | du | 1 h | hoch |
