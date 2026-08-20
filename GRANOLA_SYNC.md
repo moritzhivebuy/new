@@ -185,11 +185,41 @@ Antwortvorschlag-Notiz hängen, damit der Owner es direkt aus dem Kontakt heraus
 2. Beim Anlegen der Notiz `hs_attachment_ids` auf diese File-ID setzen.
 3. Statt des Container-Pfads den HubSpot-Dateilink in Notiz und Slack-DM nennen.
 
-**Blocker:** Der Private App Token hat die Files-Scopes nicht. Der Upload wird mit
-`MISSING_SCOPES` abgewiesen, benötigt wird einer von `files.write`, `files` oder
-`files.ui_hidden.write`. Auch der MCP-Connector und die Slack-Tools bieten keinen Datei-Upload.
-Sobald der Scope in den Einstellungen der Private App ergänzt ist, wird Schritt 1 bis 3 aktiviert.
-Bis dahin bleibt es beim Container-Pfad, und das PDF muss manuell weitergegeben werden.
+**Status:** Der Files-Scope wurde am 20.08.2026 ergänzt, der Upload funktioniert. Erster Fall:
+File 456625533137, angehängt an Notiz 513254551785 und 513295632616 am Kontakt 738633192677.
+Ein Download-Link auf sieben Tage lässt sich per
+`GET /files/v3/files/{fileId}/signed-url?expirationSeconds=604800` erzeugen.
+
+## Bearbeitbare Fassung als Google Slides (Teil d3)
+
+Neben dem PDF entsteht eine bearbeitbare Präsentation, damit der Owner Inhalte anpassen kann
+(Vorgabe Moritz, 20.08.2026: als Google Slides, Freigabe an alle Hivebuy-Mitarbeitenden).
+
+Ablauf:
+
+1. `python3 scripts/render_pptx.py output/<kunde-slug>-impact-ladder.json` erzeugt aus demselben
+   JSON wie das PDF eine fünfseitige Präsentation im 16:9-Format (Titel, Potenziale, Ladder 1+2,
+   Ladder 3+4, Summary mit Zahlen und CTA). Schriften sind Frank Ruhl Libre und DM Sans, beide in
+   Google Slides vorhanden.
+2. `python3 scripts/slim_pptx.py output/<datei>.pptx` entfernt die ungenutzten Layouts, das
+   Thumbnail und die Druckereinstellungen, 37 KB werden zu 19 KB. Das ist nötig, weil der Inhalt
+   beim Upload als Base64 im Tool-Aufruf übergeben wird und die unverkleinerte Datei über der
+   Ausgabegrenze liegt.
+3. Upload per `mcp__Google_Drive__create_file` mit
+   `contentMimeType=application/vnd.openxmlformats-officedocument.presentationml.presentation`.
+   Drive konvertiert die Datei dabei in eine bearbeitbare Google-Slides-Präsentation.
+4. Freigabe per `mcp__Google_Drive__share_file`. Das Tool erwartet eine E-Mail-Adresse, einen
+   Domain-Modus gibt es nicht. Für "alle Hivebuy-Mitarbeitenden" ist deshalb eine Google-Gruppe
+   nötig (Gruppenadresse noch zu klären), alternativ setzt der Owner die Domainfreigabe einmalig
+   in der Drive-Oberfläche am Zielordner.
+5. Slides-Link zusätzlich zum PDF in Antwortvorschlag und Slack-DM nennen.
+
+**Wichtig:** Das PDF aus `template/template.html` bleibt die verbindliche Fassung für den Kunden,
+das Layout wird nie verändert. Die Präsentation ist die Arbeitsversion und darf davon abweichen.
+
+**Offen:** Der Google-Drive-Connector ist in dieser Umgebung unzuverlässig, er war am 20.08.2026
+kurz verfügbar und dann wieder weg. Fällt er in einem Lauf aus, wird die Präsentation trotzdem
+erzeugt und nach HubSpot hochgeladen, und der fehlende Slides-Link wird in der Log-Notiz vermerkt.
 
 ## Slack-Benachrichtigung (Teil e)
 
