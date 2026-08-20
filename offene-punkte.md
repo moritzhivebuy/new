@@ -70,7 +70,6 @@ Alles an einer Stelle: Einstellungen, Content, Blog, dann je Blog auswählen.
 | Blog | ist | soll |
 |---|---|---|
 | `/blog` | `blog` | `Einkauf & Beschaffung: Blog für den Mittelstand \| Hivebuy` |
-| `/en/blog` | `blog` | `Procurement & Purchasing Blog \| Hivebuy` |
 | `/webinare` | `Webinare` | `Webinare zu Einkauf und Beschaffung \| Hivebuy` |
 | `/whitepaper-blog` | `Whitepaper` | `Whitepaper für Einkauf und Beschaffung \| Hivebuy` |
 
@@ -84,9 +83,6 @@ Webinare zu Einkauf und Beschaffung: Praxisberichte, Produktneuheiten und KI im 
 
 /whitepaper-blog
 Whitepaper zu Einkauf und Beschaffung: Leitfäden zu KI, Automatisierung, Softwareauswahl und Einführung. Kostenlos zum Download.
-
-/en/blog
-The Hivebuy blog on procurement and purchasing: practical guides, benchmarks and advice for mid-sized companies. Free to read.
 ```
 
 ### 4c Sprachwerte, das ist der wichtige Teil
@@ -96,7 +92,7 @@ The Hivebuy blog on procurement and purchasing: practical guides, benchmarks and
 | `/blog` | `de-de` | `de` | `de-de` gilt nur für Deutschland, ihr adressiert DACH |
 | `/webinare` | **`en`** | `de` | deutsche Seite, falsch ausgezeichnet |
 | `/whitepaper-blog` | **`en`** | `de` | deutsche Seite, falsch ausgezeichnet |
-| `/en/blog` | `en` | `en` | korrekt, nicht anfassen |
+| `/en/blog` | `en` | entfernen | Sprachvariante löschen, siehe Schritt 11 |
 
 **Das ist die Ursache des Sprachproblems.** Es sind drei Werte, nicht 45 Einzelseiten.
 Damit lösen sich zugleich das `de-de` im hreflang des Blogs und die drei Listing-Seiten,
@@ -144,9 +140,12 @@ deutschen Seiten `Hivebuy Hilfecenter`:
 
 ## Schritt 7: Canonical im Listing-Template
 
-**Betroffen, live geprüft:** `/blog`, `/en/blog`, `/webinare`, `/whitepaper-blog` haben
+**Betroffen, live geprüft:** `/blog`, `/webinare` und `/whitepaper-blog` haben
 **keinen** Canonical. `/hilfecenter` und `/hilfecenter/kb-search-results` haben einen,
 die sind in Ordnung.
+
+`/en/blog` ist aus dieser Liste gestrichen, seit die Seite per 301 weiterleitet. Eine
+weiterleitende URL braucht keinen Canonical.
 
 Der übrige Standard-Head ist vorhanden, geprüft sind `og:url`, JSON-LD und auf `/blog`
 zusätzlich `rel="next"`. Es fehlt gezielt der Canonical.
@@ -216,20 +215,69 @@ jeder Post trägt genau einen klaren Link zurück auf die passende kommerzielle 
 
 ---
 
-## Schritt 11: Entscheidung englischer Blog
+## Schritt 11: Englischer Blog abschalten, ENTSCHIEDEN
 
-`/en/blog` antwortet mit 200, jedes `/en/blog/<slug>` mit 404. Zwei englische Drafts
-liegen unveröffentlicht im Portal.
+**Entscheidung vom 2026-08-20: abschalten.** Umsetzung ist teilweise schon erfolgt.
 
-Meine Empfehlung: **abschalten**, bis der deutsche Blog Traffic zieht. Also
-`hreflang="en"` aus dem Listing-Template entfernen und `/en/blog` auf `/blog`
-weiterleiten. Zwei Sprachen zu bedienen, von denen die erste noch nicht funktioniert,
-verteilt den Aufwand auf die falsche Achse.
+### Was bereits erledigt ist
 
-Wenn Englisch strategisch ist, dann umgekehrt: die zwei Drafts fertig übersetzen, Slugs
-auf Englisch ziehen, veröffentlichen, und auf mindestens zehn Artikel aufbauen.
+Der Redirect existiert im Portal, `id=244527969469`:
 
-**Blockiert:** Schritt 4a und 4b für `/en/blog` sind sinnlos, solange das offen ist.
+```
+/en/blog  ->  301  ->  /blog
+```
+
+Live geprüft: `/en/blog` antwortet mit `301` und `Location: https://www.hivebuy.com/blog`.
+
+### Was jetzt dringend ist
+
+`/blog` emittiert weiterhin:
+
+```html
+<link rel="alternate" hreflang="de-de" href="https://www.hivebuy.com/blog">
+<link rel="alternate" hreflang="en"    href="https://www.hivebuy.com/en/blog">
+```
+
+Das `en`-Ziel **leitet jetzt weiter**. Ein hreflang, das auf eine 301 zeigt, ist ein
+ungültiger Verweis: Google verwirft solche Ziele und im Zweifel den gesamten
+hreflang-Cluster der Seite.
+
+**Der Zwischenzustand ist schlechter als der Ausgangszustand.** Vorher war `/en/blog`
+eine leere, aber erreichbare Seite. Jetzt ist es ein kaputter Verweis. Das sollte nicht
+lange so stehen.
+
+**Wo:** Einstellungen, Content, Blog. Die englische Sprachvariante aus der
+Sprachgruppe des Blogs entfernen, damit HubSpot das `hreflang="en"` nicht mehr
+erzeugt. Gleichzeitig `de-de` auf `de` stellen, siehe Schritt 4c.
+
+**Wer:** du. Über die API nicht erreichbar, alle Blog-Endpunkte für Content-Gruppen
+geben 404 (`cms/v3/blogs`, `cms/v3/blogs/content-groups`, `cms/v3/blog-settings`).
+
+**Aufwand:** 10 Minuten. **Priorität: hoch**, weil der aktuelle Zustand schädlicher
+ist als vorher.
+
+### Die zwei englischen Drafts, bitte entscheiden
+
+Im Portal liegen zwei unveröffentlichte englische Posts, beide mit
+`translatedFromId` auf ihr deutsches Original:
+
+| id | slug | Zustand |
+|---|---|---|
+| 421732457681 | `en/blog/bedarfsanforderung-banf` | DRAFT, Titel englisch, Slug deutsch |
+| 422018885826 | `en/blog/beschaffungsprozess-optimieren` | DRAFT, Titel noch deutsch |
+
+Solange sie DRAFT sind, liefern die URLs 404, sie schaden also nicht. Zwei Gründe
+sprechen dennoch für Aufraeumen: sie halten die englische Blogstruktur in HubSpot am
+Leben, und ein versehentliches Veröffentlichen würde zwei halbfertige Seiten live
+schalten, eine davon mit deutschem Titel unter englischem Pfad.
+
+**Ich habe sie nicht angefasst.** Löschen ist nicht umkehrbar, und du hast es nicht
+verlangt. Sag Bescheid, dann archiviere ich sie per API, oder du lässt sie liegen.
+
+### Was dadurch entfällt
+
+Title und Description für `/en/blog` aus Schritt 4a und 4b sind gegenstandslos, die
+Seite leitet weiter. Diese beiden Zeilen sind dort gestrichen.
 
 ---
 
