@@ -1,346 +1,516 @@
-# SEO Analysis: www.hivebuy.com
-**Date:** 2026-03-30
-**Analyst:** Claude (Automated Analysis)
+# SEO Analysis: www.hivebuy.com (v2, first-party data)
+
+**Date:** 2026-08-20
+**Analyst:** Claude (automated analysis)
 **Branch:** claude/seo-analysis-hivebuy-nlk2v
+**Supersedes:** v1 (commit `bd9464c`, 2026-03-30)
 
 ---
 
-## Executive Summary
+## Data basis
 
-Hivebuy.com is a Berlin-based B2B SaaS platform for indirect procurement (Procure-to-Pay). The site targets primarily the German-speaking DACH market and SME/Mittelstand segment. The analysis surfaces **significant structural and technical SEO issues** — particularly around URL inconsistency, missing hreflang/multilingual architecture, weak page titles, and limited content volume — despite solid brand positioning on third-party review platforms.
+This revision is built on first-party HubSpot data plus live HTTP checks, not on
+Google search snippets. Everything below is traceable to one of these sources:
 
-**Overall SEO Health: ⚠️ Moderate (needs structural fixes)**
+| Source | Scope |
+|---|---|
+| HubSpot content analytics, portal `145132698` | 2026-02-19 to 2026-08-19, TOTALS mode, top 100 rows by raw views |
+| HubSpot CRM inventory | `SITE_PAGE` (175 records), `LANDING_PAGE` (16), `BLOG_POST` (52) |
+| Live HTTP fetches | `robots.txt`, `sitemap.xml` (180 URLs), on-page audit of 25 pages |
+
+### Why v1 had to be replaced
+
+v1 was written when `www.hivebuy.com` returned HTTP 403 to the fetch tool, so it
+inferred the site from Google result snippets. That inference was wrong on most
+of its central points. The 403 turned out to be user-agent filtering only: with a
+normal browser user agent the site responds 200, so a real audit was possible.
+
+**v1 findings that are factually wrong and are retracted:**
+
+| v1 claim | Verified reality |
+|---|---|
+| "Critical: German slugs under `/en/`" (`/en/preise-hivebuy`, `/en/ueber-hivebuy`) | Those URLs do not exist. German pages sit at root (`/preise-hivebuy`, `/ueber-hivebuy`). 105 root pages, 70 `/en/` pages. Partially valid in a different form, see 2.3. |
+| "Critical: enforce www vs non-www 301" | Already correct. `http://hivebuy.com`, `https://hivebuy.com`, `http://www.hivebuy.com` all resolve to `https://www.hivebuy.com/`. |
+| "robots.txt unknown, may throttle Googlebot" | robots.txt is clean, minimal, and declares the sitemap. No important section is blocked. |
+| "No structured data confirmed, add `Organization` and `SoftwareApplication`" | Already implemented. Homepage emits `Organization`, `SoftwareApplication`, `Offer`, `PriceSpecification`, `ContactPoint`, `PostalAddress`, `ImageObject`, `Person`, `PropertyValue`. Blog posts emit `BlogPosting` and `WebPage`. |
+| "Missing hreflang across all pages" | `hreflang` de/en is present on the bilingual page pairs. It is genuinely missing on the top landing page and on blog posts, see 2.4. |
+| "No case study pages, only one references page" | Case studies exist (`/case_study_brera`, 800 percent ROI; Case Study OUNDA, 521 percent ROI), plus industry pages and per-integration pages. |
+| "Roughly 15 to 20 `/en/` pages plus 10 blog posts indexed" | 180 URLs in the sitemap, 243 content objects in the portal, 52 blog posts. |
+| Keyword table with no AI or KI entry | The site has repositioned around AI. Homepage title is `Hivebuy.com - Die KI-Einkaufssoftware für Ihr Unternehmen`, and the single largest marketing page is `/ki-beschaffungsplattform`. |
 
 ---
 
-## 1. Technical SEO
+## Executive summary
 
-### 1.1 Indexation & Crawlability
+Technical SEO fundamentals are in better shape than v1 suggested: canonicalisation,
+domain handling, robots, sitemap hygiene, and structured data are largely correct.
 
-| Item | Finding | Status |
-|------|---------|--------|
-| Indexed pages (Google) | ~15–20 `/en/` pages + ~10 blog posts | ⚠️ Low |
-| Root domain behaviour | `www.hivebuy.com` → redirects to `/en/` | ✅ OK |
-| www vs non-www | Both `www.hivebuy.com` and `hivebuy.com` appear in search results | ❌ Issue |
-| robots.txt | Could not be fetched (403 block); unknown directives | ⚠️ Unknown |
-| XML Sitemap | Could not be fetched (403 block); unknown coverage | ⚠️ Unknown |
-| Bot blocking / 403 | Site aggressively blocks non-browser user agents (Cloudflare likely) | ⚠️ May affect crawlers |
+The real problems are elsewhere, and they are commercial rather than architectural:
 
-**Action items:**
-- Enforce a single canonical domain (either `www` or non-www) with a 301 redirect at the server level.
-- Verify robots.txt does not accidentally block important sections (`/en/`, `/blog/`).
-- Ensure all key pages are included in the XML sitemap and submitted to Google Search Console.
-- Confirm Cloudflare or WAF rules do not throttle Googlebot.
+1. **Roughly 15,200 pageviews over six months land on 404s** because four legacy
+   pages were unpublished without redirects. One of them, `/old`, drew 9.3 times
+   the traffic of the actual homepage and produced a paying customer.
+2. **Traffic and conversion are inversely correlated.** The two biggest marketing
+   pages convert at 0.06 and 0.29 percent. Webinar pages convert at 17 to 34 percent.
+3. **The blog is a sunk investment.** 52 posts with a solid topical cluster, and not
+   one of them appears in the top 100 pages by views.
+4. **A handful of concrete, cheap defects** on high-intent pages: a missing canonical
+   and a placeholder title on the blog hub, a 20 character meta description on the
+   English homepage, and money pages titled `Preise` and `Prices`.
+
+**Overall SEO health: moderate.** Foundations are sound. Value is leaking through
+redirects, conversion design, and content ROI, not through crawlability.
 
 ---
 
-### 1.2 URL Structure & Internationalisation
+## 1. Performance baseline (2026-02-19 to 2026-08-19)
 
-This is the **most critical structural issue** on the site.
+| Metric | Value |
+|---|---|
+| Raw views | 462,804 |
+| Form submissions | 598 |
+| Contacts | 363 |
+| Leads | 83 |
+| Customers | 123 |
+| Bounce rate | 77.6 percent |
+| Avg. time per pageview | 358 s |
 
-**Current URL structure (problematic):**
+Note on scope: these totals mix `www.hivebuy.com` marketing pages with the
+`hivebuy.de` application and tenant subdomains, which dominate raw views. The
+application is not a marketing surface, so marketing conclusions below are drawn
+from `www.hivebuy.com` rows only.
+
+---
+
+## 2. Technical SEO
+
+### 2.1 What is already correct
+
+| Item | Status |
+|---|---|
+| Domain canonicalisation | All host and scheme variants resolve to `https://www.hivebuy.com/` |
+| robots.txt | Minimal and correct. Blocks only previews, preference centres, two tag pages, and cache-buster parameters. Declares the sitemap. |
+| Sitemap hygiene | 180 URLs, no draft, test, temporary, or lorem ipsum URLs leaked into it |
+| Canonical tags | Present and self-referencing on every live page tested, with two exceptions noted below |
+| Structured data | Rich and correctly typed, including `SoftwareApplication` with `Offer` and `PriceSpecification` |
+| H1 | Exactly one on every page tested except `/workflows-einkauf` |
+
+### 2.2 Critical: legacy pages 404 instead of redirecting
+
+Four pages that carried real traffic and real conversions were unpublished. They now
+return HTTP 404 and canonicalise to `/404`. No 301 redirect was put in place.
+
+| URL | Views (6 mo) | Submissions | Contacts | Customers | Current status |
+|---|---|---|---|---|---|
+| `/old` | 12,820 | 6 | 6 | 1 | 404 |
+| `/homepage-old` | 1,486 | 0 | 2 | 1 | 404 |
+| `/en/old` | 713 | 0 | 1 | 0 | 404 |
+| `/loesungen-old` | 157 | 0 | 0 | 0 | 404 |
+| **Total** | **15,176** | **6** | **9** | **2** | |
+
+For comparison, the live homepage `https://www.hivebuy.com` recorded 1,376 views in
+the same window. `/old` therefore attracted 9.3 times the traffic of the page that
+replaced it, and it converted a customer while doing so.
+
+**Action:** 301 `/old` and `/homepage-old` to `/`, `/en/old` to `/en/`, and
+`/loesungen-old` to `/loesungen`. Do this before anything else in this report.
+
+### 2.3 Language architecture
+
+The site is genuinely bilingual: German at root, English under `/en/`.
+
+| Prefix | Page count |
+|---|---|
+| root, no prefix (German) | 105 |
+| `/en/` (English) | 70 |
+
+v1's slug criticism was aimed at URLs that do not exist, but a real version of the
+problem is present: several `/en/` pages reuse German slugs, so the English tree is
+not consistently English.
 
 ```
-/en/                          → English homepage
-/en/ueber-hivebuy             → "About" page (German slug under /en/)
-/en/preise-hivebuy            → "Prices" page (German slug under /en/)
-/en/kundenreferenzen          → "Customer References" (German slug under /en/)
-/en/workflows-einkauf         → "Purchasing Workflows" (German slug under /en/)
-/en/it-abteilung              → "IT Department" (German slug under /en/)
-/blog/[slug]                  → Blog posts (NO language prefix at all)
-/wettbewerbsvergleich-procurement/  → Competitor page (NO language prefix)
+/en/workflows-einkauf                        German slug, English page
+/en/industrien/logistik                      German slug, English page
+/en/industrien/gesundheitswesen              German slug, English page
+/en/industrien/kmu-dezentrale-organisationen German slug, English page
+/en/industrien/dienstleistungen              German slug, English page
+/en/lösungen                                 German slug plus umlaut
+/en/ki-agenten-backoffice                    German slug
+/en/testzugang                               German slug
+/en/ersparnisrechner_hivebuy                 German slug plus underscore
 ```
 
-**Issues identified:**
-- **German slugs under `/en/` paths:** URLs like `/en/ueber-hivebuy`, `/en/it-abteilung`, `/en/preise-hivebuy`, `/en/kundenreferenzen`, and `/en/workflows-einkauf` all contain German words under an `/en/` (English) directory. This is semantically contradictory and confusing for both search engines and users.
-- **Blog lives outside the language structure:** `/blog/[slug]` has no `/en/` or `/de/` prefix, making it orphaned from the main URL hierarchy.
-- **No German (`/de/`) pages found indexed:** Despite targeting a primarily German-speaking DACH audience, zero `/de/` pages were found in Google's index. It is unclear whether a German version exists.
-- **URL typo:** `/en/analytics-reportings` — "reportings" is not standard English; should be `/en/analytics-reporting`.
-- **Missing hreflang tags:** Without `/de/` pages and proper `hreflang="de"` / `hreflang="en"` tags, Google cannot determine which language version to serve to which audience.
+Meanwhile `/en/pricing`, `/en/helpcenter`, and `/en/management` do use English slugs,
+so the tree is internally inconsistent rather than uniformly wrong.
 
-**Recommended URL architecture:**
+### 2.4 hreflang defects
+
+`hreflang` is implemented, but not uniformly.
+
+| Page group | hreflang | Issue |
+|---|---|---|
+| Main site pages | `de`, `en` | Correct |
+| Blog hub `/blog` | `de-de`, `en` | Value inconsistent with the rest of the site (`de-de` vs `de`) |
+| Blog posts | none | Missing entirely |
+| `/ki-beschaffungsplattform` | none | Missing on the highest-traffic marketing page |
+| `/lp_kostenlose_demo_0825` | none | Missing |
+
+The English blog is also a shell: `/en/blog` returns 200, but
+`/en/blog/ki-im-einkauf` and `/en/blog/beschaffungsprozess-optimieren` both return
+404. So `/blog` advertises an English alternate that has no English articles behind it.
+
+### 2.5 URL and canonical encoding
+
+Non-ASCII characters appear unencoded in slugs and, worse, inside canonical tags.
 
 ```
-/de/                          → German homepage (primary, DACH audience)
-/de/ueber-hivebuy             → About (DE)
-/de/einkaufssoftware-preise   → Prices (DE)
-/de/kundenreferenzen          → Customer References (DE)
-/de/blog/[slug]               → Blog (DE)
-/en/                          → English homepage
-/en/about-hivebuy             → About (EN — English slug)
-/en/pricing                   → Prices (EN)
-/en/customer-references       → Customer References (EN)
-/en/blog/[slug]               → Blog (EN)
+/en/lösungen        canonical: https://www.hivebuy.com/en/lösungen   (unencoded umlaut)
+/blog/strategischer-einkäufer-aufgaben-kompetenzen
+/blog/effizientes-vertragsmanagement-optimieren-sie-ihre-geschäftsprozesse
+/blog/lieferantenmanagement-definition-ziele-prozesse-und-software-der-komplette-überblick
+/blog/maverick-buying-ursachen-risiken-und-lösungsansätze-im-einkauf
 ```
 
----
+Canonical URLs should be percent-encoded ASCII. Unencoded umlauts risk the canonical
+being ignored or resolved inconsistently between crawlers.
 
-### 1.3 Page Speed & Core Web Vitals
+### 2.6 Second domain and application surfaces
 
-No public CrUX data was retrievable for hivebuy.com (likely insufficient traffic volume for field data). Recommended checks:
+`hivebuy.de` is a separate indexed domain. Google returns both
+`https://app.hivebuy.de/` (title `Hivebuy eProcurement - www.hivebuy.com`) and
+`https://hivebuy.de/de/datenschutz/`, so the application login and a legacy legal
+page are in the index and split brand signals away from `www.hivebuy.com`.
 
-| Metric | Target | Tool |
-|--------|--------|------|
-| LCP (Largest Contentful Paint) | < 2.5s | PageSpeed Insights |
-| INP (Interaction to Next Paint) | < 200ms | PageSpeed Insights |
-| CLS (Cumulative Layout Shift) | < 0.1 | PageSpeed Insights |
+Customer-named tenant subdomains carry substantial tracked traffic:
 
-**Action:** Run `https://pagespeed.web.dev/` for both mobile and desktop. Prioritise mobile score, as Google uses mobile-first indexing.
+| Subdomain | Views (6 mo) |
+|---|---|
+| `app.hivebuy.de` (all paths) | ~200,000 |
+| `mediamarktsaturn.hivebuy.de` | 23,153 |
+| `igus.hivebuy.de` | 3,152 |
+| `vflbochum.hivebuy.de` | 1,423 |
+| `secde.hivebuy.de` | 882 |
+| `hydrogenious.hivebuy.de` | 600 |
+| `heo.hivebuy.de` | 187 |
+| `frontend.staging.hivebuy.de` | 1,118 |
 
----
+Two things follow. First, a **staging environment** is receiving real traffic and is
+being tracked in production analytics. Second, tenant subdomains embed customer names
+in hostnames. Neither should be indexable.
 
-### 1.4 Structured Data / Schema Markup
+**Could not verify:** these hosts were unreachable from the analysis environment
+(the outbound proxy refused the CONNECT tunnel), so their `robots.txt` and
+`noindex` status is unconfirmed. Treat this as a to-check item, not a proven defect,
+with the exception of `app.hivebuy.de`, which Google demonstrably has indexed.
 
-No structured data was confirmed on the site. For a B2B SaaS with reviews and a help centre, the following schema types are strongly recommended:
-
-| Schema Type | Page | Benefit |
-|-------------|------|---------|
-| `Organization` | Homepage | Brand knowledge panel, logo in SERP |
-| `SoftwareApplication` | Product page | Rich snippets for SaaS products |
-| `FAQPage` | Product/Feature pages | FAQ accordion rich results |
-| `Review` / `AggregateRating` | Homepage or product page | Star ratings in SERP (use 3rd-party reviews) |
-| `BreadcrumbList` | All pages | Breadcrumb rich results |
-| `Article` | Blog posts | Article rich results with publish date |
-
-**Note:** Google prohibits self-review markup. Source reviews from Capterra, OMR, or G2 to display `AggregateRating` legitimately.
-
----
-
-## 2. On-Page SEO
-
-### 2.1 Page Titles Analysis
-
-| Page | Current Title | Issues |
-|------|--------------|--------|
-| Homepage | "Hivebuy.com - Purchasing software for your company" | Includes `.com` in title (unusual); missing primary DE keyword "Einkaufssoftware"; vague |
-| About | "About Hivebuy" | Too short, no keywords, no value prop |
-| Product | "Hivebuy product overview" | Generic, no target keyword |
-| Product Catalogs | "Product catalogs - Hivebuy.com" | OK, but could be stronger |
-| Invoice Management | "Invoice management - Hivebuy.com" | Reasonable |
-| Analytics | "Budget Analytics & Reports - Hivebuy.com" | URL says "reportings" — inconsistency |
-| Management | "Cost control & scaling in management - Hivebuy.com" | Too long, unclear audience |
-| IT Department | "Things run better with Hivebuy - without a major IT project" | Marketing tagline, not a keyword-rich title |
-| Integrations | "Integrations - Hivebuy.com" | Too vague; which integrations? |
-| Contact | "Contact Hivebuy" | Minimal; no keyword value needed here — acceptable |
-| Prices | "Prices - Hivebuy.com" | Could include the product name and keyword |
-
-**Recommended title format:** `[Primary Keyword] | Hivebuy – [Value Prop]`
-
-**Examples:**
-- Homepage: `Einkaufssoftware für Unternehmen | Hivebuy – Procure-to-Pay`
-- IT page: `Einkaufssoftware ohne IT-Projekt | Hivebuy`
-- Management: `Kostenkontrolle & Budgetübersicht | Hivebuy für Management`
+Application error pages are also accumulating traffic worth investigating on their
+own merits: `/not-allowed` 1,931 views, `/not-found` 1,807, `/something-went-wrong` 353.
 
 ---
 
-### 2.2 Meta Descriptions
+## 3. On-page SEO
 
-Meta descriptions were not directly accessible (403 on fetch). Based on search snippet previews, descriptions appear to be descriptive but opportunity exists to:
-- Include a clear CTA (e.g., "Kostenlos testen" / "Book a demo")
-- Front-load the primary keyword
-- Stay within 150–160 characters
-- Make each page's description unique
+### 3.1 Title defects on high-intent pages
 
----
+| Page | Current title | Length | Issue |
+|---|---|---|---|
+| `/preise-hivebuy` | `Preise` | 6 | Bare label on the highest commercial-intent page |
+| `/en/pricing` | `Prices` | 6 | Same |
+| `/blog` | `blog` | 4 | Lowercase placeholder |
+| `/kontakt` | `Kontaktieren Sie Hivebuy` | 24 | Acceptable |
+| Homepage | `Hivebuy.com - Die KI-Einkaufssoftware für Ihr Unternehmen` | 56 | Good, keyword-led. `.com` in the title is still unusual. |
 
-### 2.3 Heading Structure
+28 of 172 titled site pages exceed 60 characters, the longest at 100
+(`/webinar-tennispoint`). Those will truncate in results.
 
-Heading structures could not be directly audited (403 block), but based on scraped content themes:
+Suggested rewrites for the two money pages:
 
-**Likely issues:**
-- Multiple H1s or missing H1 on some pages
-- H1 likely uses marketing taglines rather than target keywords
-- Shallow heading hierarchy on feature pages
+```
+/preise-hivebuy  ->  Preise & Pakete | Einkaufssoftware ab … | Hivebuy
+/en/pricing      ->  Pricing & Plans | Procurement Software | Hivebuy
+```
 
-**Recommendation:** Audit all pages with a crawler (Screaming Frog, Sitebulb) to verify:
-- Exactly one `<h1>` per page
-- H1 contains the primary target keyword
-- H2–H4 use related/secondary keywords
-- No skipped heading levels (e.g., H1 → H3)
+### 3.2 Missing canonical
 
----
+`/blog` has **no canonical tag at all**. Every other page tested has one. Given the
+blog hub is paginated and tag-filtered, this is the one place a canonical matters most.
 
-### 2.4 Content Quality & Keyword Coverage
+### 3.3 Meta descriptions
 
-**Keyword themes identified:**
+| Page | Length | Verdict |
+|---|---|---|
+| `/` | 158 | Good |
+| `/en/` | **20** | Effectively missing on the English homepage |
+| `/ki-beschaffungsplattform` | **236** | Will truncate. Highest-traffic page. |
+| `/lp_kostenlose_demo_0825` | **228** | Will truncate |
+| `/preise-hivebuy` | 148 | Good |
+| `/kontakt` | 148 | Good |
+| `/blog/ki-im-einkauf` | 169 | Slightly long |
 
-| Keyword | Intent | Coverage |
-|---------|--------|----------|
-| Einkaufssoftware | Informational/Commercial | ✅ Blog + some pages |
-| Beschaffungssoftware | Informational/Commercial | ⚠️ Partial (blog only) |
-| Procure-to-Pay Software | Commercial | ⚠️ Partial |
-| indirekter Einkauf | Informational | ✅ Blog |
-| Rechnungsmanagement Software | Commercial | ✅ Dedicated page |
-| Vertragsmanagement | Commercial | ⚠️ Page exists but thin? |
-| Genehmigungsworkflow | Commercial | ❌ No dedicated coverage |
-| Maverick Buying | Informational | ✅ Blog post |
-| Einkaufssoftware Vergleich | Bottom-of-funnel | ✅ Competitor page |
-| Einkaufssoftware Preise | Bottom-of-funnel | ⚠️ Prices page exists but weak title |
+**Limitation:** HubSpot does not expose meta description as a readable property on
+`SITE_PAGE` or `LANDING_PAGE` objects, so lengths were measured by fetching live HTML
+for a 25 page sample rather than all 243 content objects. A full pass needs a crawler.
 
-**Content gaps:**
-- No dedicated content on **"e-procurement"**, **"spend management"**, or **"purchase order software"**
-- No case study / success story landing pages (only a single references page)
-- Blog is almost entirely in German — no English blog content for international SEO
-- Thin content on some service pages (IT, Management, Purchasing personas) — these appear to be single-scroll marketing pages rather than in-depth SEO content
+### 3.4 HTML entity bug in rendered titles
 
----
+Raw `&amp;` reaches the rendered `<title>`, so results display the entity rather than
+an ampersand:
 
-### 2.5 Internal Linking
+```
+/blog/ki-im-einkauf                  <title>KI im Einkauf: Vorteile, Anwendungsfälle &amp; Umsetzung</title>
+/blog/beschaffungsprozess-optimieren <title>Beschaffungsprozess optimieren: Tipps &amp; Strategien</title>
+/en/industrien/dienstleistungen      Procurement Software for Service Providers – Manage Purchasing &amp; Costs | Hivebuy
+```
 
-Could not directly audit internal links, but observations:
-- The blog (`/blog/`) is structurally separated from `/en/` pages — this may reduce internal link equity flowing between blog and service pages
-- No breadcrumb navigation confirmed
-- The competitor comparison page (`/wettbewerbsvergleich-procurement/`) lives outside the language hierarchy — may have limited internal link equity
+This is double-escaping in the template layer and affects every title containing an
+ampersand.
 
-**Recommendation:**
-- Add contextual internal links from blog posts to relevant feature/service pages
-- Implement breadcrumbs on all pages
-- Ensure the blog hub page links to all published posts (pagination)
-- Link from the homepage to key money pages (pricing, product, integrations)
+### 3.5 Heading structure
 
----
+`/workflows-einkauf` emits **two H1 elements**. Every other page tested emits exactly
+one. Worth a template check on the German department pages.
 
-## 3. Off-Page SEO / Authority Signals
+### 3.6 Inconsistent title decoration
 
-### 3.1 Brand Presence & Reviews
-
-| Platform | Status | Details |
-|----------|--------|---------|
-| Capterra | ✅ Active | Multiple reviews; positive sentiment; ease of use highlighted |
-| OMR Reviews | ✅ Listed | Insufficient reviews for aggregate rating yet |
-| G2 | ⚠️ Unclear | No confirmed active listing found |
-| wirtschaftsforum.de | ✅ Mentioned | Listed as top e-procurement provider in Germany |
-| it-daily.net | ✅ Mentioned | Featured in "beliebteste Einkaufssoftware" article |
-| Tracxn | ✅ Listed | Company profile with funding/competitor data |
-| CB Insights | ✅ Listed | Company profile |
-| firmenbild.com | ✅ Listed | Profile as "digitale Einkaufsplattform für den Mittelstand" |
-
-**Review sentiment highlights:**
-- **Pros:** Very easy to use, excellent Slack/Teams integration, Amazon Business integration, responsive support
-- **Cons:** No mobile app, missing integrations (Sevdesk, Google Chat), UI refresh issues post-approval
-
-### 3.2 Social Media
-
-| Channel | Status | Details |
-|---------|--------|---------|
-| LinkedIn | ✅ Active | ~2,192 followers; regular posts; partnership announcements |
-| Twitter/X | ❌ Not found | No confirmed presence |
-| YouTube | ⚠️ Unknown | Not surfaced in search results |
-| XING | ⚠️ Unknown | Relevant for DACH — not confirmed |
-
-**LinkedIn keywords used:** `einkauf`, `saas`, `procurement`, `eprocurement`, `enterprise software`, `Beschaffungslösung für den indirekten Einkauf`
-
-### 3.3 Backlink Profile (Estimated)
-
-Specific Ahrefs/Semrush data was not publicly available for hivebuy.com. Based on found mentions:
-
-**Estimated referring domain categories:**
-- Software review directories (Capterra, OMR, Software Advice)
-- German business media (wirtschaftsforum.de, it-daily.net, d-velop.de)
-- Startup databases (Tracxn, CB Insights)
-- Partner/integration ecosystem mentions (Schäfer Shop Deutschland)
-- Comparison content (softwareadvice.de)
-
-**Likely weaknesses:**
-- Low total referring domain count (startup, founded 2021)
-- Limited editorial backlinks from high-DA publications
-- No confirmed links from procurement/finance industry press (e.g., Beschaffung Aktuell, CPO Rising)
-- No English-language backlinks (limits international reach)
-
-**Link building opportunities:**
-1. **Digital PR:** Pitch to German business/procurement press (Beschaffung Aktuell, WEKA Business, Handelsblatt Mittelstand)
-2. **Review generation:** Drive more reviews on G2 and OMR to build aggregate rating schema
-3. **Partner co-marketing:** Co-authored content with integration partners (Amazon Business, Slack, SAP ecosystem blogs)
-4. **Industry roundups:** Target "beste Einkaufssoftware" and "e-procurement tools" roundup articles for inclusion
-5. **Podcast sponsorships/features:** Procurement-focused German podcasts
+Blog titles mix decorative glyphs without a rule: `✅ KPIs im Einkauf`,
+`RFQ-Prozess im Einkauf ✅`, `✓ Purchase-to-Pay einfach erklärt`,
+`Indirekter Einkauf ➤ Definition`, `Was ist Beschaffung? ➤ Strategie`. Pick one
+convention or drop them; leading glyphs in particular push the keyword rightwards.
 
 ---
 
-## 4. Competitive Landscape
+## 4. Conversion analysis
 
-### Key Competitors (DACH Market)
+This is the most actionable finding in the report, and v1 could not see it at all.
 
-| Competitor | Positioning | SEO Strength |
-|-----------|-------------|--------------|
-| Onventis | Enterprise-grade, Stuttgart-based, long-established | High |
-| Coupa | Enterprise global platform | Very High |
-| SAP Ariba | Enterprise ERP-integrated | Very High |
-| Precoro | Mid-market, US-based | Medium |
-| Simple System | C-parts marketplace focused | Medium |
-| Procurify | Cloud-based spend management | Medium |
-| Odoo | Open-source ERP suite | High |
-| Spendesk | Spend management incl. cards | High |
+| Page | Views | Submissions | Rate | Bounce |
+|---|---|---|---|---|
+| `/webinar-ki-einkaufsassistent` | 215 | 72 | **33.5 %** | 47.7 % |
+| `/webinar-ask-hivebuy` | 544 | 92 | **16.9 %** | 67.7 % |
+| `/kontakt` | 1,871 | 132 | **7.1 %** | 74.6 % |
+| `/whitepaper_ki_prompts` | 168 | 7 | 4.2 % | 89.8 % |
+| `/partnerprogramm` | 160 | 5 | 3.1 % | 93.2 % |
+| `/produktdemo` | 859 | 8 | 0.9 % | 77.5 % |
+| `/lp_kostenlose_demo_0825` | 14,597 | 43 | **0.29 %** | 89.8 % |
+| `/ki-beschaffungsplattform` | 26,715 | 16 | **0.06 %** | 87.9 % |
 
-**Hivebuy's SEO positioning opportunity:** The SME/Mittelstand segment is underserved by content specifically targeting *simple, fast-to-deploy* procurement software. Hivebuy's "live in 1 hour, no IT project" positioning is distinctive and should be reinforced with dedicated SEO content.
+`/webinar-ki-einkaufsassistent` converts roughly **560 times better per view** than
+`/ki-beschaffungsplattform`, and has by far the lowest bounce rate on the site.
 
----
+Read together: the two pages absorbing 41,312 views produce 59 submissions, while
+three webinar and contact pages absorbing 2,630 views produce 296. The traffic is
+arriving; the conversion path on the large pages is not working.
 
-## 5. Priority Action Plan
-
-### 🔴 Critical (Fix immediately)
-
-1. **Canonicalize www vs non-www** — 301 redirect one to the other, enforce in GSC
-2. **Fix German slugs under `/en/`** — Rename to English equivalents or migrate to proper `/de/` structure
-3. **Implement hreflang** — Add `hreflang="de"` and `hreflang="en"` tags (or `x-default`) across all pages
-4. **Move blog into language hierarchy** — `/en/blog/` and `/de/blog/`
-5. **Fix URL typo** — `/en/analytics-reportings` → `/en/analytics-reporting`
-
-### 🟡 High Priority (Next 30 days)
-
-6. **Rewrite page titles** — Include primary German and English keywords; remove `.com` from titles
-7. **Add structured data** — `Organization`, `SoftwareApplication`, `BreadcrumbList`, `FAQPage` on key pages
-8. **Audit robots.txt and sitemap** — Verify coverage and submit updated sitemap to Google Search Console
-9. **Create a German homepage `/de/`** — If one doesn't exist, this is a major gap for the primary audience
-10. **Improve meta descriptions** — Unique, keyword-rich, with CTA on all pages
-
-### 🟢 Medium Priority (Next 90 days)
-
-11. **Build out blog in both DE and EN** — Target 2–3 new articles/month per language
-12. **Add case study pages** — Individual customer stories (beyond the single "Kundenreferenzen" page)
-13. **Create a mobile app or improve responsiveness** — Noted as user complaint; also affects mobile SEO
-14. **Digital PR campaign** — Target 3–5 editorial placements in German business/procurement media per quarter
-15. **G2 profile optimisation** — Claim/create listing, drive reviews
-16. **Internal linking audit** — Connect blog posts to feature pages systematically
-17. **Core Web Vitals audit** — Run PageSpeed Insights, fix LCP/CLS issues
+**Actions:**
+1. Treat `/ki-beschaffungsplattform` as a conversion problem, not a traffic problem.
+   88 percent bounce at 190 s time-on-page suggests people read and leave, so the page
+   informs but never asks. Add the webinar or demo offer that demonstrably converts.
+2. Consolidate the six competing demo landing pages (see 5.2).
+3. Make the webinar format a repeatable programme rather than one-off events. It is
+   the single best-performing asset class on the site.
 
 ---
 
-## 6. Key Metrics to Track
+## 5. Content inventory
 
-| Metric | Tool | Frequency |
-|--------|------|-----------|
-| Organic sessions | Google Analytics / GSC | Weekly |
-| Keyword rankings (DE) | Semrush / Ahrefs | Weekly |
-| Indexed pages | Google Search Console | Monthly |
-| Core Web Vitals | PageSpeed Insights / GSC | Monthly |
-| Referring domains | Ahrefs / Moz | Monthly |
-| Review volume (Capterra, OMR, G2) | Manual | Monthly |
-| Click-through rate by page | Google Search Console | Monthly |
+### 5.1 The blog does not earn its keep
+
+52 posts exist, with a genuinely coherent topical cluster around procurement
+terminology: `bedarfsanforderung-banf`, `rfq-bedeutung`, `purchase-order`,
+`purchase-to-pay`, `eprocurement`, `kennzahlen-im-einkauf`, `beschaffungsstrategien`,
+`lieferantenklassifizierung`, `lieferantenmanagement`, `indirekter-einkauf`,
+`ki-im-einkauf`, `lieferkettengesetz-deutschland`, plus a seven part
+`ProcurementHeroes` podcast series. Publishing is current through July 2026.
+
+And yet: **not a single blog post appears in the top 100 pages by views.** The `/blog`
+hub itself drew 170 views. The author page `/blog/author/bettina-fischer` drew 185,
+which means an author archive outperforms the hub it belongs to.
+
+This is a content ROI problem, not a content quality problem. The likely causes are
+the defects in 2.4 and 3.2: no canonical on the hub, no hreflang on posts, an English
+blog that 404s at article level, and no internal linking from the money pages into the
+cluster.
+
+**Actions:** fix the blog hub canonical and title, add hreflang to posts, either build
+or remove the English blog, and link the cluster from `/produkt`, `/loesungen`, and
+`/preise-hivebuy`.
+
+### 5.2 Six competing demo landing pages
+
+| Slug | Title |
+|---|---|
+| `lp_kostenlose_demo` | `Hivebuy Kostenlose Demo buchen` |
+| `lp_kostenlose_demo_v2` | `Hivebuy Kostenlose Demo buchen` |
+| `lp_kostenlose_demo_v3` | `Hivebuy eProcurement System - Kostenlose Demo Vereinbaren` |
+| `lp_kostenlose_demo_v3-0` | `Hivebuy eProcurement System - Kostenlose Demo Vereinbaren` |
+| `lp_kostenlose_demo_0825` | `Hivebuy eProcurement System - Kostenlose Demo Vereinbaren` |
+| `lp_beschaffung` | `Hivebuy eProcurement System - Kostenlose Demo Vereinbaren` |
+
+Four share an identical title. Consolidate to one canonical demo page and redirect the
+rest, keeping only genuine live campaign variants.
+
+### 5.3 Portal hygiene
+
+The portal holds draft and test objects. **All of these return 404, so they are not an
+active SEO problem**, and none of them leaked into the sitemap. They are a governance
+issue worth a cleanup pass:
+
+- 5 pages with `-temporary-slug-<uuid>` slugs, 3 with no title at all
+- 6 test pages (`/testing`, `/testing-1`, `/testing-2`, `/testing-4`,
+  `/test-step-formtest-step-form`, `/contact-testing-german`, `/en/contact-testing`)
+- 6 blog posts still titled `Lorem ipsum dolor sit amet, consetetur sadipscing elitr…`
+  under `/whitepaper-blog/` and `/webinare/`
+- 1 landing page titled `Untitled` at `/untitled`
+- 1 page whose slug and title both carry a file extension: `/ai-procurement-software.html`
+- 4 pages titled `AVV` and 3 titled `testing`
+
+### 5.4 Content that exists and v1 missed
+
+For the record, since v1 recommended building these: industry pages
+(`/industrien/logistik`, `/gesundheitswesen`, `/kmu-dezentrale-organisationen`,
+`/dienstleistungen`, each in DE and EN), case studies (`/case_study_brera` at 800
+percent ROI, Case Study OUNDA at 521 percent ROI), per-integration pages (SAP ECC,
+SAP Business One, DATEV, Microsoft Dynamics, d.Velop), and an AI product line
+(`/ki-beschaffungsplattform`, `/ki-agenten-bedarfsanforderung`, `/ki-agenten-finance`,
+`/ki-agenten-backoffice`, `/savings-agent`, `/whitepaper_ki_prompts`).
 
 ---
 
-## Sources
+## 6. Keyword and positioning
 
-- [Hivebuy Homepage](https://www.hivebuy.com/en/)
-- [Hivebuy About](https://www.hivebuy.com/en/ueber-hivebuy)
-- [Hivebuy Product](https://hivebuy.com/en/product)
-- [Hivebuy Integrations](https://www.hivebuy.com/en/integrations)
-- [Hivebuy Invoice Management](https://www.hivebuy.com/en/invoice-management)
-- [Hivebuy Analytics](https://www.hivebuy.com/en/analytics-reportings)
-- [Hivebuy Management](https://www.hivebuy.com/en/management)
-- [Hivebuy IT Department](https://www.hivebuy.com/en/it-abteilung)
-- [Hivebuy Prices](https://hivebuy.com/en/preise-hivebuy)
-- [Hivebuy Blog – Einkaufssoftware](https://hivebuy.com/blog/die-besten-einkaufssoftwares)
-- [Hivebuy Blog – Indirekter Einkauf](https://www.hivebuy.com/blog/indirekter-einkauf)
-- [Hivebuy Blog – Procure-to-Pay](https://hivebuy.com/blog/effiziente-procure-to-pay-prozesse-so-optimieren-sie-ihre-beschaffung)
-- [Hivebuy Blog – Maverick Buying](https://www.hivebuy.com/blog/maverick-buying-ursachen-risiken-und-l%C3%B6sungsans%C3%A4tze-im-einkauf)
-- [Hivebuy Competitor Comparison](https://hivebuy.com/wettbewerbsvergleich-procurement/)
-- [Hivebuy on Capterra](https://www.capterra.com/p/249007/Hivebuy/)
-- [Hivebuy Reviews on Capterra](https://www.capterra.com/p/249007/Hivebuy/reviews/)
-- [Hivebuy on OMR Reviews](https://omr.com/en/reviews/product/hivebuy)
-- [Hivebuy on Tracxn](https://tracxn.com/d/companies/hivebuy/__dFA1zgb24d5J2kNNjqS1PJrk7eD-LwTQdrA8AjKgWHI)
-- [Hivebuy on CB Insights](https://www.cbinsights.com/company/hivebuy)
-- [Hivebuy on LinkedIn](https://www.linkedin.com/company/hivebuy/)
-- [Hivebuy on Software Advice DE](https://www.softwareadvice.de/alternatives/347399/hivebuy)
-- [Capterra DE – Procurement Software](https://www.capterra.com.de/directory/7/procurement/software)
-- [wirtschaftsforum.de – E-Procurement DE](https://www.wirtschaftsforum.de/news/e-procurement-software-die-besten-in-deutschland)
+The site has repositioned from procurement software to **AI procurement software**.
+The title history is visible in the portal: `/homepage-old` still reads
+`Hivebuy.com - Einkaufssoftware für Ihr Unternehmen`, while the live homepage reads
+`Hivebuy.com - Die KI-Einkaufssoftware für Ihr Unternehmen`.
+
+| Theme | Coverage | Traffic outcome |
+|---|---|---|
+| KI / AI procurement | Strong: dedicated LP, 4 agent pages, whitepaper, blog post | `/ki-beschaffungsplattform` is the #1 marketing page at 26,715 views |
+| Einkaufssoftware | Strong: homepage, blog cluster | Homepage only 1,376 views |
+| Procure-to-Pay, eProcurement | Blog cluster, LP titles | No page in top 100 |
+| Industry verticals | 4 verticals, DE and EN | 0 in top 100 |
+| Vertragsmanagement, Rechnungsmanagement | Dedicated pages | 177 and 140 views |
+| Preise / Pricing | Dedicated pages | 1,898 views, only 2 submissions |
+
+The AI bet is working on acquisition and failing on conversion. Vertical and feature
+pages are effectively invisible.
+
+---
+
+## 7. Off-page signals
+
+Unchanged from v1 and still qualitative: no Ahrefs, Semrush, or Search Console access
+was available, so no backlink or ranking figures are asserted here.
+
+| Platform | Status |
+|---|---|
+| Capterra | Active listing, positive sentiment, ease of use cited |
+| OMR Reviews | Listed, not enough reviews for an aggregate rating |
+| G2 | No confirmed listing |
+| LinkedIn | Active, roughly 2,200 followers |
+| German trade press | Mentioned by wirtschaftsforum.de, it-daily.net, d-velop.de |
+| Startup databases | Tracxn, CB Insights |
+
+Recurring user complaints from review platforms that also carry SEO weight: no mobile
+app, and missing integrations (Sevdesk, Google Chat).
+
+Opportunities, in priority order: claim and populate G2 to make `AggregateRating`
+markup legitimate; pitch the ProcurementHeroes podcast to German procurement press;
+co-market with named integration partners; pursue inclusion in
+`beste Einkaufssoftware` roundups.
+
+---
+
+## 8. Prioritised action plan
+
+### Critical, do this week
+
+1. **301 the four dead legacy pages.** `/old` and `/homepage-old` to `/`, `/en/old`
+   to `/en/`, `/loesungen-old` to `/loesungen`. Recovers roughly 15,200 views per
+   six months currently hitting 404s.
+2. **Add a canonical tag to `/blog`** and replace the `blog` placeholder title.
+3. **Write a real meta description for `/en/`.** 20 characters today.
+4. **Fix the `&amp;` double-escaping** in the title template.
+
+### High, next 30 days
+
+5. **Rewrite `/preise-hivebuy` and `/en/pricing` titles.** Highest intent, zero keyword.
+6. **Trim the two over-length meta descriptions** (236 and 228 characters).
+7. **Rebuild `/ki-beschaffungsplattform` for conversion.** Add the webinar or demo
+   offer. A 0.06 percent rate on 26,715 views is the largest single opportunity here.
+8. **Consolidate the six demo landing pages** to one plus redirects.
+9. **Add hreflang to blog posts and to the two big landing pages**, and standardise on
+   `de` rather than mixing `de` and `de-de`.
+10. **Decide the English blog.** Either publish English articles under `/en/blog/` or
+    remove the `hreflang="en"` pointer from `/blog`.
+
+### Medium, next 90 days
+
+11. **Verify `noindex` on `app.hivebuy.de`, the tenant subdomains, and staging.**
+    `app.hivebuy.de` is confirmed indexed and should not be.
+12. **Take `frontend.staging.hivebuy.de` out of production analytics** and restrict access.
+13. **Percent-encode umlauts** in slugs and canonical tags, starting with `/en/lösungen`.
+14. **Make `/en/` slugs consistently English**, with 301s from the German-slugged
+    `/en/` URLs.
+15. **Internally link the blog cluster** from `/produkt`, `/loesungen`, `/preise-hivebuy`.
+16. **Fix the double H1** on `/workflows-einkauf` and audit the department templates.
+17. **Shorten the 28 titles over 60 characters.**
+18. **Clean up portal junk**: temporary slugs, test pages, lorem ipsum posts, `/untitled`.
+19. **Investigate the app error pages** drawing 4,091 combined views
+    (`/not-allowed`, `/not-found`, `/something-went-wrong`).
+20. **Productise the webinar programme.** Best converting asset class on the site by
+    two orders of magnitude.
+
+---
+
+## 9. Metrics to track
+
+| Metric | Source | Frequency |
+|---|---|---|
+| 404 hits and redirect coverage | Search Console, server logs | Weekly until item 1 is closed |
+| Submission rate on `/ki-beschaffungsplattform` | HubSpot content analytics | Weekly |
+| Views and submissions per webinar page | HubSpot | Per campaign |
+| Blog cluster views | HubSpot, Search Console | Monthly |
+| Indexed URL count for `hivebuy.de` subdomains | `site:` queries, Search Console | Monthly |
+| Organic sessions and CTR by page | Search Console | Monthly |
+| Title and meta length compliance | Crawler (Screaming Frog, Sitebulb) | Quarterly |
+
+---
+
+## 10. Limitations
+
+State these plainly rather than papering over them:
+
+1. **No traffic-source split.** The HubSpot content analytics pull did not break views
+   down by organic, direct, or paid. All view counts in this report are all-sources.
+   No claim is made about organic share.
+2. **Meta descriptions sampled, not crawled.** HubSpot exposes no readable meta
+   description property on page objects, so lengths come from a 25 page live sample of
+   243 content objects.
+3. **`hivebuy.de` hosts unreachable** from the analysis environment, so their
+   `robots.txt` and `noindex` status is unverified except where Google's index proves
+   otherwise.
+4. **No backlink or rank-tracking data.** Section 7 stays qualitative.
+5. **Core Web Vitals not measured.** Requires PageSpeed Insights or CrUX access, which
+   was not available here. Still worth running.
+
+---
+
+## Appendix: verification
+
+```bash
+# robots.txt and sitemap (site requires a browser user agent, plain fetchers get 403)
+curl -sS -A "Mozilla/5.0 ..." https://www.hivebuy.com/robots.txt
+curl -sS -A "Mozilla/5.0 ..." https://www.hivebuy.com/sitemap.xml
+
+# confirm the 404s and the missing canonical
+curl -sSI -A "Mozilla/5.0 ..." https://www.hivebuy.com/old            # expect 404
+curl -sS  -A "Mozilla/5.0 ..." https://www.hivebuy.com/blog | grep canonical   # expect no match
+
+# domain canonicalisation
+curl -sS -o /dev/null -w '%{http_code} %{url_effective}\n' -L https://hivebuy.com/
+```
+
+HubSpot side: `get_content_analytics_report` in TOTALS mode over
+2026-02-19 to 2026-08-19, and `search_crm_objects` against `SITE_PAGE`,
+`LANDING_PAGE`, and `BLOG_POST` with `hs_url`, `hs_html_title`, `hs_slug`.
