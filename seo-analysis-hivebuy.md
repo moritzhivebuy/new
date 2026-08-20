@@ -112,8 +112,13 @@ For comparison, the live homepage `https://www.hivebuy.com` recorded 1,376 views
 the same window. `/old` therefore attracted 9.3 times the traffic of the page that
 replaced it, and it converted a customer while doing so.
 
-**Action:** 301 `/old` and `/homepage-old` to `/`, `/en/old` to `/en/`, and
-`/loesungen-old` to `/loesungen`. Do this before anything else in this report.
+A fifth dead page, `/en/lösungen-old`, exists with no traffic in the top 100 and
+should be redirected in the same pass.
+
+**Action:** 301 `/old` and `/homepage-old` to `/`, `/en/old` to `/en/`,
+`/loesungen-old` to `/lösungen`, and `/en/lösungen-old` to `/en/lösungen`. Note the
+live solutions pages carry umlauts, and the ASCII form `/loesungen` returns 404, so
+the redirect target must be the umlaut URL. Do this before anything else in this report.
 
 ### 2.3 Language architecture
 
@@ -159,20 +164,31 @@ The English blog is also a shell: `/en/blog` returns 200, but
 `/en/blog/ki-im-einkauf` and `/en/blog/beschaffungsprozess-optimieren` both return
 404. So `/blog` advertises an English alternate that has no English articles behind it.
 
-### 2.5 URL and canonical encoding
+### 2.5 Canonical and sitemap disagree on umlaut encoding
 
-Non-ASCII characters appear unencoded in slugs and, worse, inside canonical tags.
+The sitemap is correct here: it percent-encodes all seven affected URLs, for example
+`https://www.hivebuy.com/l%C3%B6sungen`. The canonical tag on the page does not.
+`/en/lösungen` emits `<link rel="canonical" href="https://www.hivebuy.com/en/lösungen">`
+with a raw umlaut.
+
+So the sitemap and the canonical tag point at two different string representations of
+the same page. Affected slugs:
 
 ```
-/en/lösungen        canonical: https://www.hivebuy.com/en/lösungen   (unencoded umlaut)
+/lösungen                                                    /en/lösungen
 /blog/strategischer-einkäufer-aufgaben-kompetenzen
 /blog/effizientes-vertragsmanagement-optimieren-sie-ihre-geschäftsprozesse
 /blog/lieferantenmanagement-definition-ziele-prozesse-und-software-der-komplette-überblick
 /blog/maverick-buying-ursachen-risiken-und-lösungsansätze-im-einkauf
+/blog/automatisierter-preisvergleich-im-indirekten-einkauf-hiveiq-ist-jetzt-für-alle-hivebuy-kunden-live
 ```
 
-Canonical URLs should be percent-encoded ASCII. Unencoded umlauts risk the canonical
-being ignored or resolved inconsistently between crawlers.
+Note also that the ASCII spelling `/loesungen` returns 404, so the solutions page is
+reachable only via the umlaut URL. Any internal link or external citation using the
+ASCII form is a dead link.
+
+This is a low-severity consistency issue, not a crawl blocker. The durable fix is to
+migrate these slugs to ASCII and 301 the umlaut forms.
 
 ### 2.6 Second domain and application surfaces
 
@@ -251,19 +267,25 @@ blog hub is paginated and tag-filtered, this is the one place a canonical matter
 `SITE_PAGE` or `LANDING_PAGE` objects, so lengths were measured by fetching live HTML
 for a 25 page sample rather than all 243 content objects. A full pass needs a crawler.
 
-### 3.4 HTML entity bug in rendered titles
+### 3.4 Double-escaped ampersand on three English pages
 
-Raw `&amp;` reaches the rendered `<title>`, so results display the entity rather than
-an ampersand:
+Three pages have the literal string `&amp;` stored in their HubSpot HTML title
+field. That value is then escaped again on output to `&amp;amp;`, so the page title
+visibly displays `&amp;` instead of an ampersand.
 
-```
-/blog/ki-im-einkauf                  <title>KI im Einkauf: Vorteile, Anwendungsfälle &amp; Umsetzung</title>
-/blog/beschaffungsprozess-optimieren <title>Beschaffungsprozess optimieren: Tipps &amp; Strategien</title>
-/en/industrien/dienstleistungen      Procurement Software for Service Providers – Manage Purchasing &amp; Costs | Hivebuy
-```
+| Page | Stored title field | Rendered source |
+|---|---|---|
+| `/en/management` | `Cost control &amp; scaling in management \| Hivebuy` | `&amp;amp;` |
+| `/en/industrien/dienstleistungen` | `… Manage Purchasing &amp; Costs \| Hivebuy` | `&amp;amp;` |
+| `/en/case_study_tennis-point` | `Tennis-Point Case Study: Procure-to-Pay with Hivebuy &amp; SAP` | `&amp;amp;` |
 
-This is double-escaping in the template layer and affects every title containing an
-ampersand.
+This is a data-entry problem on three specific pages, not a template defect. Titles
+that store a plain `&` render correctly: `/industrien/dienstleistungen` and
+`/blog/ki-im-einkauf` both emit a single `&amp;` in the HTML source, which is the
+correct escaping and displays as `&`. Only the German-to-English page duplication
+path introduced the entity.
+
+**Fix:** edit the three title fields and replace `&amp;` with `&`. No template change.
 
 ### 3.5 Heading structure
 
@@ -425,12 +447,13 @@ co-market with named integration partners; pursue inclusion in
 
 ### Critical, do this week
 
-1. **301 the four dead legacy pages.** `/old` and `/homepage-old` to `/`, `/en/old`
-   to `/en/`, `/loesungen-old` to `/loesungen`. Recovers roughly 15,200 views per
-   six months currently hitting 404s.
+1. **301 the five dead legacy pages.** `/old` and `/homepage-old` to `/`, `/en/old`
+   to `/en/`, `/loesungen-old` to `/lösungen`, `/en/lösungen-old` to `/en/lösungen`.
+   Recovers roughly 15,200 views per six months currently hitting 404s.
 2. **Add a canonical tag to `/blog`** and replace the `blog` placeholder title.
 3. **Write a real meta description for `/en/`.** 20 characters today.
-4. **Fix the `&amp;` double-escaping** in the title template.
+4. **Replace `&amp;` with `&`** in the title field of `/en/management`,
+   `/en/industrien/dienstleistungen`, and `/en/case_study_tennis-point`.
 
 ### High, next 30 days
 
@@ -449,7 +472,8 @@ co-market with named integration partners; pursue inclusion in
 11. **Verify `noindex` on `app.hivebuy.de`, the tenant subdomains, and staging.**
     `app.hivebuy.de` is confirmed indexed and should not be.
 12. **Take `frontend.staging.hivebuy.de` out of production analytics** and restrict access.
-13. **Percent-encode umlauts** in slugs and canonical tags, starting with `/en/lösungen`.
+13. **Align canonical tags with the sitemap's percent-encoding**, or migrate the seven
+    umlaut slugs to ASCII with 301s. Also make `/loesungen` resolve instead of 404.
 14. **Make `/en/` slugs consistently English**, with 301s from the German-slugged
     `/en/` URLs.
 15. **Internally link the blog cluster** from `/produkt`, `/loesungen`, `/preise-hivebuy`.
