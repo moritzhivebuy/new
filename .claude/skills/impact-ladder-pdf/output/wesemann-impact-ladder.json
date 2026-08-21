@@ -1,0 +1,94 @@
+{
+  "customer": {
+    "name": "Wesemann",
+    "ansprechpartner": "Julian Kunst",
+    "gespraechsdatum": "21.08.2026"
+  },
+  "date": "21.08.2026",
+  "potenziale": [
+    {
+      "titel": "Positionen werden von Hand ins ERP getippt",
+      "beschreibung": "Artikel werden aus Zeichnungen und Stücklisten herausgesucht und einzeln erfasst."
+    },
+    {
+      "titel": "Rund 167 Stunden im Monat gehen für Erfassung weg",
+      "beschreibung": "500 Bestellungen mal 20 Minuten, mehr als eine Vollzeitstelle."
+    },
+    {
+      "titel": "Kein strukturierter Freigabeweg",
+      "beschreibung": "Bedarfe werden informell kommuniziert, ohne feste Regeln."
+    },
+    {
+      "titel": "Rechnungen werden ohne Bestellbezug geprüft",
+      "beschreibung": "Die Buchhaltung prüft jede Rechnung manuell, ohne Bestellbezug."
+    }
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Stücklisten und Angebote werden hochgeladen, alle Positionen sind in 20 Sekunden ausgelesen (Parsing Agent).",
+        "Suche über Kataloge und angebundene Onlineshops an einer Stelle (Intake Agent, Status Agent)."
+      ],
+      "impact": "Das Heraussuchen und Eintippen von Positionen entfällt."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Freigaben laufen regelbasiert nach Wert, Warengruppe und Kostenstelle, die Bestellung löst danach automatisch aus (Approval Agent).",
+        "Ein nachvollziehbarer Standardprozess für Freitext, Katalog und Onlineshop (Intake Agent)."
+      ],
+      "impact": "Die sechs Personen im Einkauf gewinnen den Großteil der 167 Stunden pro Monat zurück."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Warengruppe, Kostenstelle und Sachkonto werden bei der Auswahl vorbelegt (Category Agent, Accounting Agent).",
+        "Rechnungen werden automatisch mit der Bestellung abgeglichen, die Buchhaltung greift nur bei Abweichungen ein (Invoice Agent)."
+      ],
+      "impact": "Die manuelle Rechnungsprüfung wird zur Ausnahme statt zur Regel."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Auswertbare Zahlen über Bestellvolumen, Lieferanten und Bearbeitungszeiten (Analytics Agent).",
+        "Dokumentierte Freigabewege und nur freigegebene Lieferanten, unabhängig von einzelnen Personen (Compliance Agent)."
+      ],
+      "impact": "Der Einkaufsprozess funktioniert auch ohne besetzte Einkaufsleitung."
+    }
+  ],
+  "executive_summary": "Wesemann verliert im Einkauf rund 167 Stunden pro Monat an reiner Erfassungsarbeit. Hivebuy liest Stücklisten und Angebote aus, führt Freigaben regelbasiert und übergibt Bestellungen automatisch an Pro-Alpha, sodass die Buchhaltung nur noch Abweichungen prüft.",
+  "zahlenbasis": [
+    {
+      "text": "ca. 500 Bestellungen pro Monat, Schätzung eher höher",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 20 Minuten manuelle Bearbeitung pro Bestellung",
+      "status": "belegt"
+    },
+    {
+      "text": "6 Personen im Einkauf, keine Einkaufsleitung seit über einem Jahr",
+      "status": "belegt"
+    },
+    {
+      "text": "ERP Pro-Alpha als einziges System",
+      "status": "belegt"
+    }
+  ],
+  "annahmen": [
+    "Die Zahl der monatlich manuell geprüften Rechnungen ist nicht bekannt.",
+    "Ein Rechnungsmanagement-System wurde nicht genannt.",
+    "Die Einkaufsleitung ist ausgeschrieben, ein Besetzungstermin steht nicht fest.",
+    "Wer bis dahin über neue Projekte entscheidet, ist offen."
+  ],
+  "naechster_schritt": {
+    "text": "In drei bis vier Wochen sprechen wir kurz darüber, wie die Buchhaltung die Zahlen einschätzt.",
+    "cta": "Folgetermin vereinbaren",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}
