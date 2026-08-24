@@ -1,0 +1,80 @@
+{
+  "customer": {
+    "name": "Techniropa",
+    "ansprechpartner": "Annika Roden",
+    "gespraechsdatum": "24.08.2026"
+  },
+  "date": "24.08.2026",
+  "potenziale": [
+    {
+      "titel": "Drei parallele Beschaffungswege",
+      "beschreibung": "Anforderungssystem, manuelle Anforderung im ERP und Direktbestellung im Shop laufen nebeneinander, je Abteilung anders."
+    },
+    {
+      "titel": "Bestellungen laufen am ERP vorbei",
+      "beschreibung": "Ein Teil der Beschaffung wird nie im ERP erfasst, damit fehlt die Datenbasis für Auswertungen."
+    },
+    {
+      "titel": "Keine konsolidierte Lieferantenbasis",
+      "beschreibung": "Volumen je Lieferant ist über die Gesellschaften hinweg nicht sichtbar, es fehlt die Verhandlungsbasis."
+    },
+    {
+      "titel": "Keine standardisierten Freigaben",
+      "beschreibung": "Mitarbeitende außerhalb des Einkaufs bestellen eigenständig, ohne einheitlichen Freigabeweg."
+    }
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Bedarfe an einer Stelle anfragen, über Punch-out-Katalog, internen Katalog oder Freitext (Intake Agent).",
+        "Status kommt automatisch, Nachfragen per E-Mail entfallen (Status Agent)."
+      ],
+      "impact": "Ein verständlicher Weg für alle Gesellschaften, auch außerhalb des Einkaufs."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Anforderungen aller Gesellschaften laufen in einem System zusammen, manuelles Nachbestellen im Shop entfällt.",
+        "Freigaben nach Betrag, Lieferant oder Warengruppe konfigurierbar (Approval Agent)."
+      ],
+      "impact": "Das Team im indirekten Einkauf gewinnt Zeit für Verhandlung statt Erfassung."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Kostenstelle und Sachkonto werden bereits bei der Anforderung hinterlegt (Accounting Agent).",
+        "Bestellungen werden über die Schnittstelle direkt im ERP angelegt, die Datenlücke schließt sich."
+      ],
+      "impact": "Vollständige Zahlen im ERP, weniger Nacharbeit in der Buchhaltung."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Ausgaben aller sechs bis sieben beschaffenden Gesellschaften auf einer Auswertung (Analytics Agent).",
+        "Sichtbares Volumen je Lieferant als Basis für Konsolidierung (Savings Agent)."
+      ],
+      "impact": "Steuerbarer indirekter Einkauf in der Holding, ohne manuelle Datensammlung."
+    }
+  ],
+  "executive_summary": "Ein gemeinsamer Weg für alle Anforderungen entlastet die beschaffenden Abteilungen, schließt über die ERP-Schnittstelle die Datenlücke für Finance und macht die Ausgaben der Holding zentral steuerbar.",
+  "zahlenbasis": [
+    { "text": "ca. 6 bis 7 aktiv beschaffende Gesellschaften", "status": "belegt" },
+    { "text": "Einkaufsteam ca. 20 Personen, indirekter Einkauf 5 Personen", "status": "belegt" },
+    { "text": "Implementierungsdauer 4 bis 8 Wochen nach Kick-off", "status": "belegt" },
+    { "text": "30 bis 50 Nutzer zum Einstieg", "status": "annahme" }
+  ],
+  "annahmen": [
+    "Anzahl der Bestellungen pro Monat im indirekten Einkauf ist noch offen.",
+    "ERP-Version und Schnittstellenaufwand klärt der geplante IT-Termin."
+  ],
+  "naechster_schritt": {
+    "text": "Im Follow-up in zwei Wochen gehen wir Ihre offenen Punkte durch, den Schnittstellenaufwand klären wir davor mit Ihrer IT.",
+    "cta": "Folgetermin vereinbaren",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}
