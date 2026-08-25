@@ -1,0 +1,104 @@
+{
+  "customer": {
+    "name": "Dalli-Group",
+    "ansprechpartner": "Lukas Nysten",
+    "gespraechsdatum": "25.08.2026"
+  },
+  "date": "25.08.2026",
+  "potenziale": [
+    {
+      "titel": "Freitext und Angebote nur über SAP",
+      "beschreibung": "Wer einen Freitextbedarf hat, muss ins ERP oder gibt ihn beim Teamleiter zur Erfassung ab."
+    },
+    {
+      "titel": "Katalogdaten veralten",
+      "beschreibung": "Im Katalogsystem fehlen Bilder und die Preise sind nicht aktuell, Bestellungen entstehen auf alter Datenbasis."
+    },
+    {
+      "titel": "Bezahlte Funktionen sind blockiert",
+      "beschreibung": "Die SAP-Anbindung lässt die RFQ- und Freitext-Features des Katalogsystems technisch nicht zu."
+    },
+    {
+      "titel": "Kein gemeinsamer Weg für alle Bedarfsarten",
+      "beschreibung": "Katalog, Freitext und Onlineshop laufen getrennt, über drei Werke mit eigenen Buchhaltungen."
+    }
+  ],
+  "painkiller": [
+    "Eine Plattform für Katalog, Freitext, Angebote und Onlineshops",
+    "Aktuelle Preise und Artikeldaten direkt aus den Shops, ohne manuelle Katalogpflege",
+    "Angebote werden automatisch ausgelesen und vorkontiert",
+    "Preisvergleich über alle integrierten Shops in einer Ansicht",
+    "Ca. 60 bis 70 Shops direkt integriert, darunter Unite, Conrad, Amazon, Dell und Würth",
+    "Freigabeprozesse vollständig in Hivebuy, Freigabe auch aus Microsoft Teams",
+    "Die Bestellung wird automatisch und korrekt ins SAP übertragen",
+    "SAP bleibt das System für Buchhaltung und Freigabe, es wird nicht ersetzt",
+    "Mitarbeitende müssen SAP für Bedarfsanforderungen nicht mehr öffnen",
+    "Vorgelagertes System, keine Konflikte mit der bestehenden SAP-Konfiguration"
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Freitextbedarf und Angebot über eine einfache Oberfläche einreichen, ohne SAP zu öffnen (Intake Agent).",
+        "Aktuelle Preise und Artikeldaten direkt aus den Shops (Recommendation Agent)."
+      ],
+      "impact": "Auch ohne SAP-Kenntnisse kommt der Bedarf richtig ins System, ohne Umweg."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Katalog, Freitext und Onlineshop über einen Weg, die Katalogpflege entfällt (Comparison Agent).",
+        "Angebote werden vorkontiert, Freigaben regelbasiert nach Wert und Werk (Approval Agent)."
+      ],
+      "impact": "Der Einkauf prüft statt zu erfassen, blockierte RFQ-Funktionen entfallen."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Die Bestellung wird automatisch und korrekt ins SAP übertragen (Accounting Agent).",
+        "SAP bleibt das System für Buchhaltung und Freigabe, die Werke bleiben unangetastet."
+      ],
+      "impact": "Für die Buchhaltung ändert sich nichts, der Medienbruch davor verschwindet."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Ein Standard über die drei Werke, eine Auswertung über alle Bedarfsarten (Analytics Agent).",
+        "Sichtbare Volumen je Lieferant als Basis für Bündelung (Savings Agent)."
+      ],
+      "impact": "Steuerbarer indirekter Einkauf, bei 5.000 bis 6.000 Mitarbeitenden mit Hebel."
+    }
+  ],
+  "executive_summary": "Hivebuy legt sich vor SAP, nimmt Freitext, Angebote und Katalog auf einer Oberfläche auf und übergibt die fertige Bestellung ans ERP. Die Buchhaltung behält ihren Prozess.",
+  "zahlenbasis": [
+    {
+      "text": "ca. 5.000 bis 6.000 Mitarbeitende gruppenweit",
+      "status": "belegt"
+    },
+    {
+      "text": "3 Werke mit eigenen Buchhaltungen, alle auf SAP",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 60 bis 70 Shops in Hivebuy direkt integriert",
+      "status": "belegt"
+    },
+    {
+      "text": "Zeitverlust durch manuelle SAP-Erfassung von Freitextbedarfen",
+      "status": "annahme"
+    }
+  ],
+  "annahmen": [
+    "Die Zahl der Freitextbestellungen pro Monat liefert die Auswertung von Lukas nach.",
+    "Der finale Entscheider für eine neue Lösung ist noch nicht benannt."
+  ],
+  "naechster_schritt": {
+    "text": "In der Demo am 31. August zeigen wir den Freitextweg und die Übergabe ans SAP an Ihren eigenen Beispielen.",
+    "cta": "Demo am 31. August",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}
