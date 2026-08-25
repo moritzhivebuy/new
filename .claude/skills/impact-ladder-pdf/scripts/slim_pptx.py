@@ -20,6 +20,15 @@ def main():
     src = Path(sys.argv[1])
     tmp = src.with_suffix(".slim.pptx")
     drop_prefixes = ("docProps/thumbnail", "ppt/printerSettings/")
+    # Optionale Teile. Sie kosten zusammen rund 1,8 KB komprimiert und werden
+    # weder von PowerPoint noch von der Google-Slides-Konvertierung gebraucht.
+    optional = {
+        "docProps/core.xml",
+        "docProps/app.xml",
+        "ppt/presProps.xml",
+        "ppt/viewProps.xml",
+        "ppt/tableStyles.xml",
+    }
 
     with zipfile.ZipFile(src) as zin:
         names = zin.namelist()
@@ -30,6 +39,7 @@ def main():
                  if n.startswith("ppt/slideLayouts/_rels/")
                  and not n.endswith(KEEP_LAYOUT + ".rels")}
         drop |= {n for n in names if n.startswith(drop_prefixes)}
+        drop |= optional & set(names)
 
         master_rels = zin.read("ppt/slideMasters/_rels/slideMaster1.xml.rels").decode()
         keep_id = re.search(
@@ -52,12 +62,19 @@ def main():
                             % name, "")
         ct = re.sub(r'<Default Extension="bin"[^>]*/>', "", ct)
         ct = re.sub(r'<Default Extension="jpeg"[^>]*/>', "", ct)
+        for name in optional:
+            ct = re.sub(r'<Override PartName="/%s"[^>]*/>' % re.escape(name), "", ct)
 
         root_rels = zin.read("_rels/.rels").decode()
         root_rels = re.sub(r'<Relationship [^>]*thumbnail[^>]*/>', "", root_rels)
+        root_rels = re.sub(r'<Relationship [^>]*docProps/(core|app)\.xml[^>]*/>',
+                           "", root_rels)
 
         pres_rels = zin.read("ppt/_rels/presentation.xml.rels").decode()
         pres_rels = re.sub(r'<Relationship [^>]*printerSettings[^>]*/>', "", pres_rels)
+        pres_rels = re.sub(
+            r'<Relationship [^>]*(presProps|viewProps|tableStyles)\.xml[^>]*/>',
+            "", pres_rels)
 
         replaced = {
             "[Content_Types].xml": ct,

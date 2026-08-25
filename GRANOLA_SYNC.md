@@ -103,7 +103,14 @@ September" (manuell, 19.08.), die Notiz vom 17.08. nannte "Erinnerung für Q2 20
 
 ## Lead-Logik
 
-- Kein Lead am Kontakt: Lead wird angelegt und mit dem Kontakt assoziiert. Bei `QUALIFIZIERT: JA` wird die Pipeline-Phase "Qualified" gesetzt, sonst die Anfangsphase "New".
+- **Bestandskunden ohne Lead: kein Lead anlegen.** Steht der Kontakt auf Lifecycle-Stage
+  `customer` oder auf Lead-Status `Existing Customer`, wird kein Lead erzeugt, auch wenn keiner
+  vorhanden ist. Grund (Moritz, 25.08.2026): Bei Kunden hängt der Lead historisch nur an der
+  einen Person, über die der Deal lief. Alle weiteren Kontakte kommen später dazu, oft über das
+  Ticketsystem, und sind nur dem Unternehmen zugeordnet. Ein neuer Lead in "New" würde den
+  Stand falsch darstellen. Die Begründung wird im Log vermerkt. Erster Fall: Karen Serauky,
+  Evangelische Stiftung Neinstedt, 25.08.2026.
+- Kein Lead am Kontakt und kein Bestandskunde: Lead wird angelegt und mit dem Kontakt assoziiert. Bei `QUALIFIZIERT: JA` wird die Pipeline-Phase "Qualified" gesetzt, sonst die Anfangsphase "New".
 - Lead vorhanden: Bei `QUALIFIZIERT: JA` wird die Phase auf "Qualified" gesetzt (außer der Lead ist bereits dort oder in einer späteren Phase, dann keine Änderung, Begründung im Log). Bei NEIN oder fehlender Zeile keine Phasenänderung, Begründung im Log.
 - Lead in Phase "Lost": wird nie automatisch verändert.
 
@@ -198,13 +205,37 @@ Neben dem PDF entsteht eine bearbeitbare Präsentation, damit der Owner Inhalte 
 Ablauf:
 
 1. `python3 scripts/render_pptx.py output/<kunde-slug>-impact-ladder.json` erzeugt aus demselben
-   JSON wie das PDF eine fünfseitige Präsentation im 16:9-Format (Titel, Potenziale, Ladder 1+2,
-   Ladder 3+4, Summary mit Zahlen und CTA). Schriften sind Frank Ruhl Libre und DM Sans, beide in
-   Google Slides vorhanden.
+   JSON wie das PDF eine **sechsseitige** Präsentation im 16:9-Format. Schriften sind Frank Ruhl
+   Libre und DM Sans, beide in Google Slides vorhanden. Reihenfolge und Überschriften (Vorgabe
+   Moritz, 25.08.2026):
+
+   | Slide | Überschrift | Quelle im Granola-Eintrag |
+   |---|---|---|
+   | 1 | Impact Ladder (Titel) | Kunde, Ansprechpartner, Datum |
+   | 2 | Aktuelle Optimierungspotenziale | Pain Points, Beschreibung des Problems |
+   | 3 | Wie optimiert Hivebuy den Prozess | **Umsetzung in Hivebuy (Pain Killer)**, JSON-Feld `painkiller` |
+   | 4 | Vorteile für Bedarfsträger und den Einkauf | Ladder-Ebene 1 und 2 |
+   | 5 | Vorteile für Finance & Controlling und die Geschäftsführung | Ladder-Ebene 3 und 4 |
+   | 6 | Zusammenfassung | executive_summary, Zahlenbasis, nächster Schritt |
+
+   Slide 3 ist neu und braucht im JSON die Liste `painkiller`, acht bis elf kurze Funktionen aus
+   dem Pain-Killer-Abschnitt. Fehlt die Liste, wird die Slide übersprungen. Die Status-Marker
+   "(belegt)" und "(annahme)" bleiben in der Bearbeitungsfassung stehen.
 2. `python3 scripts/slim_pptx.py output/<datei>.pptx` entfernt die ungenutzten Layouts, das
-   Thumbnail und die Druckereinstellungen, 37 KB werden zu 19 KB. Das ist nötig, weil der Inhalt
-   beim Upload als Base64 im Tool-Aufruf übergeben wird und die unverkleinerte Datei über der
-   Ausgabegrenze liegt.
+   Thumbnail, die Druckereinstellungen und die optionalen Teile `docProps/core.xml`,
+   `docProps/app.xml`, `presProps.xml`, `viewProps.xml` und `tableStyles.xml`. 39 KB werden zu
+   rund 18,5 KB, das sind etwa 25.000 Base64-Zeichen.
+
+   **Das ist keine Kosmetik, sondern die Voraussetzung für den Upload.** Der Inhalt wird als
+   Base64 im Tool-Aufruf übergeben. Der erfolgreiche NAVAX-Upload am 20.08.2026 hatte 19 KB
+   (etwa 25.300 Zeichen). Am 25.08.2026 wurden zwei Uploads mit 21,2 KB (28.336 Zeichen) je mit
+   "The file content is not a valid base64 string" abgewiesen. Das Muster passt zu einer
+   Längengrenze zwischen diesen beiden Werten: wird der Parameter abgeschnitten, ist die Länge
+   nicht mehr durch vier teilbar und die Prüfung schlägt fehl. Deshalb gilt: **die Datei muss
+   nach dem Slimmen unter 19 KB liegen**, sonst Inhalte auf den Slides kürzen und erneut prüfen
+   mit `python3 -c "import base64;print(len(base64.b64encode(open(PFAD,'rb').read())))"`.
+   Beim Upload die Base64-Zeichenkette in einer Zeile ohne Zeilenumbrüche übergeben,
+   Umbrüche werden ebenfalls als ungültig abgewiesen.
 3. Upload per `mcp__Google_Drive__create_file` mit
    `contentMimeType=application/vnd.openxmlformats-officedocument.presentationml.presentation`
    und `parentFolderId=0APJQKQ-OeVKNUk9PVA`. Drive konvertiert die Datei dabei in eine
@@ -218,9 +249,14 @@ Ablauf:
 **Wichtig:** Das PDF aus `template/template.html` bleibt die verbindliche Fassung für den Kunden,
 das Layout wird nie verändert. Die Präsentation ist die Arbeitsversion und darf davon abweichen.
 
-**Offen:** Der Google-Drive-Connector ist in dieser Umgebung unzuverlässig, er war am 20.08.2026
-kurz verfügbar und dann wieder weg. Fällt er in einem Lauf aus, wird die Präsentation trotzdem
-erzeugt und nach HubSpot hochgeladen, und der fehlende Slides-Link wird in der Log-Notiz vermerkt.
+**Pflicht (Moritz, 25.08.2026):** Die Präsentation muss immer bearbeitbar in Google Drive liegen.
+Der Upload ist damit kein optionaler Schritt mehr.
+
+**Offen:** Der Google-Drive-Connector ist in dieser Umgebung unzuverlässig, er ist oft nur für
+einzelne Turns verbunden. Fällt er in einem Lauf aus, wird die Präsentation trotzdem erzeugt und
+nach HubSpot hochgeladen, der fehlende Slides-Link wird in der Log-Notiz vermerkt, und der Upload
+wird im nächsten Lauf nachgeholt, in dem der Connector verfügbar ist. Nicht als erledigt melden,
+solange der Slides-Link fehlt.
 
 ## Slack-Benachrichtigung (Teil e)
 
