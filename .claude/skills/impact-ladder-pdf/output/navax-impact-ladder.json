@@ -23,6 +23,18 @@
       "beschreibung": "Deutschland und Österreich arbeiten unterschiedlich, Verträge liegen nicht systematisch ab."
     }
   ],
+  "painkiller": [
+    "Zentrale Plattform als erste Instanz für alle Bedarfsanforderungen, ersetzt die Jira-Tickets",
+    "Anforderung inklusive Kostenstelle, Warengruppe und Sachkonto direkt im System",
+    "Lieferanten zentral administriert: Webshops, Punch-out und Freitext für Einmalbedarfe",
+    "Digitaler Freigabeprozess mit vollständigem Audit-Trail",
+    "Konfigurierbare Vertretungsregeln, Freigaben laufen auch im Urlaub weiter",
+    "Freigaben zusätzlich direkt in Microsoft Teams",
+    "Schnittstelle zu Business Central: Bestellungen im ERP, Rechnungen automatisch gematcht",
+    "Automatische Freigabe wiederkehrender, gleichbleibender Rechnungspositionen",
+    "SSO über Microsoft Active Directory, Deaktivierung wirkt sofort in Hivebuy",
+    "Vertragsmanagement mit Katalogartikeln und Erinnerung an Verlängerung und Kündigungsfrist"
+  ],
   "ladder": [
     {
       "nummer": 1,

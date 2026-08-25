@@ -146,6 +146,30 @@ def slide_potenziale(prs, data):
     return slide
 
 
+def slide_painkiller(prs, data):
+    """Wie optimiert Hivebuy den Prozess, Quelle: Abschnitt Pain Killer."""
+    items = [t for t in data.get("painkiller", []) if t]
+    if not items:
+        return None
+    slide = blank(prs)
+    top = section_label(slide, "Wie optimiert Hivebuy den Prozess", round(1.6 * CM))
+    col_w = round((W - 2 * MARGIN - round(0.8 * CM)) / 2)
+    card_h = H - top - round(1.6 * CM)
+    half = (len(items) + 1) // 2
+    for i, column in enumerate((items[:half], items[half:])):
+        if not column:
+            continue
+        x = MARGIN + i * (col_w + round(0.8 * CM))
+        rect(slide, x, top, col_w, card_h, WHITE, line=BORDER)
+        plain_rect(slide, x, top, round(0.16 * CM), card_h, TEAL)
+        tf = box(slide, x + round(0.9 * CM), top + round(0.9 * CM),
+                 col_w - round(1.8 * CM), card_h - round(1.8 * CM))
+        for j, bullet in enumerate(column):
+            para(tf, "•  " + bullet, 13, DARK, first=(j == 0), space_after=9,
+                 line_spacing=1.3)
+    return slide
+
+
 def slide_ladder(prs, data, levels, heading):
     slide = blank(prs)
     top = section_label(slide, heading, round(1.6 * CM))
@@ -195,7 +219,7 @@ def slide_ladder(prs, data, levels, heading):
 
 def slide_summary(prs, data):
     slide = blank(prs)
-    top = section_label(slide, "Executive Summary", round(1.6 * CM))
+    top = section_label(slide, "Zusammenfassung", round(1.6 * CM))
     card = rect(slide, MARGIN, top, W - 2 * MARGIN, round(4.4 * CM), DARK)
     plain_rect(slide, MARGIN, top, round(0.2 * CM), round(4.4 * CM), NEON)
     tf = box(slide, MARGIN + round(1 * CM), top + round(0.8 * CM),
@@ -257,10 +281,12 @@ def main():
 
     slide_title(prs, data)
     slide_potenziale(prs, data)
+    slide_painkiller(prs, data)
     ladder = data.get("ladder", [])
-    slide_ladder(prs, data, ladder[:2], "Impact Ladder, Ebene 1 und 2")
+    slide_ladder(prs, data, ladder[:2], "Vorteile für Bedarfsträger und den Einkauf")
     if len(ladder) > 2:
-        slide_ladder(prs, data, ladder[2:4], "Impact Ladder, Ebene 3 und 4")
+        slide_ladder(prs, data, ladder[2:4],
+                     "Vorteile für Finance & Controlling und die Geschäftsführung")
     slide_summary(prs, data)
 
     out_dir = src.parent

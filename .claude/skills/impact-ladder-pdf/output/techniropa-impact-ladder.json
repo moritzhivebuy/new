@@ -23,6 +23,19 @@
       "beschreibung": "Mitarbeitende außerhalb des Einkaufs bestellen eigenständig, ohne einheitlichen Freigabeweg."
     }
   ],
+  "painkiller": [
+    "Einheitliche Plattform für alle Gesellschaften und Abteilungen als Single Point of Entry",
+    "Punch-out-Anbindung an Amazon, Mercateo/United, Bechtle, Konrad und weitere",
+    "Interne Kataloge für lokale Lieferanten und spezifische Sortimente",
+    "Freitextanforderung weiterhin möglich, alles im selben System",
+    "Automatische Kontierung: Kostenstelle und Sachkonto werden direkt hinterlegt",
+    "Konfigurierbare Freigaben nach Betrag, Lieferant, Warengruppe oder Antragsteller",
+    "Bestellung geht nach der letzten Freigabe automatisch an den Lieferanten",
+    "ERP-Schnittstelle zu Pro-Alpha: die Bestellung wird direkt im ERP angelegt",
+    "KI-gestützter Preisvergleich zwischen den angebundenen Webshops",
+    "Angebote werden ausgelesen und in Bedarfsanforderungen überführt",
+    "Wareneingang und Rechnungsfreigabe ebenfalls im System abbildbar"
+  ],
   "ladder": [
     {
       "nummer": 1,
