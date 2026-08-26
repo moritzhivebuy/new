@@ -110,7 +110,25 @@ September" (manuell, 19.08.), die Notiz vom 17.08. nannte "Erinnerung für Q2 20
   Ticketsystem, und sind nur dem Unternehmen zugeordnet. Ein neuer Lead in "New" würde den
   Stand falsch darstellen. Die Begründung wird im Log vermerkt. Erster Fall: Karen Serauky,
   Evangelische Stiftung Neinstedt, 25.08.2026.
-- **Neue Leads immer in "New" (Moritz, 26.08.2026).** Kein Lead am Kontakt und kein Bestandskunde:
+- **Ein Lead pro Firma, nicht pro Kontakt (Moritz, 26.08.2026).** Vor dem Anlegen wird geprüft, ob
+  **irgendein** Kontakt der zugeordneten Firma schon einen Lead hat. Wenn ja, wird kein neuer Lead
+  angelegt, auch wenn der Kontakt aus dem Granola-Eintrag selbst keinen hat. Im Log wird notiert,
+  welcher Lead an welchem Kontakt schon existiert.
+
+  Grund: An einem Gespräch nehmen oft zwei Personen derselben Firma teil, und eine davon hat schon
+  einen Lead. Zwei Leads für eine Firma zerstören das Reporting. Anlass: Erstgespräch Techniropa am
+  24.08.2026 mit Annika Roden (#850236019947) und Markus Peifer (#738609789126), beide an Firma
+  #421812840670. Markus hatte bereits Lead 1304982667471, die Routine legte für Annika trotzdem
+  einen zweiten an. Moritz hat den zweiten Lead am 26.08.2026 gelöscht.
+
+  Nehmen mehrere Kontakte derselben Firma an einem Gespräch teil und existiert noch gar kein Lead,
+  wird genau ein Lead angelegt, an dem Kontakt, dem der Granola-Eintrag zugeordnet ist.
+
+  API: Firma über `GET /crm/v4/objects/contacts/{contactId}/associations/companies`, deren Kontakte
+  über `GET /crm/v4/objects/companies/{companyId}/associations/contacts`, dann je Kontakt
+  `GET /crm/v4/objects/0-1/{contactId}/associations/0-136`. Hat der Kontakt keine Firma, gilt nur
+  die Prüfung am Kontakt selbst.
+- **Neue Leads immer in "New" (Moritz, 26.08.2026).** Kein Lead an der Firma und kein Bestandskunde:
   Lead wird angelegt, mit dem Kontakt assoziiert und in die Anfangsphase "New" gesetzt. Auch bei
   `QUALIFIZIERT: JA`. Qualifizieren bleibt eine menschliche Entscheidung.
 - **Bestehende Leads werden nie bewegt (Moritz, 26.08.2026).** Die Routine ändert `hs_pipeline_stage`
