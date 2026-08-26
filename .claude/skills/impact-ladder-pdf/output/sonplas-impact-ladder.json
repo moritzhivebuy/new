@@ -1,0 +1,104 @@
+{
+  "customer": {
+    "name": "Sonplas",
+    "ansprechpartner": "Ewald Geiger",
+    "gespraechsdatum": "26.08.2026"
+  },
+  "date": "26.08.2026",
+  "potenziale": [
+    {
+      "titel": "Lieferscheine laufen über Scan und Handarbeit",
+      "beschreibung": "Jeder Lieferschein wird gescannt, ins DMS importiert und der Bestellung von Hand zugeordnet."
+    },
+    {
+      "titel": "Auftragsbestätigungen werden manuell abgeglichen",
+      "beschreibung": "Artikeldaten und Liefertermine werden Position für Position geprüft, bei großen Mengen zeitaufwendig."
+    },
+    {
+      "titel": "Rechnungen laufen noch physisch",
+      "beschreibung": "Ausdruck, Stempel und Tacker, kein digitaler Freigabe-Workflow und keine digitale Ablage."
+    },
+    {
+      "titel": "Zwei getrennte Wege in die Anforderung",
+      "beschreibung": "Mit ERP-Zugang direkt im ERP, ohne Zugang über das eigene Tool, der Einkauf matcht die Felder nach."
+    }
+  ],
+  "painkiller": [
+    "Freitextbestellung für Artikel, die sich nicht standardisieren lassen",
+    "Kostenstelle, Kostenträger und Sachkonto werden bei der Anforderung hinterlegt",
+    "Ein Weg für alle Anforderer, auch ohne ERP-Zugang",
+    "Freigaben nach festen Kriterien, auch direkt aus Microsoft Teams",
+    "Lieferantenauswahl und Preisvergleich auf einer Oberfläche",
+    "Angebote hochladen und per KI in eine Bestellung überführen",
+    "Wareneingangsbestätigung und Lieferschein-Upload im Tool",
+    "Schnittstelle ins bestehende ERP, das ERP bleibt führend",
+    "AB-Matching und Rechnungs-Matching sind in Entwicklung",
+    "Auswertung über den indirekten Bedarf, der heute nirgends zusammenläuft"
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Anforderung über eine Oberfläche, auch ohne ERP-Zugang (Intake Agent).",
+        "Status kommt automatisch, Nachfragen im Anforderungstool entfallen (Status Agent)."
+      ],
+      "impact": "Ein Weg statt zwei, unabhängig davon wer einen ERP-Zugang hat."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Felder kommen vollständig an, das Nachmatchen im Einkauf entfällt (Category Agent).",
+        "Freigaben regelbasiert nach Wert und Warengruppe, auch aus Teams (Approval Agent)."
+      ],
+      "impact": "Der Einkauf prüft statt zu ergänzen, die Pappenheimer-Regel wird zur Systemregel."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Kontierung entsteht bei der Anforderung, nicht erst in der Buchhaltung (Accounting Agent).",
+        "Wareneingang und Lieferschein am Vorgang, AB- und Rechnungs-Matching in Entwicklung."
+      ],
+      "impact": "Der Beleg hängt am Vorgang, der Weg zur digitalen Ablage wird kürzer."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Der indirekte Bedarf wird erstmals auswertbar, getrennt vom Projektgeschäft (Analytics Agent).",
+        "Volumen je Lieferant sichtbar als Basis für Bündelung (Savings Agent)."
+      ],
+      "impact": "Transparenz über den Teil der Beschaffung, der heute an keiner Stelle zusammenläuft."
+    }
+  ],
+  "executive_summary": "Der Kern Ihres aktuellen Projekts, das Auslesen von AB, Lieferschein und Rechnung, ist bei uns in Entwicklung. Vor dem ERP dagegen können wir heute helfen: ein Weg für alle Anforderer und ein Freigabeprozess mit Regeln statt Erfahrungswissen.",
+  "zahlenbasis": [
+    {
+      "text": "368 Mitarbeitende, Sondermaschinenbau in Unikatfertigung",
+      "status": "belegt"
+    },
+    {
+      "text": "Zwei Anforderungswege: ERP und eigenes Tool mit ERP-Schnittstelle",
+      "status": "belegt"
+    },
+    {
+      "text": "Rechnungsprozess heute physisch, ohne digitale Ablage",
+      "status": "belegt"
+    },
+    {
+      "text": "Bestellungen pro Monat im indirekten Bedarf",
+      "status": "annahme"
+    }
+  ],
+  "annahmen": [
+    "Der finale Entscheider für eine neue Lösung ist noch nicht benannt.",
+    "Anzahl der Bestellungen pro Monat und der künftigen Nutzer wurde nicht genannt."
+  ],
+  "naechster_schritt": {
+    "text": "Wir melden uns zum Jahresende erneut, wenn Ihr Projekt zu AB, Lieferschein und Rechnung abgeschlossen ist.",
+    "cta": "Wiedervorlage zum Jahresende",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}
