@@ -110,9 +110,19 @@ September" (manuell, 19.08.), die Notiz vom 17.08. nannte "Erinnerung für Q2 20
   Ticketsystem, und sind nur dem Unternehmen zugeordnet. Ein neuer Lead in "New" würde den
   Stand falsch darstellen. Die Begründung wird im Log vermerkt. Erster Fall: Karen Serauky,
   Evangelische Stiftung Neinstedt, 25.08.2026.
-- Kein Lead am Kontakt und kein Bestandskunde: Lead wird angelegt und mit dem Kontakt assoziiert. Bei `QUALIFIZIERT: JA` wird die Pipeline-Phase "Qualified" gesetzt, sonst die Anfangsphase "New".
-- Lead vorhanden: Bei `QUALIFIZIERT: JA` wird die Phase auf "Qualified" gesetzt (außer der Lead ist bereits dort oder in einer späteren Phase, dann keine Änderung, Begründung im Log). Bei NEIN oder fehlender Zeile keine Phasenänderung, Begründung im Log.
-- Lead in Phase "Lost": wird nie automatisch verändert.
+- **Neue Leads immer in "New" (Moritz, 26.08.2026).** Kein Lead am Kontakt und kein Bestandskunde:
+  Lead wird angelegt, mit dem Kontakt assoziiert und in die Anfangsphase "New" gesetzt. Auch bei
+  `QUALIFIZIERT: JA`. Qualifizieren bleibt eine menschliche Entscheidung.
+- **Bestehende Leads werden nie bewegt (Moritz, 26.08.2026).** Die Routine ändert `hs_pipeline_stage`
+  an vorhandenen Leads nicht, unabhängig von der QUALIFIZIERT-Zeile. Der Stand wird nur im Log
+  vermerkt.
+
+  Grund: Am 24.08.2026 hat die Routine für Annika Roden (Techniropa, Kontakt #850236019947) den Lead
+  1331712986304 direkt in "Qualified" angelegt, weil der Granola-Eintrag "QUALIFIZIERT: JA" nannte.
+  Moritz am 26.08.2026: "Dies sollte so nicht passieren." Die alte Regel setzte die Phase aus der
+  Granola-Zeile, das war eine automatische Qualifizierung ohne menschliche Prüfung. Der betroffene
+  Lead bleibt auf Wunsch unverändert in "Qualified".
+- Lead in Phase "Lost": wird ebenfalls nie verändert, das ist durch die Regel oben schon abgedeckt.
 
 **Technischer Zugang:** Der HubSpot-MCP-Connector bietet das Lead-Objekt nicht an. Der Lead-Schritt läuft daher über die HubSpot-REST-API mit dem Private-App-Token aus der Umgebungsvariable `HUBSPOT_PRIVATE_APP_TOKEN` (per curl). Verifiziert am 16.07.2026 (Lesen, Schreiben und Pipeline-Abfrage funktionieren).
 
