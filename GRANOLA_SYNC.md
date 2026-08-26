@@ -226,20 +226,29 @@ Ablauf:
    `docProps/app.xml`, `presProps.xml`, `viewProps.xml` und `tableStyles.xml`. 39 KB werden zu
    rund 18,5 KB, das sind etwa 25.000 Base64-Zeichen.
 
-   **Das ist keine Kosmetik, sondern die Voraussetzung für den Upload.** Der Inhalt wird als
-   Base64 im Tool-Aufruf übergeben. Der erfolgreiche NAVAX-Upload am 20.08.2026 hatte 19 KB
-   (etwa 25.300 Zeichen). Am 25.08.2026 wurden zwei Uploads mit 21,2 KB (28.336 Zeichen) je mit
-   "The file content is not a valid base64 string" abgewiesen. Das Muster passt zu einer
-   Längengrenze zwischen diesen beiden Werten: wird der Parameter abgeschnitten, ist die Länge
-   nicht mehr durch vier teilbar und die Prüfung schlägt fehl. Deshalb gilt: **die Datei muss
-   nach dem Slimmen unter 19 KB liegen**, sonst Inhalte auf den Slides kürzen und erneut prüfen
-   mit `python3 -c "import base64;print(len(base64.b64encode(open(PFAD,'rb').read())))"`.
-   Beim Upload die Base64-Zeichenkette in einer Zeile ohne Zeilenumbrüche übergeben,
-   Umbrüche werden ebenfalls als ungültig abgewiesen.
+   Kleiner ist beim Upload besser, weil der Inhalt als Base64 im Tool-Aufruf übergeben wird und
+   die Zeichenkette dabei fehlerfrei durchkommen muss.
+
+   **Es gibt keine Größengrenze (korrigiert am 26.08.2026).** Die frühere Annahme einer Grenze
+   zwischen 19 und 21,2 KB war falsch. Am 26.08.2026 liefen Uploads mit 18,4 bis 18,8 KB
+   (24.492 bis 25.008 Zeichen) durch, und dieselbe Datei scheiterte einmal und lief beim
+   zweiten Versuch. Die Fehlermeldung "The file content is not a valid base64 string" bedeutet
+   also nur eins: die übergebene Zeichenkette ist beschädigt, meist weil beim Übertragen ein
+   Zeichen verloren geht und die Länge nicht mehr durch vier teilbar ist. Gegenmittel:
+   Base64 in einer Zeile ohne Umbrüche übergeben, vorher Länge und Teilbarkeit prüfen mit
+   `python3 -c "import base64;b=base64.b64encode(open(PFAD,'rb').read());print(len(b),len(b)%4)"`
+   und bei diesem Fehler den Upload einfach erneut versuchen, nicht die Inhalte kürzen.
 3. Upload per `mcp__Google_Drive__create_file` mit
-   `contentMimeType=application/vnd.openxmlformats-officedocument.presentationml.presentation`
-   und `parentFolderId=0APJQKQ-OeVKNUk9PVA`. Drive konvertiert die Datei dabei in eine
-   bearbeitbare Google-Slides-Präsentation.
+   `contentMimeType=application/vnd.openxmlformats-officedocument.presentationml.presentation`,
+   `parentId=0APJQKQ-OeVKNUk9PVA` und **`disableConversionToGoogleType=true`**. Der Dateiname
+   endet auf `.pptx`.
+
+   **Ohne dieses Flag schlägt der Upload mit "Invalid conversion requested" fehl** (festgestellt
+   am 26.08.2026). Drive konvertiert pptx nicht automatisch nach Google Slides. Das ist kein
+   Problem: die hochgeladene pptx lässt sich unter
+   `https://docs.google.com/presentation/d/<file-id>/edit` direkt in Google Slides im Browser
+   öffnen und bearbeiten. Genau dieser Link wird weitergegeben, nicht die `viewUrl` aus der
+   Tool-Antwort.
 4. **Keine Freigabe per Tool nötig.** Moritz hat am 20.08.2026 am Zielordner
    (https://drive.google.com/drive/folders/0APJQKQ-OeVKNUk9PVA) "alle bei Hivebuy können
    bearbeiten" gesetzt. Neue Dateien im Ordner erben das. `share_file` wird also nicht aufgerufen,
@@ -253,10 +262,22 @@ das Layout wird nie verändert. Die Präsentation ist die Arbeitsversion und dar
 Der Upload ist damit kein optionaler Schritt mehr.
 
 **Offen:** Der Google-Drive-Connector ist in dieser Umgebung unzuverlässig, er ist oft nur für
-einzelne Turns verbunden. Fällt er in einem Lauf aus, wird die Präsentation trotzdem erzeugt und
-nach HubSpot hochgeladen, der fehlende Slides-Link wird in der Log-Notiz vermerkt, und der Upload
-wird im nächsten Lauf nachgeholt, in dem der Connector verfügbar ist. Nicht als erledigt melden,
-solange der Slides-Link fehlt.
+einzelne Turns verbunden. Beobachtung vom 26.08.2026: In von Moritz ausgelösten Turns ist Drive
+verbunden, in den Trigger-Läufen bisher nie. Fällt er in einem Lauf aus, wird die Präsentation
+trotzdem erzeugt und nach HubSpot hochgeladen, der fehlende Slides-Link wird in der Log-Notiz
+vermerkt, und der Upload wird im nächsten Lauf nachgeholt, in dem der Connector verfügbar ist.
+Nicht als erledigt melden, solange der Slides-Link fehlt.
+
+**Bereits hochgeladen** (nicht erneut hochladen):
+
+| Kunde | Gespräch | Slides-Link |
+|---|---|---|
+| NAVAX Software | 20.08.2026 | https://docs.google.com/presentation/d/1FxoiYDq3oZmaxHocy68g9vFpTw2-Rhj7/edit |
+| Techniropa | 24.08.2026 | https://docs.google.com/presentation/d/1zhEzmoGRifqd8OHmrh5gLOiALo05aQVP/edit |
+| Dalli-Group | 25.08.2026 | https://docs.google.com/presentation/d/1A0AKPSazd6ZwNTbTCbMHHnwZ_k8vEKph/edit |
+
+Offen ist noch Wesemann (21.08.2026), `output/2026-08-21-impact-ladder-wesemann.pptx`. Die Datei
+stammt aus der Zeit vor der Sechs-Slide-Struktur und wird erst neu erzeugt, dann hochgeladen.
 
 ## Slack-Benachrichtigung (Teil e)
 
