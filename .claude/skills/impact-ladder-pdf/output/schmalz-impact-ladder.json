@@ -1,0 +1,90 @@
+{
+  "customer": {
+    "name": "Schmalz",
+    "ansprechpartner": "Tanja Keck",
+    "gespraechsdatum": "27.08.2026"
+  },
+  "date": "27.08.2026",
+  "potenziale": [
+    {
+      "titel": "Warengruppen passen nicht zur i-Class",
+      "beschreibung": "Die Zuordnung in Onventis trifft die internen i-Class-Vorgaben nicht, dadurch entsteht fehlerhafte Kontierung und Nacharbeit."
+    },
+    {
+      "titel": "Zu wenige Webshops angebunden",
+      "beschreibung": "Mitarbeitende sehen nicht, wo ein Artikel am günstigsten verfügbar ist."
+    },
+    {
+      "titel": "Manuelle Kontierung bei Angeboten",
+      "beschreibung": "Positionen aus Angeboten werden von Hand eingetragen, das kostet Zeit und ist fehleranfällig."
+    },
+    {
+      "titel": "Sehr unterschiedliche Nutzergruppen",
+      "beschreibung": "Ein Teil will moderne Funktionen, ein anderer nur statische Kataloge. Ein einheitlicher Prozess ist schwer durchzusetzen."
+    }
+  ],
+  "painkiller": [
+    "Warengruppen mit i-Class-Werten verknüpft, Sachkonto kommt automatisch",
+    "54 bis 59 integrierte Webshops, weitere in rund drei Stunden anbindbar",
+    "KI-Suche in natürlicher Sprache zeigt das günstigste Angebot",
+    "Angebots-Upload kontiert alle Positionen vor",
+    "Felder und Freigabeprozesse selbst konfigurierbar, keine Beraterabhängigkeit",
+    "Microsoft-Teams-Integration für Mitarbeitende ohne Systemzugang",
+    "Implementierung in rund drei Monaten, ohne separate Implementierungskosten"
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Bedarf in natürlicher Sprache suchen, das System zeigt das günstigste Angebot (Intake Agent).",
+        "Einstieg klassisch, über Microsoft Teams oder über statische Kataloge (Status Agent)."
+      ],
+      "impact": "Jede Nutzergruppe arbeitet so, wie es zu ihr passt, ohne Schulungsaufwand."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Warengruppen sind mit den i-Class-Werten verknüpft, das Nachkorrigieren entfällt (Category Agent).",
+        "Weitere Webshops in rund drei Stunden angebunden, ohne Extrakosten (Approval Agent)."
+      ],
+      "impact": "Der Einkauf pflegt keine Zuordnungen nach, sondern steuert Sortiment und Freigaben."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Das Sachkonto entsteht bei der Anforderung, nicht in der Buchhaltung (Accounting Agent).",
+        "Angebote werden ausgelesen und vorkontiert, kein manuelles Eintippen von Positionen."
+      ],
+      "impact": "Die Nacharbeit an fehlerhafter Kontierung fällt weg."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Ein Werkzeug statt einer weiteren Insel in einer überlasteten Softwarelandschaft (Analytics Agent).",
+        "Preisvergleich über alle angebundenen Shops als Basis für Einsparungen (Savings Agent)."
+      ],
+      "impact": "Kalkulierbare Kosten, alles inklusive, ohne separates Implementierungsprojekt."
+    }
+  ],
+  "executive_summary": "Der Kern Ihres Problems ist die Zuordnung: Warengruppen und i-Class passen nicht zusammen, und das kostet Nacharbeit in der Buchhaltung. Genau dort setzt Hivebuy an, dazu kommen mehr angebundene Shops und ein Zugang, der zu jeder Nutzergruppe passt.",
+  "zahlenbasis": [
+    { "text": "500 aktive von 1.000 lizenzierten Onventis-Nutzern", "status": "belegt" },
+    { "text": "Knapp unter 1.000 Mitarbeitende am Hauptstandort, weltweit rund 1.600", "status": "belegt" },
+    { "text": "ERP Abas, Onventis für den indirekten Einkauf", "status": "belegt" },
+    { "text": "Bestellungen pro Monat und Zeitaufwand für die manuelle Kontierung", "status": "annahme" }
+  ],
+  "annahmen": [
+    "Der finale Entscheider für Softwareinvestitionen wurde nicht benannt.",
+    "Die IT ist noch nicht eingebunden, IT-Security bei Datenschutz und KI-Anbindung ist offen.",
+    "Die laufenden Onventis-Kosten sind nicht bekannt, ein Kostenvergleich fehlt daher noch."
+  ],
+  "naechster_schritt": {
+    "text": "Folgetermin in der Woche ab dem 1. September, mit der Kollegin aus dem Einkauf und einer tieferen Demo.",
+    "cta": "Folgetermin bestätigen",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}
