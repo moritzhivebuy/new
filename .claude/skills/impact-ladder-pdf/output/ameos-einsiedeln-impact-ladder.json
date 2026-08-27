@@ -1,0 +1,88 @@
+{
+  "customer": {
+    "name": "AMEOS Spital Einsiedeln",
+    "ansprechpartner": "Gaby Zollinger",
+    "gespraechsdatum": "26.05.2026"
+  },
+  "date": "27.08.2026",
+  "potenziale": [
+    {
+      "titel": "Anträge laufen auf Papier und als PDF",
+      "beschreibung": "Bedarfsanforderungen kommen in PDF- oder Papierform und werden anschließend vom Einkauf geprüft."
+    },
+    {
+      "titel": "Freigaben hängen an der Kommissionssitzung",
+      "beschreibung": "Ein Gremium bewertet die Notwendigkeit, von der Investition bis zum Verbrauchsmaterial."
+    },
+    {
+      "titel": "Investitionsprozess ohne definierten Workflow",
+      "beschreibung": "Der Wunsch nach klaren Schritten war der einzige konkret genannte Punkt im Gespräch."
+    },
+    {
+      "titel": "Umgehungen sind noch nicht ausgeschlossen",
+      "beschreibung": "Sie kommen seltener vor, sind aber weiterhin möglich."
+    }
+  ],
+  "painkiller": [
+    "Nutzerfreundliche Alternative zu SAP für Endnutzer",
+    "Standardisierter Bestellprozess für alle Mitarbeitenden",
+    "Automatische Datenübertragung an SAP, SAP bleibt führendes System",
+    "Preisvergleich zwischen verschiedenen Lieferanten",
+    "Microsoft-Teams-Integration möglich",
+    "Vollständige Kostenstellen- und Sachkonto-Zuordnung"
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Bedarf über eine Oberfläche anfordern, auch aus Microsoft Teams heraus (Intake Agent).",
+        "Der Status kommt automatisch, Nachfragen im Einkauf entfallen (Status Agent)."
+      ],
+      "impact": "Ein Weg für alle Mitarbeitenden, ohne SAP-Kenntnisse und ohne Papierantrag."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Anträge kommen vollständig an, die Prüfung startet ohne Rückfragen (Category Agent).",
+        "Freigaben nach festen Regeln, die Kommissionssitzung entscheidet nur noch die echten Fälle (Approval Agent)."
+      ],
+      "impact": "Der Einkauf prüft statt zu sammeln, Umgehungen werden vom System ausgeschlossen."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Kostenstelle und Sachkonto entstehen bei der Anforderung, nicht in der Buchhaltung (Accounting Agent).",
+        "Die Daten laufen automatisch nach SAP, das bestehende Rechnungssystem bleibt unberührt."
+      ],
+      "impact": "Saubere Kontierung ab dem ersten Schritt, kein zweites Rechnungsprojekt nötig."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Ein definierter Investitionsworkflow mit klaren Schritten und dokumentierten Entscheidungen (Analytics Agent).",
+        "Volumen je Lieferant über die Standorte hinweg sichtbar als Basis für Bündelung (Savings Agent)."
+      ],
+      "impact": "Der Investitionsprozess wird nachvollziehbar, auch gegenüber dem strategischen Einkauf."
+    }
+  ],
+  "executive_summary": "Ein akuter Schmerz wurde im Gespräch nicht genannt, der aktuelle Prozess funktioniert. Der Nutzen liegt vor dem ERP: ein Weg für alle Anforderer statt Papier und PDF, und ein Investitionsprozess mit definierten Schritten, während SAP führendes System bleibt.",
+  "zahlenbasis": [
+    { "text": "Standort Einsiedeln mit rund 350 Mitarbeitenden, viele Teilzeitstellen", "status": "belegt" },
+    { "text": "Sieben Personen im Bereich: vier Apotheke, drei Einkauf", "status": "belegt" },
+    { "text": "Drei Standorte in der Schweiz: Einsiedeln, Brunnen, Zug", "status": "belegt" },
+    { "text": "Anzahl Bestellungen pro Monat", "status": "annahme" }
+  ],
+  "annahmen": [
+    "Die finale Entscheidung liegt beim strategischen Einkauf in Deutschland, nicht am Standort.",
+    "Die Migration auf S4HANA läuft, der Zeitpunkt für ein zusätzliches Tool ist offen."
+  ],
+  "naechster_schritt": {
+    "text": "Die einkaufsspezifischen Unterlagen inklusive SAP-Referenzen gehen an den strategischen Einkauf in Deutschland.",
+    "cta": "Bewertung durch den strategischen Einkauf",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}
