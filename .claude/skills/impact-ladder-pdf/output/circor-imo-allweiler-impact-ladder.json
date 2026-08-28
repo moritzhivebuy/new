@@ -1,0 +1,105 @@
+{
+  "customer": {
+    "name": "CIRCOR IMO ALLWEILER",
+    "ansprechpartner": "Dominik Bechler",
+    "gespraechsdatum": "28.08.2026"
+  },
+  "date": "28.08.2026",
+  "potenziale": [
+    {
+      "titel": "Anforderung im 15 Jahre alten SAP-Add-on",
+      "beschreibung": "Graue Masken und eine hohe Einstiegshürde für alle, die selten bestellen."
+    },
+    {
+      "titel": "Freitext kommt unvollständig an",
+      "beschreibung": "Anforderungen wie \"Maler für zwei Wände\" landen unstrukturiert im Einkauf und müssen nachgefasst werden."
+    },
+    {
+      "titel": "Monitoring läuft von Hand",
+      "beschreibung": "BANFs, Wareneingänge, überfällige Bestellungen und Rechnungsabweichungen werden einzeln getrackt."
+    },
+    {
+      "titel": "Kein Blick über die 16 Standorte",
+      "beschreibung": "Die Standorte arbeiten isoliert, dieselben Lieferanten werden mehrfach bedient."
+    }
+  ],
+  "painkiller": [
+    "Modernes Frontend für Bedarfsanforderer, ohne Schulungsaufwand",
+    "Kataloge, Punch-out und Freitext in einer Oberfläche",
+    "Vollständige und korrekt kontierte BANFs aus jeder Anforderung",
+    "Freigabe-Workflows frei konfigurierbar, beliebig viele Stufen",
+    "Überfällige Freigaben auf einen Blick, Hinweis per Mail und Teams",
+    "Bestellstatus von Bestellung bis Rechnung in einer Übersicht",
+    "SAP-Schnittstelle: Bestellung entsteht nach Freigabe automatisch in SAP",
+    "Rechnungsmatching auch ohne KI, passend zu den Konzernauflagen",
+    "Angebote hochladen, auslesen und in eine BANF überführen",
+    "RFQ-Funktion und Lieferantenportal in Kürze verfügbar"
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Anforderung in einer Oberfläche, die ohne Schulung bedienbar ist (Intake Agent).",
+        "Bestellstatus von Lieferung bis Rechnung selbst einsehbar (Status Agent)."
+      ],
+      "impact": "Wer selten bestellt, findet sich sofort zurecht, die Umwege über den Einkauf entfallen."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Freitext kommt vollständig und kontiert an, kein Nachfassen (Category Agent).",
+        "Freigaben in beliebig vielen Stufen, überfällige Fälle sichtbar statt gesucht (Approval Agent)."
+      ],
+      "impact": "Der Einkauf prüft und verhandelt, statt Anforderungen zu vervollständigen und Listen zu pflegen."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Die Bestellung entsteht nach Freigabe automatisch in SAP (Accounting Agent).",
+        "Rechnungsmatching auch ohne KI, passend zu den Konzernauflagen."
+      ],
+      "impact": "Ein ergänzendes Frontend statt eines Systemwechsels, die Rechnungsverarbeitung bleibt unberührt."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Maverick Spend sinkt, weil das System benutzt wird statt umgangen (Analytics Agent).",
+        "Ein Standort startet, weitere Standorte kommen dazu, ohne neues Projekt (Savings Agent)."
+      ],
+      "impact": "Compliance wird messbar, der Weg zu Transparenz beginnt bei einem Standort."
+    }
+  ],
+  "executive_summary": "Hivebuy ersetzt Ihr SAP-Add-on nicht, sondern setzt sich davor: eine Oberfläche ohne Schulungsaufwand, vollständige BANFs und sichtbare Freigaben. Die Rechnungsverarbeitung bleibt in SAP.",
+  "zahlenbasis": [
+    {
+      "text": "Rund 80.000 Rechnungsbelege pro Jahr, davon geschätzt 20.000 indirekt",
+      "status": "belegt"
+    },
+    {
+      "text": "16 Standorte im CIRCOR-Konzern, isoliert arbeitend",
+      "status": "belegt"
+    },
+    {
+      "text": "Fünf E-Kataloge, SAP mit eigenem Add-on seit rund 15 Jahren",
+      "status": "belegt"
+    },
+    {
+      "text": "Aufwandsreduktion im Einkauf",
+      "status": "annahme"
+    }
+  ],
+  "annahmen": [
+    "Die finale Entscheidung liegt vermutlich nicht allein beim Einkauf.",
+    "Spend Cube und die Add-on-Modernisierung binden aktuell die Kapazität.",
+    "Guided Buying startet laut Gespräch frühestens im kommenden Jahr."
+  ],
+  "naechster_schritt": {
+    "text": "Sie kommen auf uns zu, sobald Guided Buying auf der Agenda steht, und erhalten dann den Stand zu RFQ und Lieferantenportal.",
+    "cta": "Kontakt bei Projektstart",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}
