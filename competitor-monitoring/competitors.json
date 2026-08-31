@@ -1,0 +1,275 @@
+{
+  "$comment": "Registry für das Wettbewerbs-Monitoring. Ein Eintrag pro Domain. 'role' unterscheidet die eigene Seite von Wettbewerbern.",
+  "sites": [
+    {
+      "id": "hivebuy",
+      "role": "self",
+      "name": "Hivebuy",
+      "hosts": [
+        "hivebuy.com",
+        "www.hivebuy.com"
+      ],
+      "bases": [
+        "https://www.hivebuy.com/en/",
+        "https://www.hivebuy.com/blog/"
+      ],
+      "sitemaps": [
+        "https://www.hivebuy.com/sitemap.xml"
+      ],
+      "keyPages": {
+        "home": "https://www.hivebuy.com/en/",
+        "pricing": "https://www.hivebuy.com/en/pricing",
+        "product": "https://hivebuy.com/en/product",
+        "integrations": "https://www.hivebuy.com/en/integrations",
+        "references": "https://www.hivebuy.com/en/kundenreferenzen"
+      },
+      "reviewProfiles": [
+        "https://omr.com/en/reviews/product/hivebuy",
+        "https://www.capterra.com.de/software/1027395/hivebuy",
+        "https://trusted.de/hivebuy"
+      ],
+      "excludePatterns": [
+        "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
+        "/wp-json/",
+        "\\?"
+      ],
+      "shots": [
+        {
+          "name": "home-vollseite",
+          "url": "https://www.hivebuy.com/en/",
+          "fullPage": true
+        },
+        {
+          "name": "home-hero",
+          "url": "https://www.hivebuy.com/en/",
+          "selector": "h1"
+        },
+        {
+          "name": "preise-vollseite",
+          "url": "https://www.hivebuy.com/en/pricing",
+          "fullPage": true
+        }
+      ]
+    },
+    {
+      "id": "simplesystem",
+      "role": "competitor",
+      "name": "simple system",
+      "hosts": [
+        "simplesystem.com",
+        "www.simplesystem.com",
+        "company.simplesystem.com",
+        "en.company.simplesystem.com"
+      ],
+      "bases": [
+        "https://simplesystem.com/",
+        "https://simplesystem.com/magazin/",
+        "https://company.simplesystem.com/"
+      ],
+      "sitemaps": [
+        "https://simplesystem.com/sitemap.xml",
+        "https://company.simplesystem.com/sitemap.xml"
+      ],
+      "keyPages": {
+        "home": "https://simplesystem.com/",
+        "pricing": "https://simplesystem.com/preise",
+        "pricingArticle": "https://simplesystem.com/magazin/preise-bei-simple-system",
+        "magazine": "https://simplesystem.com/magazin/"
+      },
+      "reviewProfiles": [
+        "https://omr.com/en/reviews/product/simple-system"
+      ],
+      "excludePatterns": [
+        "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
+        "\\?"
+      ],
+      "shots": [
+        {
+          "name": "home-vollseite",
+          "url": "https://simplesystem.com/",
+          "fullPage": true
+        },
+        {
+          "name": "home-hero",
+          "url": "https://simplesystem.com/",
+          "selector": "h1"
+        },
+        {
+          "name": "preise-artikel",
+          "url": "https://simplesystem.com/magazin/preise-bei-simple-system",
+          "fullPage": true
+        },
+        {
+          "name": "preise-vollseite",
+          "url": "https://simplesystem.com/preise",
+          "fullPage": true
+        }
+      ]
+    },
+    {
+      "id": "onventis",
+      "role": "competitor",
+      "name": "Onventis",
+      "hosts": [
+        "onventis.com",
+        "www.onventis.com",
+        "onventis.de",
+        "www.onventis.de"
+      ],
+      "bases": [
+        "https://www.onventis.com/"
+      ],
+      "sitemaps": [
+        "https://www.onventis.com/wpms-sitemap.xml"
+      ],
+      "keyPages": {
+        "home": "https://www.onventis.com/"
+      },
+      "reviewProfiles": [],
+      "excludePatterns": [
+        "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
+        "\\?"
+      ],
+      "shots": [
+        {
+          "name": "home-vollseite",
+          "url": "https://www.onventis.com/",
+          "fullPage": true
+        },
+        {
+          "name": "home-hero",
+          "url": "https://www.onventis.com/",
+          "selector": "h1"
+        }
+      ]
+    },
+    {
+      "id": "precoro",
+      "role": "competitor",
+      "name": "Precoro",
+      "hosts": [
+        "precoro.com",
+        "www.precoro.com"
+      ],
+      "bases": [
+        "https://precoro.com/"
+      ],
+      "sitemaps": [
+        "https://precoro.com/sitemap.xml"
+      ],
+      "keyPages": {
+        "home": "https://precoro.com/",
+        "pricing": "https://precoro.com/pricing"
+      },
+      "reviewProfiles": [],
+      "excludePatterns": [
+        "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
+        "\\?",
+        "/blog/page/"
+      ],
+      "shots": [
+        {
+          "name": "home-vollseite",
+          "url": "https://precoro.com/",
+          "fullPage": true
+        },
+        {
+          "name": "preise-vollseite",
+          "url": "https://precoro.com/pricing",
+          "fullPage": true
+        },
+        {
+          "name": "preise-de-vollseite",
+          "url": "https://precoro.com/de/pricing",
+          "fullPage": true
+        },
+        {
+          "name": "home-de-vollseite",
+          "url": "https://precoro.com/de/",
+          "fullPage": true
+        }
+      ]
+    },
+    {
+      "id": "procureai",
+      "role": "competitor",
+      "name": "Procure Ai",
+      "hosts": [
+        "procure.ai",
+        "www.procure.ai"
+      ],
+      "bases": [
+        "https://www.procure.ai/",
+        "https://www.procure.ai/platform"
+      ],
+      "sitemaps": [
+        "https://www.procure.ai/sitemap.xml"
+      ],
+      "keyPages": {
+        "home": "https://www.procure.ai/",
+        "platform": "https://www.procure.ai/platform"
+      },
+      "reviewProfiles": [
+        "https://www.g2.com/products/procure-ai-procureai/reviews",
+        "https://www.capterra.com/p/10016095/Procure-Ai/",
+        "https://www.gartner.com/reviews/product/procure-ai"
+      ],
+      "excludePatterns": [
+        "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
+        "\\?"
+      ],
+      "shots": [
+        {
+          "name": "home-vollseite",
+          "url": "https://www.procure.ai/",
+          "fullPage": true
+        },
+        {
+          "name": "plattform-vollseite",
+          "url": "https://www.procure.ai/platform",
+          "fullPage": true
+        }
+      ]
+    },
+    {
+      "id": "lio",
+      "role": "competitor",
+      "name": "Lio (vormals askLio)",
+      "hosts": [
+        "lio.ai",
+        "www.lio.ai",
+        "asklio.ai",
+        "www.asklio.ai"
+      ],
+      "bases": [
+        "https://www.lio.ai/"
+      ],
+      "sitemaps": [
+        "https://www.lio.ai/sitemap.xml"
+      ],
+      "keyPages": {
+        "home": "https://www.lio.ai/"
+      },
+      "reviewProfiles": [
+        "https://www.ycombinator.com/companies/lio"
+      ],
+      "excludePatterns": [
+        "\\.(pdf|jpg|jpeg|png|svg|webp|zip|css|js)$",
+        "\\?"
+      ],
+      "shots": [
+        {
+          "name": "home-vollseite",
+          "url": "https://www.lio.ai/",
+          "fullPage": true
+        },
+        {
+          "name": "home-hero",
+          "url": "https://www.lio.ai/",
+          "selector": "h1"
+        }
+      ]
+    }
+  ],
+  "$shots_hinweis": "shots: benannte Screenshots pro Site. Ohne 'selector' wird die ganze Seite aufgenommen, mit 'selector' nur dieser Ausschnitt. Erlaubt sind CSS-Selektoren und Playwright-Selektoren wie text=Preise oder text=/regex/i. hideSelectors blendet vor der Aufnahme Elemente aus, etwa Cookie-Banner. Selektoren gegen fremde Seiten sind nicht verifizierbar und können brechen: der Snapshot vermerkt dann einen Fehler zu diesem Shot."
+}
