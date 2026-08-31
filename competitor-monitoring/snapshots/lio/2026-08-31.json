@@ -1,0 +1,978 @@
+{
+  "site": "lio",
+  "name": "Lio (vormals askLio)",
+  "role": "competitor",
+  "crawledAt": "2026-08-31T07:08:57.884Z",
+  "fetchMode": "playwright",
+  "robots": {
+    "https://www.lio.ai": {
+      "present": true,
+      "disallowRules": [
+        "!/",
+        "/panel"
+      ]
+    },
+    "https://lio.ai": {
+      "present": true,
+      "disallowRules": [
+        "!/",
+        "/panel"
+      ]
+    },
+    "https://asklio.ai": {
+      "present": true,
+      "disallowRules": [
+        "!/",
+        "/panel"
+      ]
+    },
+    "https://www.asklio.ai": {
+      "present": true,
+      "disallowRules": [
+        "!/",
+        "/panel"
+      ]
+    }
+  },
+  "sitemapsFound": [
+    "https://www.lio.ai/sitemap.xml",
+    "https://lio.ai/sitemap.xml"
+  ],
+  "sitemapUrlCount": 42,
+  "pageCount": 26,
+  "truncated": false,
+  "robotsSkipped": [],
+  "screenshots": [
+    {
+      "name": "home-vollseite",
+      "url": "https://www.lio.ai/",
+      "selector": null,
+      "file": "snapshots/lio/screenshots/2026-08-31/home-vollseite.png"
+    },
+    {
+      "name": "home-hero",
+      "url": "https://www.lio.ai/",
+      "selector": "h1",
+      "file": "snapshots/lio/screenshots/2026-08-31/home-hero.png"
+    }
+  ],
+  "pages": [
+    {
+      "url": "https://www.lio.ai/",
+      "finalUrl": "https://lio.ai/",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "de-DE",
+          "href": "https://lio.ai/de"
+        },
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai"
+        }
+      ],
+      "h1": [
+        "The world's first multi agent system for procurement"
+      ],
+      "h2": [
+        "Trusted by Industry Leaders",
+        "The Engine Behind a New Era of Procurement",
+        "Empowering the Industries that Power the World",
+        "Your AI workforce running procurement end-to-end.",
+        "Proven Impact at Enterprise Scale",
+        "Enterprise Security guaranteed",
+        "The most awarded and adopted multi-agent procurement system worldwide"
+      ],
+      "wordCount": 2091,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "061cb35f30b06c6d",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo The world's first multi agent system for procurement Lio builds the world's first AI procurement workforce for global enterprises. Every purchase request is managed by specialized agents working in parallel: researching vendors, negotiating terms, managing approvals, and tracking deliveries simultaneously. What once consumed your team's hours is now executed by a coordinated network of AI Agents. Request Demo Announcing Lio's $30M Series A, led by Andreessen Horowitz! Watch the announcement video here. DPW Growth Award Winner Trusted by Industry Leaders Next-Gen Intelligence The Engine Behind a New Era of Procurement A single request enters the system. Within seconds, multiple agents research, negotiate, validate, and complete the order, all in parallel. \"In collaboration with Lio"
+    },
+    {
+      "url": "https://lio.ai",
+      "finalUrl": "https://lio.ai/",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "de-DE",
+          "href": "https://lio.ai/de"
+        },
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai"
+        }
+      ],
+      "h1": [
+        "The world's first multi agent system for procurement"
+      ],
+      "h2": [
+        "Trusted by Industry Leaders",
+        "The Engine Behind a New Era of Procurement",
+        "Empowering the Industries that Power the World",
+        "Your AI workforce running procurement end-to-end.",
+        "Proven Impact at Enterprise Scale",
+        "Enterprise Security guaranteed",
+        "The most awarded and adopted multi-agent procurement system worldwide"
+      ],
+      "wordCount": 2091,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "6f526773c213566b",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo The world's first multi agent system for procurement Lio builds the world's first AI procurement workforce for global enterprises. Every purchase request is managed by specialized agents working in parallel: researching vendors, negotiating terms, managing approvals, and tracking deliveries simultaneously. What once consumed your team's hours is now executed by a coordinated network of AI Agents. Request Demo Announcing Lio's $30M Series A, led by Andreessen Horowitz! Watch the announcement video here. DPW Growth Award Winner Trusted by Industry Leaders Next-Gen Intelligence The Engine Behind a New Era of Procurement A single request enters the system. Within seconds, multiple agents research, negotiate, validate, and complete the order, all in parallel. \"In collaboration with Lio"
+    },
+    {
+      "url": "https://lio.ai/product",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/product",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "de-DE",
+          "href": "https://lio.ai/de/product"
+        },
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/product"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/product"
+        }
+      ],
+      "h1": [],
+      "h2": [
+        "Our solution for intelligent procurement",
+        "From implementation to impact in weeks, not months",
+        "Measurable results from day one"
+      ],
+      "wordCount": 1062,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "f6d25e1140394f7e",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Our solution for intelligent procurement Source suppliers, negotiate contracts, optimize spend. Secure your competitive advantage. 01 Agent-augmented buying 02 Procurement automated 03 Tame the tailspend 04 Supercharge your buyers 05 The Agentic Workforce Make your users fall in love with procurement Lio turns complex buying into an effortless, guided experience. When agents make procurement intuitive, users naturally stay compliant. Freetext Agent Search Agent Guided Buying Agent Approvals Agent RFQ Agent Lio turns any unstructured data, such as quotations, dialogues, and images, into standardized, actionable procurement requests. Lio enriches your data and provides a simple search interface to find catalog items, vendors, and framework agreements in seconds. Lio learns from your"
+    },
+    {
+      "url": "https://lio.ai/newsroom",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/newsroom",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/newsroom"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/newsroom"
+        }
+      ],
+      "h1": [],
+      "h2": [
+        "About Lio and beyond: company, industry, trends",
+        "News in the spotlight",
+        "The full load of Lio"
+      ],
+      "wordCount": 423,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "3d0a7e739008ae44",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo About Lio and beyond: company, industry, trends Discover our newsroom. Lio Technologies Raises $30M Series A to Bring Agentic AI to Enterprise Procurement Lio (formerly known as askLio), the company building an agentic AI platform for enterprise procurement, today announced a $30 million Series A funding round led by Andreessen Horowitz (a16z), with participation from SV Angels, Harry Stebbings and Y Combinator. Mar 05, 2026 Read more Featured articles News in the spotlight Lio Technologies Raises $30M Series A to Bring Agentic AI to Enterprise Procurement Mar 05, 2026 Read more How Lio Automates Shared Service Centers (SSCs) or Business Process Outsourcing (BPO) Feb 12, 2026 Read more From Operational Buyer to Agent Supervisor: The Procurement Workforce of the Future Feb 25, 2026"
+    },
+    {
+      "url": "https://lio.ai/newsroom/how-lio-automates-shared-service-centers-sscs-or-business-process-outsourcing-bpo-discover-ow-lio-replaces-traditional-bpo-with-agentic-digital-labor-delivering-24-7-auditable-ai-agents-that-execute-procurement-workflows-end-to-end-copy",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/newsroom/how-lio-automates-shared-service-centers-sscs-or-business-process-outsourcing-bpo-discover-ow-lio-replaces-traditional-bpo-with-agentic-digital-labor-delivering-24-7-auditable-ai-agents-that-execute-procurement-workflows-end-to-end-copy",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/newsroom/how-lio-automates-shared-service-centers-sscs-or-business-process-outsourcing-bpo-discover-ow-lio-replaces-traditional-bpo-with-agentic-digital-labor-delivering-24-7-auditable-ai-agents-that-execute-procurement-workflows-end-to-end-copy"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/newsroom/how-lio-automates-shared-service-centers-sscs-or-business-process-outsourcing-bpo-discover-ow-lio-replaces-traditional-bpo-with-agentic-digital-labor-delivering-24-7-auditable-ai-agents-that-execute-procurement-workflows-end-to-end-copy"
+        }
+      ],
+      "h1": [
+        "How Lio Automates Shared Service Centers (SSCs) or Business Process Outsourcing (BPO)"
+      ],
+      "h2": [
+        "The Scalability / Blackbox Trade-off",
+        "Digital Labor That Executes End-to-End",
+        "From Labor Management to Agent Supervision",
+        "The Bottom Line"
+      ],
+      "wordCount": 878,
+      "schemaTypes": [],
+      "prices": [
+        "$30",
+        "€0.6",
+        "€7"
+      ],
+      "textHash": "dfe99e30c5cf4fd1",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo How Lio Automates Shared Service Centers (SSCs) or Business Process Outsourcing (BPO) Most large enterprises rely on Shared Service Centers (SSCs) or Business Process Outsourcing (BPO) providers to scale structured procurement operations. Companies adopt these models for lower labor cost, lack of local talent, and global scale. But while BPOs scale throughput, they introduce structural friction - and Lio is built to eliminate it. Feb 12, 2026 Industry Trends Technical Depth The Problem The Scalability / Blackbox Trade-off Most large enterprises rely on Shared Service Centers (SSCs) or Business Process Outsourcing (BPO) providers to scale structured procurement operations. Companies adopt these models for lower labor cost, lack of local talent, and global scale. But while BPOs scal"
+    },
+    {
+      "url": "https://lio.ai/newsroom/from-operational-buyer-to-agent-supervisor-the-procurement-workforce-of-the-future",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/newsroom/from-operational-buyer-to-agent-supervisor-the-procurement-workforce-of-the-future",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/newsroom/from-operational-buyer-to-agent-supervisor-the-procurement-workforce-of-the-future"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/newsroom/from-operational-buyer-to-agent-supervisor-the-procurement-workforce-of-the-future"
+        }
+      ],
+      "h1": [
+        "From Operational Buyer to Agent Supervisor: The Procurement Workforce of the Future"
+      ],
+      "h2": [
+        "The Digitization Illusion",
+        "From Forms to Execution",
+        "The Three Layers of Tomorrow’s Procurement Department"
+      ],
+      "wordCount": 675,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "e75684c3af2af87a",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo From Operational Buyer to Agent Supervisor: The Procurement Workforce of the Future The first Procure-to-Pay solutions were digital forms. Paper became cloud interfaces. Emails became structured fields. Approvals became workflows. But the real work never disappeared. Feb 25, 2026 Industry Trends The Problem The Digitization Illusion Humans still validated line items, checked suppliers, matched invoices, chased missing information, and routed approvals. The interface improved. The operating model didn’t. Even today, “AI in P2P” often means small AI features embedded into form-driven systems. Useful, yes - but incremental. And when 80-90% of demand enters as unstructured free text, humans still interpret, verify, and execute. The bottleneck isn’t the UI. It’s the manual execution la"
+    },
+    {
+      "url": "https://lio.ai/newsroom/enterprise-systems-aren-t-the-bottleneck-manual-execution-is",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/newsroom/enterprise-systems-aren-t-the-bottleneck-manual-execution-is",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/newsroom/enterprise-systems-aren-t-the-bottleneck-manual-execution-is"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/newsroom/enterprise-systems-aren-t-the-bottleneck-manual-execution-is"
+        }
+      ],
+      "h1": [
+        "Enterprise Systems Aren’t the Bottleneck: Manual Execution Is"
+      ],
+      "h2": [
+        "The Systems Work. The Work Inside Them Doesn’t Scale.",
+        "An Intelligence Layer on Top of Your ERP",
+        "Execution Without Rip-and-Replace"
+      ],
+      "wordCount": 536,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "67b3d098eea4e3c4",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Enterprise Systems Aren’t the Bottleneck: Manual Execution Is Your ERP works. The manual work inside it doesn't scale. Learn how Lio adds an intelligent execution layer on top of SAP, Coupa, and Ariba. Feb 16, 2026 Industry Trends The Problem The Systems Work. The Work Inside Them Doesn’t Scale. Large enterprises already run on powerful ERP & Procurement systems. SAP. Oracle. Ariba. Coupa. These platforms manage data, approvals, workflows, storage, compliance and are the system of record - the operational backbone of the enterprise. The infrastructure exists. The interface exists.The data layer exists. What doesn’t scale is the manual work happening inside it. Inside those systems, humans still do the execution. Most companies don’t want to rip out their ERP or procurement suite. "
+    },
+    {
+      "url": "https://lio.ai/newsroom/how-we-created-a-guided-buying-system-employees-actually-want-to-use",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/newsroom/how-we-created-a-guided-buying-system-employees-actually-want-to-use",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/newsroom/how-we-created-a-guided-buying-system-employees-actually-want-to-use"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/newsroom/how-we-created-a-guided-buying-system-employees-actually-want-to-use"
+        }
+      ],
+      "h1": [
+        "How We Created a Guided Buying System Employees Actually Want to Use"
+      ],
+      "h2": [
+        "Why Buying Tools Fail to Get Adopted",
+        "How We Designed Guided Buying Differently",
+        "Why Employees Actually Use It"
+      ],
+      "wordCount": 623,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "07ce545d60efc188",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo How We Created a Guided Buying System Employees Actually Want to Use Most employees don't buy every day. They buy once a quarter. Sometimes once a year. That's the core problem- and the reason most buying tools never get adopted. We designed guided buying to work for people who don't buy for a living. Feb 09, 2026 Industry Trends The Problem Why Buying Tools Fail to Get Adopted Traditional buying tools assume training, familiarity, and procurement knowledge. But most requesters don’t speak procurement. They don’t think in commodity groups, preferred vendors, or GL accounts. They think: “How should I know how this maps to a GL account?” The result? Frustration at the front end - and cleanup at the back end. When requesters struggle, procurement turns into a help desk. Finance fixes"
+    },
+    {
+      "url": "https://lio.ai/newsroom/lio-technologies-raises-30m-series-a-to-bring-agentic-ai-to-enterprise-procurement",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/newsroom/lio-technologies-raises-30m-series-a-to-bring-agentic-ai-to-enterprise-procurement",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/newsroom/lio-technologies-raises-30m-series-a-to-bring-agentic-ai-to-enterprise-procurement"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/newsroom/lio-technologies-raises-30m-series-a-to-bring-agentic-ai-to-enterprise-procurement"
+        }
+      ],
+      "h1": [
+        "Lio Technologies Raises $30M Series A to Bring Agentic AI to Enterprise Procurement"
+      ],
+      "h2": [
+        "Lio Raises $30M Series A to Bring Agentic AI to Enterprise Procurement Backed by Andreessen Horowitz, the AI-native company is redefining procurement with a virtual workforce that executes purchasing end-to-end",
+        "Watch the announcement video !"
+      ],
+      "wordCount": 1129,
+      "schemaTypes": [],
+      "prices": [
+        "$30",
+        "$33",
+        "$180",
+        "$10",
+        "$90"
+      ],
+      "textHash": "b1575cd4e61a8ed2",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Lio Technologies Raises $30M Series A to Bring Agentic AI to Enterprise Procurement Lio (formerly known as askLio), the company building an agentic AI platform for enterprise procurement, today announced a $30 million Series A funding round led by Andreessen Horowitz (a16z), with participation from SV Angels, Harry Stebbings and Y Combinator. Mar 05, 2026 Press Press Release Lio Raises $30M Series A to Bring Agentic AI to Enterprise Procurement Backed by Andreessen Horowitz, the AI-native company is redefining procurement with a virtual workforce that executes purchasing end-to-end New York, New York, March 5, 2026 : Lio (formerly known as askLio), the company building an agentic AI platform for enterprise procurement, today announced a $30 million Series A funding round led by An"
+    },
+    {
+      "url": "https://lio.ai/newsroom/why-we-built-lio-a-manifesto-by-ceo-vladimir-keil",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/newsroom/why-we-built-lio-a-manifesto-by-ceo-vladimir-keil",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/newsroom/why-we-built-lio-a-manifesto-by-ceo-vladimir-keil"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/newsroom/why-we-built-lio-a-manifesto-by-ceo-vladimir-keil"
+        }
+      ],
+      "h1": [
+        "Why we built Lio: a manifesto by CEO Vladimir Keil"
+      ],
+      "h2": [],
+      "wordCount": 1028,
+      "schemaTypes": [],
+      "prices": [
+        "$30",
+        "$180",
+        "$10"
+      ],
+      "textHash": "72cb48c68848ba6f",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Why we built Lio: a manifesto by CEO Vladimir Keil Every year, large corporations spend trillions of dollars buying things: raw materials, professional services, IT infrastructure, office supplies, anything. The volume that flows through enterprise procurement departments is simply staggering. We’re building Lio to free procurement teams from these painfully manual processes. Mar 06, 2026 Founder Stories The Problem Every year, large corporations spend trillions of dollars buying things: raw materials, professional services, IT infrastructure, office supplies, anything . The volume that flows through enterprise procurement departments is simply staggering. At a Fortune 500 company, a single procurement organization might manage tens of thousands of suppliers, hundreds of thousands"
+    },
+    {
+      "url": "https://lio.ai/newsroom/lio-appoints-jared-petras-as-head-of-us-growth",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/newsroom/lio-appoints-jared-petras-as-head-of-us-growth",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/newsroom/lio-appoints-jared-petras-as-head-of-us-growth"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/newsroom/lio-appoints-jared-petras-as-head-of-us-growth"
+        }
+      ],
+      "h1": [
+        "Lio Appoints Jared Petras as Head of US Growth"
+      ],
+      "h2": [],
+      "wordCount": 671,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "29eb22b18bbcd8aa",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Lio Appoints Jared Petras as Head of US Growth Former Walmart Senior Director of Procurement Digital Transformation joins Lio, bringing Fortune 100 enterprise network and deep procurement expertise to accelerate North American expansion. Apr 10, 2026 Press Press Release New York, 10.04.2026: Lio, the world’s first multi agent system for enterprise procurement, today announced the appointment of Jared Petras as Head of US Growth, effective April 13, 2026. Petras joins from Walmart, where he served as Senior Director of Digital Transformation for Procurement and led the company’s engagement with Lio an engagement that ultimately led him to join the company he helped bring on board. In his new role, Petras will spearhead Lio’s go to market strategy across North America, leveraging hi"
+    },
+    {
+      "url": "https://lio.ai/events",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/events",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/events"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/events"
+        }
+      ],
+      "h1": [],
+      "h2": [
+        "Experience Lio live and unfiltered",
+        "Our upcoming events"
+      ],
+      "wordCount": 376,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "3f804822c43ecb21",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Experience Lio live and unfiltered Sign up for the latest events. We’re excited to meet you! Our upcoming events All Webinars On site Roundtable Host (Lio Events) Meet us at... September 2026 Bots & Buyers US 2026 Sep 23, 2026 English On site Bots & Buyers is an exclusive event designed by Lio Technologies to connect industry experts, encourage new partnerships and discuss the future roadmap of procurement. Secure your spot for the US … Sign up October 2026 Bots & Buyers EU 2026 Oct 27, 2026 English On site Bots & Buyers is an exclusive event designed by Lio Technologies to connect industry experts, encourage new partnerships and discuss the future roadmap of procurement. Secure your spot for the EU … Sign up Coming soon FDE Night 2026 To be announced English On site A community m"
+    },
+    {
+      "url": "https://lio.ai/about-us",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/about-us",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/about-us"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/about-us"
+        }
+      ],
+      "h1": [],
+      "h2": [
+        "Meet the team behind the world's first multi agent system for procurement.",
+        "Right place, right time, right product.",
+        "One for all. All for procurement.",
+        "Our values aren’t on a wall. They're in how we hire, how we work, and how we talk to each other on a Monday morning.",
+        "Only the best for the world’s best team"
+      ],
+      "wordCount": 822,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "706a1a88d34e1c4f",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Meet the team behind the world's first multi agent system for procurement. Discover the story behind the innovation. “Working at Lio isn’t just a job. It’s a rare chance to build something that truly matters, alongside people who will raise your standards for the rest of your career.” Philipp Kutschker, Chief of Staff View open positions 2023 Founded 120+ Lions 1 Vision uniting us Our Story Right place, right time, right product. This story didn’t begin with a grand vision. It began with frustration. We had felt it everywhere: inside global companies, across industries, in meeting rooms and online threads. Employees stuck in endless forms. Approval chains stretching for weeks. A thousand e-mails for “just checking in”. Buying processes in even the most powerful industries and comp"
+    },
+    {
+      "url": "https://lio.ai/demo",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/demo",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/demo"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/demo"
+        }
+      ],
+      "h1": [],
+      "h2": [
+        "Book your consultation today. Transform your procurement tomorrow.",
+        "Speak to us on-site."
+      ],
+      "wordCount": 264,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "80c803c4dff4c8e3",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Book your consultation today. Transform your procurement tomorrow. Fall in love with procurement again. One call is all it takes. Free and non-binding Designed to fit your requirements Conducted by our procurement experts Our promise to our clients 85% reduction in operational workload. 10% cost savings in sourcing and negotiation. 95% adoption rate of compliant procurement processes. A single request enters the system. Within seconds, multiple agents research, negotiate, validate, and complete the order, all in parallel. “Lio is the first real game changer I have seen in 18 years in purchasing.” Christian Uhlmann, Director Procurement, @worlds leading manufacturing company We seamlessly integrate with your existing P2P / ERP systems. Speak to us on-site. Lio Technologies GmbH Sei"
+    },
+    {
+      "url": "https://lio.ai/datenschutz",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/datenschutz",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/datenschutz"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/datenschutz"
+        }
+      ],
+      "h1": [],
+      "h2": [
+        "1. An overview of data protection",
+        "General information",
+        "Data recording on this website",
+        "Who is the responsible party for the recording of data on this website (i.e., the “controller”)?",
+        "How do we record your data?",
+        "What are the purposes we use your data for?",
+        "What rights do you have as far as your information is concerned?",
+        "Analysis tools and tools provided by third parties",
+        "2. Hosting",
+        "Webflow",
+        "Data processing",
+        "3. General information and mandatory information",
+        "Data protection",
+        "Information about the responsible party (referred to as the “controller” in the GDPR)",
+        "Storage duration",
+        "General information on the legal basis for the data processing on this website",
+        "Information on data transfer to the USA and other non-EU countries",
+        "Recipients of personal data",
+        "Revocation of your consent to the processing of data",
+        "Right to object to the collection of data in special cases; right to object to direct advertising (Art. 21 GDPR)",
+        "Right to log a complaint with the competent supervisory agency",
+        "Right to data portability",
+        "Information about, rectification and eradication of data",
+        "Right to demand processing restrictions",
+        "SSL and/or TLS encryption"
+      ],
+      "wordCount": 7806,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "a987bca00caf9ecb",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Datenschutz 1. An overview of data protection General information The following information will provide you with an easy to navigate overview of what will happen with your personal data when you visit this website. The term “personal data” comprises all data that can be used to personally identify you. For detailed information about the subject matter of data protection, please consult our Data Protection Declaration, which we have included beneath this copy. Data recording on this website Who is the responsible party for the recording of data on this website (i.e., the “controller”)? The data on this website is processed by the operator of the website, whose contact information is available under section “Information about the responsible party (referred to as the “controller” i"
+    },
+    {
+      "url": "https://lio.ai/impressum",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/impressum",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/impressum"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/impressum"
+        }
+      ],
+      "h1": [],
+      "h2": [
+        "Site Notice Information pursuant to Sect. 5 German Digital Services Act (DDG)",
+        "Contact",
+        "EU dispute resolution",
+        "Dispute resolution proceedings in front of a consumer arbitration board"
+      ],
+      "wordCount": 239,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "41121005f88fdff9",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Site Notice Information pursuant to Sect. 5 German Digital Services Act (DDG) Legal Address Lio Technologies GmbH Karlstraße 64-68/Seidlstraße 21-23 80335 München Office Location (for postal communication) Lio Technologies GmbH Seidlstraße 23 80335 München Germany Represented by Lukas Heinzmann Vladimir Keil Register entry Entry in the commercial register. Register court: Munich Register number: HRB 286659 Managing directors: Lukas Heinzmann, Vladimir Keil VAT ID DE364047844 Contact Phone: +49 15888 633603 E-mail: info@asklio.ai EU dispute resolution The European Commission provides a platform for online dispute resolution (ODR): https://ec.europa.eu/consumers/odr/ . Our e-mail address can be found above in the site notice. Dispute resolution proceedings in front of a consumer arb"
+    },
+    {
+      "url": "https://lio.ai/lio-exclusive-cpo-dinner-2026",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/lio-exclusive-cpo-dinner-2026",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/lio-exclusive-cpo-dinner-2026"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/lio-exclusive-cpo-dinner-2026"
+        }
+      ],
+      "h1": [],
+      "h2": [
+        "Procurement Agentic AI Leaders Dinner",
+        "You are cordially invited...",
+        "This event is brought to you by:"
+      ],
+      "wordCount": 409,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "63cf8eb22122eabc",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Procurement Agentic AI Leaders Dinner An exclusive event by Lio Technologies. 04-14-2026, 7:00 pm, Miami You are cordially invited... Over the past two years, Walmart and Lio have partnered to transform enterprise procurement through AI. Lio, backed by Andreessen Horowitz, is developing autonomous agents that are redefining procurement at scale. During NAPES, Lio will convene a select group of senior procurement leaders for a private dinner to discuss the implications of AI for procurement. https://maps.apple/p/4GN33RH8NyzUWM This event is brought to you by: Jared Petras | Senior Director Global Procurement Walmart Jared Petras is a senior procurement executive with extensive experience in strategic sourcing and supply chain management across multiple industries. Currently serving"
+    },
+    {
+      "url": "https://lio.ai/the-lio-principals-bme-e-loesungstage-2026-edition",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/the-lio-principals-bme-e-loesungstage-2026-edition",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/the-lio-principals-bme-e-loesungstage-2026-edition"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/the-lio-principals-bme-e-loesungstage-2026-edition"
+        }
+      ],
+      "h1": [],
+      "h2": [
+        "The Lio Principals: BME e-Lösungstage 2026 Edition",
+        "Save the Date!",
+        "We look forward to having you. Details to follow."
+      ],
+      "wordCount": 290,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "f64d56d40a634684",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo The Lio Principals: BME e-Lösungstage 2026 Edition The handpicked community for enterprise leaders on the frontier of agentic procurement. 19.05.2026, 19:30 o'clock, Düsseldorf Confirm your invitation Save the Date! The BME eLösungstage asks the questions on the future of procurement. We invite you to explore the right answers over dinner. Lio Technologies is hosting an exclusive dinner for a small group of senior procurement leaders on the sidelines of the event. At this intimate table, we offer you and carefully selected peers the opportunity to deepen the conversations of the day, gain new perspectives and strengthen connections. Confirm your registration here: https://lio-ai.typeform.com/bmeeloesung2026 We look forward to having you. Details to follow. This event is brought to"
+    },
+    {
+      "url": "https://lio.ai/lio-exclusive-cpo-dinner-dpw-edition",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/lio-exclusive-cpo-dinner-dpw-edition",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/lio-exclusive-cpo-dinner-dpw-edition"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/lio-exclusive-cpo-dinner-dpw-edition"
+        }
+      ],
+      "h1": [],
+      "h2": [
+        "Procurement Agentic AI Leaders Dinner",
+        "You are cordially invited...",
+        "This event is brought to you by:"
+      ],
+      "wordCount": 420,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "bc86fa3aae177074",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Procurement Agentic AI Leaders Dinner Hosted by Jared Petras (VP US Growth) & Vladimir Keil (CEO) 06-02-2026, 6:30 pm, New York Sign up You are cordially invited... Over the past two years, Walmart and Lio have partnered to transform enterprise procurement through AI. Lio, backed by Andreessen Horowitz, is developing autonomous agents that are redefining procurement at scale. During DPW 2026, Lio will convene a select group of senior procurement leaders for a private dinner to discuss the implications of AI for procurement. Secure your spot. This event is brought to you by: Jared Petras | Senior Director Global Procurement Walmart Jared Petras is a senior procurement executive with extensive experience in strategic sourcing and supply chain management across multiple industries. C"
+    },
+    {
+      "url": "https://lio.ai/the-lio-principals-world-procurement-congress-2026-edition",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/the-lio-principals-world-procurement-congress-2026-edition",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/the-lio-principals-world-procurement-congress-2026-edition"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/the-lio-principals-world-procurement-congress-2026-edition"
+        }
+      ],
+      "h1": [],
+      "h2": [
+        "The Lio Principals: World Procurement Congress 2026 Edition",
+        "Save the Date!",
+        "Where to meet us:"
+      ],
+      "wordCount": 273,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "6501bea6a6784200",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo The Lio Principals: World Procurement Congress 2026 Edition 20.05.2026, 20:15 o'clock, London Confirm your invitation Save the Date! For the past three years, Lio has been on a mission to transform enterprise procurement through AI. In developing autonomous agents, we are redefining procurement at scale. During World Procurement Congress, Lio will convene a select group of senior procurement leaders for a private dinner to discuss the implications of AI for procurement. Confirm your registration here: https://lio-ai.typeform.com/wpc2026 Where to meet us: Gaucho at The O2 Peninsula Square | London SE10 0DX | United Kingdom https://maps.app.goo.gl/VgvycAG3yTfjV8x29 This event is brought to you by Lio Technologies Lio (formerly known as askLio) builds the world’s most advanced AI pro"
+    },
+    {
+      "url": "https://lio.ai/10-million",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/10-million",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/10-million"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/10-million"
+        }
+      ],
+      "h1": [
+        "Lio launches the $10M challenge!"
+      ],
+      "h2": [
+        "We identify $10m in procurement value opportunities hidden within your business, or we donate $100k."
+      ],
+      "wordCount": 260,
+      "schemaTypes": [],
+      "prices": [
+        "$30",
+        "$10",
+        "$100"
+      ],
+      "textHash": "91f179568d257a95",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Join the challenge! Lio launches the $10M challenge! Lio Technologies - the leading AI company for procurement, logistics and finance agents - puts itself up to the test. The claim is simple: We identify $10m in procurement value opportunities hidden within your business, or we donate $100k. Interested participants sign up for the challenge and send their data to the team's Value Consultants. If they cannot identify at least 10.000.000 USD in savings hidden in these procurement, logistics and finance information, Lio donates 100.000 USD to a non-profit organization of the participant's choice. Win-Win. Why the company is confident to master the challenge: Most enterprises have $10M-$100M hidden inside procurement decisions. Lio agents uncover and capture these savings autonomously"
+    },
+    {
+      "url": "https://lio.ai/bots-buyers-clubhouse-edition",
+      "status": 200,
+      "title": "Bots &amp; Buyers Munich 2026: an event by Lio Technologies",
+      "metaDescription": "Discover the transformative force agentic AI unfolds when leveraged by industry-defining enterprises. Bots &amp; Buyers is our forum to connect you with fellow procurement leaders from around Europe and explore together how to redefine the future of procurement.",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai/bots-buyers-clubhouse-edition",
+      "ogTitle": "Bots &amp; Buyers Munich 2026: an event by Lio Technologies",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai/bots-buyers-clubhouse-edition"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai/bots-buyers-clubhouse-edition"
+        }
+      ],
+      "h1": [
+        "Lio's flagship event returns to Munich!"
+      ],
+      "h2": [
+        "Bots & Buyers Munich 2026 Clubhouse Edition"
+      ],
+      "wordCount": 262,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "9c02bcc0549dd340",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Bots & Buyers Munich 2026 Clubhouse Edition 11.06.2026 - Lio Headquarters - 10:00 am Lio's flagship event returns to Munich! Meet your peers at Bots & Buyers! Connect with procurement leaders and AI enthusiasts from around Europe. Confirmed companies include: Discover the transformative force agentic AI unfolds when leveraged by industry-defining enterprises. Bots & Buyers is our forum to connect you with fellow procurement leaders from around Europe and explore together how to redefine the future of procurement. Impressions from last year: https://drive.google.com/file/d/1DMuwM8fzfcF1nZEANa57AP6bNPjwqEDy/view This event is brought to you by Lio Technologies Lio (formerly known as askLio) builds the world’s most advanced AI procurement workforce for enterprise companies worldwide."
+    },
+    {
+      "url": "https://lio.ai/",
+      "status": 200,
+      "title": "Lio: The world's first multi agent system for procurement",
+      "metaDescription": "Lio (formerly known as askLio) builds the world",
+      "robotsMeta": "all",
+      "canonical": "https://lio.ai",
+      "ogTitle": "Lio: The world",
+      "lang": "en-US",
+      "hreflang": [
+        {
+          "lang": "de-DE",
+          "href": "https://lio.ai/de"
+        },
+        {
+          "lang": "en-US",
+          "href": "https://lio.ai"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://lio.ai"
+        }
+      ],
+      "h1": [
+        "The world's first multi agent system for procurement"
+      ],
+      "h2": [
+        "Trusted by Industry Leaders",
+        "The Engine Behind a New Era of Procurement",
+        "Empowering the Industries that Power the World",
+        "Your AI workforce running procurement end-to-end.",
+        "Proven Impact at Enterprise Scale",
+        "Enterprise Security guaranteed",
+        "The most awarded and adopted multi-agent procurement system worldwide"
+      ],
+      "wordCount": 2091,
+      "schemaTypes": [],
+      "prices": [
+        "$30"
+      ],
+      "textHash": "7d22f3f4af77e744",
+      "textExcerpt": "Announcing Lio's $30M Series A, led by Andreessen Horowitz! Get all insights here! Product Events + Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company + About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo Product Events Overview Bots & Buyers - Munich Bots & Buyers - New York Newsroom Company About Us Open Positions +1 (646) 776-4657 +49 15888 633603 Request Demo The world's first multi agent system for procurement Lio builds the world's first AI procurement workforce for global enterprises. Every purchase request is managed by specialized agents working in parallel: researching vendors, negotiating terms, managing approvals, and tracking deliveries simultaneously. What once consumed your team's hours is now executed by a coordinated network of AI Agents. Request Demo Announcing Lio's $30M Series A, led by Andreessen Horowitz! Watch the announcement video here. DPW Growth Award Winner Trusted by Industry Leaders Next-Gen Intelligence The Engine Behind a New Era of Procurement A single request enters the system. Within seconds, multiple agents research, negotiate, validate, and complete the order, all in parallel. \"In collaboration with Lio"
+    },
+    {
+      "url": "https://bots-and-buyers-eu.lio.ai/",
+      "status": 200,
+      "title": "Bots &amp; Buyers - Lio.ai",
+      "metaDescription": "Bots &amp; Buyers - the agentic summit for procurement, powered by Lio. Oct 27-28, 2026 at MotorWorld Munich. Try the world",
+      "robotsMeta": null,
+      "canonical": null,
+      "ogTitle": "Bots &amp; Buyers 2026 - The Most AI-Focused Procurement Event On Earth",
+      "lang": "en",
+      "hreflang": [],
+      "h1": [
+        "AI-FOCUSED PROCUREMENT"
+      ],
+      "h2": [
+        "LIMITED SPOTS AVAILABLE EVENT STARTS IN",
+        "TAKEAWAYS",
+        "WHAT'S HAPPENING",
+        "IMPRESSIONS FROM LAST YEAR",
+        "ATTENDING MAKES SENSE FOR YOU",
+        "MotorWorld München",
+        "THE ROUGH OUTLINE",
+        "APPLY HERE",
+        "You don’t know Lio?",
+        "FAQ"
+      ],
+      "wordCount": 1050,
+      "schemaTypes": [],
+      "prices": [],
+      "textHash": "d18e0ba99252b915",
+      "textExcerpt": "Takeaways What's Happening Why attend? Location Agenda FAQ THE MOST APPLY HERE AI-FOCUSED PROCUREMENT 27-28 October 2026 · MotorWorld München Free of charge · Application & invite only EVENT ON EARTH LIMITED SPOTS AVAILABLE EVENT STARTS IN 57 Days 00 hrs 51 Min 13 sec WHY ATTEND TAKEAWAYS Only 1% of enterprises already run multi-agent systems in procurement ( Gartner ). Bots & Buyers is where you meet that 1% and learn from them. Be in the room and you're one of them. Miss it, and the shift happens without you. Free of charge. Application only. You know how to scale AI without complexity and risk You know how to build a reliable AI operating model You can show measurable savings and business impact You've tried the world's first multi-agent system for procurement You can build agents yourself Exclusive insight into Lio's roadmap WHAT'S HAPPENING 01 Keynote presentations Lio's team opens the product roadmap before it's public. 02 New agents reveal Be in the room when we reveal our newest agents live on stage. 03 AI Lab Build agents with Lio engineers all day, and take a working agent for one of your own processes home. 04 Agentic Experience World Be the first to test the latest agen"
+    },
+    {
+      "url": "https://bots-and-buyers-us.lio.ai/",
+      "status": 200,
+      "title": "Bots &amp; Buyers NYC 2026 | Lio",
+      "metaDescription": "Bots &amp; Buyers NYC 2026: the first agentic procurement world. Watch agents run procurement end to end, put them to work yourself, and meet the 1% already doing it. New York City, September 23, 2026.",
+      "robotsMeta": "index, follow",
+      "canonical": "https://bots-and-buyers-us.lio.ai/",
+      "ogTitle": "Bots &amp; Buyers NYC 2026 | Lio",
+      "lang": null,
+      "hreflang": [],
+      "h1": [
+        "Bots & Buyers NYC 26"
+      ],
+      "h2": [
+        "Systems Built for Humans.",
+        "Meet your peers.",
+        "The rough outline.",
+        "Highlights from Munich.",
+        "FAQ",
+        "Apply to attend.",
+        "Who is Lio?"
+      ],
+      "wordCount": 944,
+      "schemaTypes": [
+        "Event",
+        "Organization",
+        "Place",
+        "PostalAddress"
+      ],
+      "prices": [],
+      "textHash": "559688d7e2798f81",
+      "textExcerpt": "Bots & Buyers Bots & Buyers Meet your peers Meet your peers Agenda Agenda Highlights Highlights FAQ FAQ Bots & Buyers Meet your peers Agenda Highlights FAQ Apply Apply Bots & Buyers NYC 26 September 23, 2026 New York City The most immersive and hands-on agentic procurement event in NYC. Apply now Apply now September 23, 2026 · NYC · Bots & Buyers 2026 · Application only · The agentic summit for procurement · September 23, 2026 · NYC · Bots & Buyers 2026 · Application only · The agentic summit for procurement · September 23, 2026 · NYC · Bots & Buyers 2026 · Application only · The agentic summit for procurement · September 23, 2026 · NYC · Bots & Buyers 2026 · Application only · The agentic summit for procurement · September 23, 2026 · NYC · Bots & Buyers 2026 · Application only · The agentic summit for procurement · September 23, 2026 · NYC · Bots & Buyers 2026 · Application only · The agentic summit for procurement · September 23, 2026 · NYC · Bots & Buyers 2026 · Application only · The agentic summit for procurement · September 23, 2026 · NYC · Bots & Buyers 2026 · Application only · The agentic summit for procurement · September 23, 2026 · NYC · Bots & Buyers 2026 · Application "
+    },
+    {
+      "url": "http://asklio.ai/",
+      "status": 405,
+      "title": null,
+      "metaDescription": null,
+      "robotsMeta": null,
+      "canonical": null,
+      "ogTitle": null,
+      "lang": null,
+      "hreflang": [],
+      "h1": [],
+      "h2": [],
+      "wordCount": 48,
+      "schemaTypes": [],
+      "prices": [],
+      "textHash": "6f910a52b5bf19c3",
+      "textExcerpt": "agent-proxy relay: this proxy only accepts HTTPS CONNECT tunnels. Plain-HTTP/absolute-form requests are not supported — common causes are axios releases before 1.16.1 (broken HTTPS proxy handling) or a tool configured with HTTP_PROXY pointing at this relay. GET /__agentproxy/status on this proxy port shows proxy state and recent failures."
+    }
+  ],
+  "errors": []
+}
