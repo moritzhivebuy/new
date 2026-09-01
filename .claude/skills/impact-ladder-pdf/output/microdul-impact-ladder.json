@@ -1,0 +1,93 @@
+{
+  "customer": {
+    "name": "Microdul AG",
+    "ansprechpartner": "Aleksandar Mihajlov",
+    "gespraechsdatum": "01.09.2026"
+  },
+  "date": "01.09.2026",
+  "potenziale": [
+    {
+      "titel": "Bestellungen laufen per E-Mail, ohne Standardprozess",
+      "beschreibung": "Jeder Bedarf wird einzeln per Mail kommuniziert und manuell bestellt, bei ca. 50 Bestellungen pro Monat."
+    },
+    {
+      "titel": "Unterschriftsregelung nicht digital abgebildet",
+      "beschreibung": "Wer was bestellen darf, ist definiert, die Freigabe läuft aber informell und ohne Dokumentation."
+    },
+    {
+      "titel": "Liefertermine werden manuell nachverfolgt",
+      "beschreibung": "Auftragsbestätigungen und Terminänderungen kommen per Mail, bei Lieferzeiten bis zu sechs Monaten."
+    },
+    {
+      "titel": "Rechnungsprüfung zentral und manuell",
+      "beschreibung": "Alle Rechnungen laufen über eine Person, auch bei kleinen Beträgen; der Abschluss erfolgt extern."
+    }
+  ],
+  "painkiller": [
+    "Bedarfsanforderung über eine einheitliche Oberfläche, unabhängig vom Lieferanten (Intake Agent)",
+    "Screenshot, PDF oder Excel hochladen, die Artikel werden automatisch ausgelesen (Parsing Agent)",
+    "Freitextbestellung für spezialisierte und internationale Lieferanten",
+    "60 integrierte Punch-out-Kataloge, inklusive Schweizer Shops",
+    "Digitale Freigaben nach Betrag, Warengruppe und Kostenstelle (Approval Agent)",
+    "Freigabe per Mail oder direkt in MS Teams (MS Teams Agent)",
+    "Automatische Bestellung nach der letzten Freigabe, ohne manuellen Klick",
+    "Auftragsbestätigungen und Lieferterminupdates werden der Bestellung automatisch zugeordnet (Status Agent)",
+    "Automatischer Rechnungsabgleich, Durchbuchung ab definierten Schwellenwerten (Invoice Agent)",
+    "Kostenstellen und Innenaufträge als Pflichtfelder, ergänzt um eigene Felder"
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Bedarf in einer Oberfläche anfragen, auch bei Spezialartikeln: Screenshot oder PDF genügt (Parsing Agent).",
+        "Freigaben in MS Teams oder per Mail bestätigen, Bestellstatus selbst einsehen (MS Teams Agent, Status Agent)."
+      ],
+      "impact": "Weniger Rückfragen und kein Schulungsaufwand, der Bedarf bleibt beim Bedarfsträger."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Ein Weg für Katalog, Punch-out und Freitext, statt Bestellungen per Mail.",
+        "Automatische Bestellung nach der letzten Freigabe, Lieferterminupdates ordnen sich selbst zu (Status Agent)."
+      ],
+      "impact": "Rund 150 manuelle Prozessschritte pro Monat entfallen, der Einkauf wird von Weiterleitungen entlastet."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Rechnungen werden automatisch mit Bestellung und Wareneingang abgeglichen (Invoice Agent).",
+        "Kostenstelle und Innenauftrag stehen bereits bei der Anforderung fest, nicht erst bei der Rechnung."
+      ],
+      "impact": "Die zentrale Prüfung beschränkt sich auf Abweichungen, der externe Aufwand sinkt."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Die Unterschriftsregelung liegt als digitaler Freigabepfad vor und ist nachvollziehbar (Compliance Agent).",
+        "Ausgaben je Kostenstelle sind laufend sichtbar, unabhängig vom ERP (Analytics Agent)."
+      ],
+      "impact": "Kontrolle über Freigaben und Ausgaben, ohne auf die ERP-Einführung zu warten."
+    }
+  ],
+  "executive_summary": "Hivebuy standardisiert Anforderung und Freigabe schon vor der proALPHA-Einführung, entlastet die zentrale Rechnungsprüfung und macht Ausgaben laufend sichtbar.",
+  "zahlenbasis": [
+    { "text": "ca. 50 Bestellungen pro Monat, rund 600 pro Jahr", "status": "belegt" },
+    { "text": "200 aktive Lieferanten, Lieferzeiten bis sechs Monate", "status": "belegt" },
+    { "text": "ca. 100 Mitarbeitende, davon ca. 25 Nutzer", "status": "belegt" },
+    { "text": "ca. 150 manuelle Prozessschritte pro Monat", "status": "annahme" }
+  ],
+  "annahmen": [
+    "Kosten der externen Buchhaltung für die Rechnungsübertragung sind nicht quantifiziert.",
+    "Zeitaufwand je Bestellung und je Rechnungsprüfung wurde nicht gemessen.",
+    "Entscheidungsweg für einen Softwarekauf ist offen."
+  ],
+  "naechster_schritt": {
+    "text": "Wir melden uns im Mai 2027, sobald die proALPHA-Einführung absehbar ist.",
+    "cta": "Folgetermin vereinbaren",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}
