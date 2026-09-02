@@ -23,6 +23,18 @@
       "beschreibung": "Die Buchhaltung prüft jede Rechnung manuell, ohne Bestellbezug."
     }
   ],
+  "painkiller": [
+    "Anforderung über eine Oberfläche für Katalog, Punch-out und Freitext (Intake Agent)",
+    "Angebote und Stücklisten hochladen, die Positionen werden in Sekunden ausgelesen (Parsing Agent)",
+    "Integrierte Punch-out-Kataloge für den Bedarf, der heute über Onlineshops läuft",
+    "Digitale Freigaben nach Wert, Warengruppe und Kostenstelle (Approval Agent)",
+    "Automatische Vorkontierung und Weiterleitung im Freigabeweg (Accounting Agent)",
+    "Automatische Bestellung nach der letzten Freigabe, ohne manuellen Klick",
+    "Automatische Übergabe der Bestellung an das ERP",
+    "Auftragsbestätigungen und Liefertermine werden der Bestellung zugeordnet (Status Agent)",
+    "Automatischer Abgleich von Rechnung, Bestellung und Wareneingang (Invoice Agent)",
+    "Auswertung nach Warengruppe, Lieferant und Abteilung (Analytics Agent)"
+  ],
   "ladder": [
     {
       "nummer": 1,
