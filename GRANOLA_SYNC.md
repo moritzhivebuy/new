@@ -290,22 +290,58 @@ das Layout wird nie verändert. Die Präsentation ist die Arbeitsversion und dar
 Der Upload ist damit kein optionaler Schritt mehr.
 
 **Offen:** Der Google-Drive-Connector ist in dieser Umgebung unzuverlässig, er ist oft nur für
-einzelne Turns verbunden. Beobachtung vom 26.08.2026: In von Moritz ausgelösten Turns ist Drive
-verbunden, in den Trigger-Läufen bisher nie. Fällt er in einem Lauf aus, wird die Präsentation
+einzelne Turns verbunden. Beobachtung vom 26.08.2026, bestätigt am 02.09.2026: In von Moritz
+ausgelösten Turns ist Drive verbunden, in den Trigger-Läufen bisher nie. Am 02.09.2026 war Drive
+in einem Moritz-Turn verbunden und fiel im nächsten Trigger-Lauf wieder weg, mitten in der
+Nacharbeit der offenen Uploads. Fällt er in einem Lauf aus, wird die Präsentation
 trotzdem erzeugt und nach HubSpot hochgeladen, der fehlende Slides-Link wird in der Log-Notiz
 vermerkt, und der Upload wird im nächsten Lauf nachgeholt, in dem der Connector verfügbar ist.
 Nicht als erledigt melden, solange der Slides-Link fehlt.
 
+### Upload-Prüfung (Pflicht, Moritz 02.09.2026)
+
+**Ein Upload ohne Fehlermeldung ist noch kein erfolgreicher Upload.** Am 02.09.2026 ist die
+Präsentation CIRCOR IMO ALLWEILER mit 17.791 Bytes in Drive angekommen, lokal hat die Datei
+18.417 Bytes. Drive hat die beschädigte Base64-Zeichenkette also nicht abgelehnt, sondern
+stillschweigend zu einer kürzeren, kaputten Datei dekodiert. Die Meldung "The file content is not
+a valid base64 string" ist damit nur der **sichtbare** von zwei Fehlerfällen.
+
+Nach jedem Upload deshalb:
+
+1. `fileSize` aus der Antwort von `create_file` mit der lokalen Dateigröße vergleichen
+   (`ls -l` oder `stat -c%s`). Bei Abweichung ist die Datei kaputt.
+2. Stimmt die Größe nicht, die hochgeladene Datei mit `mcp__Google_Drive__trash_file` entfernen
+   und neu hochladen. `update_file` hilft nicht, es ändert nur Metadaten, nicht den Inhalt.
+3. Erst danach den Slides-Link weitergeben und den Upload als erledigt melden.
+
+Größengleichheit ist ein starkes, aber kein vollständiges Kriterium: ein einzelnes vertauschtes
+Base64-Zeichen lässt die Länge unverändert. Zusätzliche Sicherheit gibt
+`mcp__Google_Drive__read_file_content` auf die hochgeladene Datei: kommt der Text aller sechs
+Slides zurück, ist das Archiv intakt.
+
 **Bereits hochgeladen** (nicht erneut hochladen):
 
-| Kunde | Gespräch | Slides-Link |
-|---|---|---|
-| NAVAX Software | 20.08.2026 | https://docs.google.com/presentation/d/1FxoiYDq3oZmaxHocy68g9vFpTw2-Rhj7/edit |
-| Techniropa | 24.08.2026 | https://docs.google.com/presentation/d/1zhEzmoGRifqd8OHmrh5gLOiALo05aQVP/edit |
-| Dalli-Group | 25.08.2026 | https://docs.google.com/presentation/d/1A0AKPSazd6ZwNTbTCbMHHnwZ_k8vEKph/edit |
+| Kunde | Gespräch | Slides-Link | Größe geprüft |
+|---|---|---|---|
+| NAVAX Software | 20.08.2026 | https://docs.google.com/presentation/d/1FxoiYDq3oZmaxHocy68g9vFpTw2-Rhj7/edit | nein, Verdacht (Drive 18.341, lokal 18.755) |
+| Techniropa | 24.08.2026 | https://docs.google.com/presentation/d/1zhEzmoGRifqd8OHmrh5gLOiALo05aQVP/edit | ja (18.446) |
+| Dalli-Group | 25.08.2026 | https://docs.google.com/presentation/d/1A0AKPSazd6ZwNTbTCbMHHnwZ_k8vEKph/edit | ja (18.369) |
+| Sonplas | 26.08.2026 | https://docs.google.com/presentation/d/1HURu7ke_zXCAQD5n1wJVe5sA4GkxOEyM/edit | ja (18.376) |
+| Ameos Spital Einsiedeln | 27.08.2026 | https://docs.google.com/presentation/d/1NOCdh60GwuJduZMDLPVo-pA2Gq5MN8G9/edit | ja (18.280) |
+| Schmalz | 27.08.2026 | https://docs.google.com/presentation/d/1q8vdjyAdQh8D2YgByEnnJPcc1RJkisaQ/edit | ja (18.416) |
 
-Offen ist noch Wesemann (21.08.2026), `output/2026-08-21-impact-ladder-wesemann.pptx`. Die Datei
-stammt aus der Zeit vor der Sechs-Slide-Struktur und wird erst neu erzeugt, dann hochgeladen.
+Offen sind:
+
+- **CIRCOR IMO ALLWEILER (28.08.2026):** Datei 1bfrfij3JGhDiqc7gN\_G6fkW-0wz8dfKg liegt beschädigt
+  im Ordner (17.791 statt 18.417 Bytes). Im nächsten Lauf mit verbundenem Drive: in den Papierkorb
+  verschieben und `output/2026-08-28-impact-ladder-circor-imo-allweiler.pptx` neu hochladen.
+- **Microdul AG (01.09.2026):** `output/2026-09-01-impact-ladder-microdul-ag.pptx`, noch nicht
+  hochgeladen.
+- **NAVAX Software (20.08.2026):** Größe prüfen, bei Abweichung neu hochladen.
+- **Wesemann (21.08.2026):** `output/2026-08-21-impact-ladder-wesemann.pptx` stammt aus der Zeit vor
+  der Sechs-Slide-Struktur und hat nur fünf Slides, weil im JSON die Liste `painkiller` fehlt. Sie
+  muss erst aus dem Pain-Killer-Abschnitt des Granola-Eintrags ergänzt und die Präsentation neu
+  erzeugt werden, dann hochgeladen.
 
 ## Slack-Benachrichtigung (Teil e)
 
