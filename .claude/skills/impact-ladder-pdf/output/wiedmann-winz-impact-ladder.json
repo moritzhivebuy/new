@@ -7,58 +7,59 @@
   "date": "03.09.2026",
   "potenziale": [
     {
-      "titel": "Jede Abteilung bestellt anders",
-      "beschreibung": "Werkstatt, Büro und IT arbeiten mit gewachsenen Abläufen."
+      "titel": "Jede Abteilung bestellt nach eigenem Muster",
+      "beschreibung": "Werkstatt, Büro und IT arbeiten mit historisch gewachsenen Abläufen."
     },
     {
-      "titel": "Preisvergleich von Hand bei 2 bis 4 Anbietern",
-      "beschreibung": "Angebote werden je Bestellung einzeln gesucht und verglichen."
+      "titel": "Preisvergleich läuft von Hand bei 2 bis 4 Anbietern",
+      "beschreibung": "Für jede Bestellung werden Angebote einzeln gesucht und verglichen."
     },
     {
-      "titel": "Preise je Lieferant sehr unterschiedlich",
-      "beschreibung": "Beispiel: 450 Euro für ein Werkzeug, anderswo 225 Euro."
+      "titel": "Gleiche Teile kosten je Lieferant sehr unterschiedlich",
+      "beschreibung": "Beispiel aus dem Gespräch: 450 Euro für ein Werkzeug, anderswo 225 Euro."
     },
     {
-      "titel": "Keine Übersicht über die Ausgaben",
-      "beschreibung": "Ausgaben nach Lieferant und Warengruppe sind nicht auswertbar."
+      "titel": "Keine Übersicht über die Gesamtausgaben",
+      "beschreibung": "Ausgaben nach Lieferant und Warengruppe sind heute nicht auswertbar."
     }
   ],
   "painkiller": [
-    "Eine Anlaufstelle für Werkstatt, Büro und IT (Intake Agent)",
-    "Integrierte Punch-out-Kataloge für die bestehenden Lieferanten",
-    "Preisvergleich der angebundenen Lieferanten im System (Comparison Agent)",
-    "Kostenstelle und Sachkonto schon bei der Anforderung (Category Agent)",
-    "Freigaben nach Wert, Warengruppe und Kostenstelle (Approval Agent)",
-    "Freigabe direkt aus MS Teams heraus (MS Teams Agent)",
-    "Wareneingang mit Lieferschein und Schadensmeldung dokumentieren",
-    "Bestelldaten an d.velop D3, Rechnungen laufen dunkel durch (Invoice Agent)",
-    "Ausgaben nach Lieferant und Warengruppe auswerten (Analytics Agent)"
+    "Eine Anlaufstelle für alle Abteilungen, für Werkstatt, Büro und IT (Intake Agent)",
+    "Integrierte Punch-out-Kataloge für die bestehenden und langjährigen Lieferanten",
+    "Preisvergleich zwischen den angebundenen Lieferanten direkt im System (Comparison Agent)",
+    "Kostenstelle, Sachkonto und Lieferadresse werden bereits bei der Anforderung hinterlegt (Category Agent)",
+    "Strukturierte Freigaben nach Wert, Warengruppe und Kostenstelle (Approval Agent)",
+    "Freigabe direkt aus MS Teams heraus, ohne Systemwechsel (MS Teams Agent)",
+    "Wareneingang dokumentieren, inklusive Lieferschein und Schadensmeldung",
+    "Übergabe der Bestelldaten an d.velop D3, Rechnungen können dunkel durchlaufen (Invoice Agent)",
+    "Auswertung der Ausgaben nach Lieferant, Warengruppe und Zeitraum (Analytics Agent)",
+    "Leitplanken im System halten Bestellungen im freigegebenen Rahmen (Compliance Agent)"
   ],
   "ladder": [
     {
       "nummer": 1,
       "ebene": "Mitarbeitende / Bedarfsträger",
       "bullets": [
-        "Bedarfe werden direkt im System angefordert (Intake Agent).",
+        "Bedarfe werden direkt im System angefordert, die Mail ins Sekretariat entfällt (Intake Agent).",
         "Freigaben und Statusinfos laufen über MS Teams (MS Teams Agent, Status Agent)."
       ],
-      "impact": "Der Weg vom Bedarf zur Bestellung ist überall derselbe."
+      "impact": "Der Weg vom Bedarf zur Bestellung ist in allen Abteilungen derselbe und bleibt kurz."
     },
     {
       "nummer": 2,
       "ebene": "Einkauf / Administration",
       "bullets": [
-        "Der Preisvergleich der angebundenen Lieferanten passiert im System (Comparison Agent).",
-        "Freigaben laufen regelbasiert, die Bestellung löst danach aus (Approval Agent)."
+        "Der Preisvergleich zwischen den angebundenen Lieferanten passiert im System (Comparison Agent).",
+        "Freigaben laufen regelbasiert, die Bestellung löst danach automatisch aus (Approval Agent)."
       ],
-      "impact": "Suchen, Vergleichen und Bestellen von Hand entfällt für die meisten Bestellungen."
+      "impact": "Suchen, Vergleichen und Bestellen von Hand entfällt für den Großteil der Bestellungen."
     },
     {
       "nummer": 3,
       "ebene": "Finance / Controlling",
       "bullets": [
-        "Kostenstelle und Sachkonto stehen schon bei der Anforderung fest (Accounting Agent).",
-        "Bestelldaten gehen an d.velop D3, Rechnungen mit Bestellbezug laufen durch (Invoice Agent)."
+        "Kostenstelle, Sachkonto und Lieferadresse stehen schon bei der Anforderung fest (Accounting Agent).",
+        "Bestelldaten gehen an d.velop D3, Rechnungen mit Bestellbezug laufen ohne Eingriff durch (Invoice Agent)."
       ],
       "impact": "Rechnungen werden nur noch bei Abweichungen von Hand geprüft."
     },
@@ -66,38 +67,38 @@
       "nummer": 4,
       "ebene": "Geschäftsführung / Management",
       "bullets": [
-        "Ausgaben nach Lieferant, Warengruppe und Zeitraum sind auswertbar (Analytics Agent).",
-        "Leitplanken halten Bestellungen im freigegebenen Rahmen (Compliance Agent)."
+        "Ausgaben nach Lieferant, Warengruppe und Zeitraum sind jederzeit auswertbar (Analytics Agent).",
+        "Leitplanken im System halten Bestellungen im freigegebenen Rahmen (Compliance Agent)."
       ],
-      "impact": "Die Zahlen für den Business Case entstehen im laufenden Betrieb."
+      "impact": "Die Zahlen für den Business Case entstehen im laufenden Betrieb, nicht durch Nachfragen."
     }
   ],
-  "executive_summary": "Wiedmann & Winz erhält einen einheitlichen Bestellweg für alle Abteilungen, der Preisvergleich läuft im System statt von Hand, und die Ausgaben werden auswertbar.",
+  "executive_summary": "Wiedmann & Winz erhält einen einheitlichen Bestellweg für alle Abteilungen, der Preisvergleich läuft im System statt von Hand, und die Ausgaben werden nach Lieferant und Warengruppe auswertbar.",
   "zahlenbasis": [
     {
-      "text": "ca. 10 Nutzer würden im System arbeiten",
+      "text": "ca. 10 Nutzer würden im System arbeiten, Schätzung aus dem Gespräch",
       "status": "belegt"
     },
     {
-      "text": "Preisvergleich heute bei 2 bis 4 Anbietern",
+      "text": "Preisvergleich heute bei 2 bis 4 Anbietern pro Bestellung",
       "status": "belegt"
     },
     {
-      "text": "Vorgänge mit 4.000 bis 10.000 Euro genannt",
+      "text": "Einzelne Vorgänge mit 4.000 bis 10.000 Euro Einkaufsvolumen genannt",
       "status": "belegt"
     },
     {
-      "text": "Einsparung durch Bündelung und Preisvergleich",
+      "text": "Einsparung durch Bündelung und systemgestützten Preisvergleich",
       "status": "annahme"
     }
   ],
   "annahmen": [
-    "Bestellungen pro Monat und Einkaufsvolumen sind noch offen.",
-    "Das angepasste Angebot ohne ERP-Schnittstelle steht aus.",
-    "Ein freier Preisvergleich im Internet ist heute nicht möglich."
+    "Anzahl der Bestellungen pro Monat und indirektes Einkaufsvolumen sind noch offen.",
+    "Das angepasste Angebot ohne ERP-Schnittstelle steht noch aus.",
+    "Ein freier Preisvergleich im offenen Internet ist heute nicht möglich."
   ],
   "naechster_schritt": {
-    "text": "Im Testzugang sehen Sie den Ablauf mit Ihren eigenen Bedarfen, im Folgetermin am 24. September ordnen wir die Zahlen ein.",
+    "text": "Im Testzugang sehen Sie den Ablauf mit Ihren eigenen Bedarfen, im Folgetermin am 24. September ordnen wir die Zahlen gemeinsam ein.",
     "cta": "Folgetermin vereinbaren",
     "link": "https://www.hivebuy.com/kontakt"
   }

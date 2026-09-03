@@ -267,13 +267,26 @@ Ablauf:
    Fehlermeldung, 18.143 Bytes (24.192 Zeichen) kamen als 17.751 Bytes an. Am 26.08.2026 liefen
    18,3 bis 18,4 KB durch, das ist der Grenzbereich.
 
-   Konsequenz: **Die pptx sollte unter etwa 18 KB bleiben.** Fällt sie größer aus, werden die
-   Texte im JSON gekürzt (kürzere Bullets, weniger Punkte in `painkiller`, kürzere
-   `zahlenbasis`), nicht das Layout geändert. Länge und Teilbarkeit vorher prüfen mit
+   **Kürzen hilft nicht (geprüft am 03.09.2026).** Am selben Tag wurde versucht, die Datei durch
+   deutlich kürzere Texte unter die Grenze zu bringen: zwei Potenziale weniger, `painkiller` von
+   zehn auf acht Punkte, alle Bullets, `zahlenbasis` und `annahmen` gestrafft. Ergebnis: von
+   18.064 auf 18.018 Bytes, also 46 Bytes. Der Grund ist, dass die komprimierte Datei von der
+   XML-Struktur der sechs Slides bestimmt wird, nicht vom Text; dazu kommen rund 2,8 KB
+   Zip-Verwaltung bei 21 Einträgen. Auch ein Neupacken mit allen Deflate-Strategien brachte
+   null Bytes. **Rund 18 KB ist der Boden für die vorgegebene Sechs-Slide-Struktur.** Texte
+   werden deshalb nicht mehr wegen der Dateigröße gekürzt, das verschlechtert nur den Inhalt.
+
+   Konsequenz: Über diesen Connector ist der Upload nicht zuverlässig zu schaffen. Bis eine
+   andere Übertragung eingerichtet ist, gilt: Länge und Teilbarkeit prüfen mit
    `python3 -c "import base64;b=base64.b64encode(open(PFAD,'rb').read());print(len(b),len(b)%4)"`,
-   die Kette in einer Zeile ohne Umbrüche übergeben. Ein Wiederholungsversuch lohnt sich, weil
-   die Grenze nicht exakt bei einer Zeichenzahl liegt, aber ohne Größenprüfung nach dem Upload
-   ist ein Erfolg nicht belegt.
+   die Kette in einer Zeile übergeben, danach `fileSize` mit der lokalen Größe vergleichen und
+   höchstens zweimal wiederholen. Danach den Upload als offen melden statt weiter zu versuchen.
+
+   **Vorschlag für eine dauerhafte Lösung (offen, braucht eine Entscheidung von Moritz):** Ein
+   Service-Account-Key als Umgebungsvariable im Container. Dann lädt die Routine die Datei per
+   `curl` direkt an die Drive-API hoch, die Base64-Kette läuft nicht mehr durch die
+   Modellausgabe, und die Trigger-Läufe sind zugleich nicht mehr vom wackeligen
+   MCP-Connector abhängig.
 3. Upload per `mcp__Google_Drive__create_file` mit
    `contentMimeType=application/vnd.openxmlformats-officedocument.presentationml.presentation`,
    `parentId=0APJQKQ-OeVKNUk9PVA` und **`disableConversionToGoogleType=true`**. Der Dateiname
