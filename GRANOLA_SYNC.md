@@ -257,15 +257,23 @@ Ablauf:
    Kleiner ist beim Upload besser, weil der Inhalt als Base64 im Tool-Aufruf übergeben wird und
    die Zeichenkette dabei fehlerfrei durchkommen muss.
 
-   **Es gibt keine Größengrenze (korrigiert am 26.08.2026).** Die frühere Annahme einer Grenze
-   zwischen 19 und 21,2 KB war falsch. Am 26.08.2026 liefen Uploads mit 18,4 bis 18,8 KB
-   (24.492 bis 25.008 Zeichen) durch, und dieselbe Datei scheiterte einmal und lief beim
-   zweiten Versuch. Die Fehlermeldung "The file content is not a valid base64 string" bedeutet
-   also nur eins: die übergebene Zeichenkette ist beschädigt, meist weil beim Übertragen ein
-   Zeichen verloren geht und die Länge nicht mehr durch vier teilbar ist. Gegenmittel:
-   Base64 in einer Zeile ohne Umbrüche übergeben, vorher Länge und Teilbarkeit prüfen mit
-   `python3 -c "import base64;b=base64.b64encode(open(PFAD,'rb').read());print(len(b),len(b)%4)"`
-   und bei diesem Fehler den Upload einfach erneut versuchen, nicht die Inhalte kürzen.
+   **Die eigentliche Grenze liegt in der Übergabe, nicht bei Drive (geklärt am 03.09.2026).**
+   Die Base64-Zeichenkette wird als Argument im Tool-Aufruf übergeben und muss dafür Zeichen
+   für Zeichen ausgegeben werden. Bei rund 24.000 Zeichen und mehr bricht diese Ausgabe
+   zuverlässig ab, und zwar in zwei Varianten: entweder antwortet Drive mit "The file content
+   is not a valid base64 string", oder Drive dekodiert die abgeschnittene Kette stillschweigend
+   zu einer kürzeren, kaputten Datei. Beobachtungen vom 03.09.2026 an Wiedmann &amp; Winz:
+   18.547 Bytes (24.732 Zeichen) und 18.419 Bytes (24.560 Zeichen) scheiterten beide mit der
+   Fehlermeldung, 18.143 Bytes (24.192 Zeichen) kamen als 17.751 Bytes an. Am 26.08.2026 liefen
+   18,3 bis 18,4 KB durch, das ist der Grenzbereich.
+
+   Konsequenz: **Die pptx sollte unter etwa 18 KB bleiben.** Fällt sie größer aus, werden die
+   Texte im JSON gekürzt (kürzere Bullets, weniger Punkte in `painkiller`, kürzere
+   `zahlenbasis`), nicht das Layout geändert. Länge und Teilbarkeit vorher prüfen mit
+   `python3 -c "import base64;b=base64.b64encode(open(PFAD,'rb').read());print(len(b),len(b)%4)"`,
+   die Kette in einer Zeile ohne Umbrüche übergeben. Ein Wiederholungsversuch lohnt sich, weil
+   die Grenze nicht exakt bei einer Zeichenzahl liegt, aber ohne Größenprüfung nach dem Upload
+   ist ein Erfolg nicht belegt.
 3. Upload per `mcp__Google_Drive__create_file` mit
    `contentMimeType=application/vnd.openxmlformats-officedocument.presentationml.presentation`,
    `parentId=0APJQKQ-OeVKNUk9PVA` und **`disableConversionToGoogleType=true`**. Der Dateiname
@@ -332,9 +340,14 @@ Slides zurück, ist das Archiv intakt.
 
 Offen sind:
 
-- **CIRCOR IMO ALLWEILER (28.08.2026):** Datei 1bfrfij3JGhDiqc7gN\_G6fkW-0wz8dfKg liegt beschädigt
-  im Ordner (17.791 statt 18.417 Bytes). Im nächsten Lauf mit verbundenem Drive: in den Papierkorb
-  verschieben und `output/2026-08-28-impact-ladder-circor-imo-allweiler.pptx` neu hochladen.
+- **CIRCOR IMO ALLWEILER (28.08.2026):** Datei 1u8gi_nn8UZK3qKWoa7WF5A8wziEEcVwx liegt beschädigt
+  im Ordner (18.177 statt 18.417 Bytes). Am 03.09.2026 mit `read_file_content` geprüft: die Antwort
+  ist leer, das Archiv ist also tatsächlich unlesbar. Die beiden früheren Fehlversuche
+  (1bfrfij3JGhDiqc7gN\_G6fkW-0wz8dfKg, 1wNr6XiEZmq3AIDIVef7ZW1X7jEKRM19y) sind schon im Papierkorb.
+  Zu tun: diese Datei in den Papierkorb, die pptx auf unter 18 KB bringen und neu hochladen.
+- **Wiedmann &amp; Winz (03.09.2026):** Datei 1pnT3PnOobd2kC6-J4M_ka7Gb7FMVzjsZ liegt beschädigt im
+  Ordner (17.751 statt 18.143 Bytes). `trash_file` war in dem Lauf nicht verfügbar. Zu tun: Datei
+  in den Papierkorb und `output/2026-09-03-impact-ladder-wiedmann-winz.pptx` neu hochladen.
 - **Microdul AG (01.09.2026):** `output/2026-09-01-impact-ladder-microdul-ag.pptx`, noch nicht
   hochgeladen.
 - **NAVAX Software (20.08.2026):** Größe prüfen, bei Abweichung neu hochladen.
