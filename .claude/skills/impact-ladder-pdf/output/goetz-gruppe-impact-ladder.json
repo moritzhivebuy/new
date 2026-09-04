@@ -1,0 +1,105 @@
+{
+  "customer": {
+    "name": "Götz-Gruppe",
+    "ansprechpartner": "Robert Fischer",
+    "gespraechsdatum": "04.09.2026"
+  },
+  "date": "04.09.2026",
+  "potenziale": [
+    {
+      "titel": "Über 10.000 Bestellungen im Jahr werden von Hand bearbeitet",
+      "beschreibung": "Jede Bestellung wird im Einkauf einzeln bearbeitet und an den Lieferanten versendet."
+    },
+    {
+      "titel": "Rund 5 Stunden Einkaufszeit gehen täglich für Bestellungen weg",
+      "beschreibung": "60 Bestellungen am Tag mal 5 Minuten, hochgerechnet etwa 1.500 Stunden im Jahr."
+    },
+    {
+      "titel": "Rechnungsprüfung ohne automatische Wareneingangsdaten",
+      "beschreibung": "Rechnungen werden von Hand geprüft, weil die Daten nicht automatisch vorliegen."
+    },
+    {
+      "titel": "Die Zuordnung zur richtigen Firmierung passiert manuell",
+      "beschreibung": "Bei rund 100 Niederlassungen in sechs Ländern ist das fehleranfällig."
+    }
+  ],
+  "painkiller": [
+    "Eine Oberfläche für Objektleiter: Artikel suchen, anklicken, absenden (Intake Agent)",
+    "Kataloge und Punch-out-Shops gemeinsam durchsuchbar (Comparison Agent)",
+    "Sachkonto und Kostenstelle werden aus Oracle vorbelegt (Accounting Agent)",
+    "Freigaben nach Budget, Warengruppe und Betrag (Approval Agent)",
+    "Automatische Bestellung nach der Freigabe, ohne manuellen Schritt",
+    "Automatische Übergabe von Bestell- und Wareneingangsdaten an Oracle",
+    "Rechnungen mit gebuchtem Wareneingang werden automatisch abgeglichen (Invoice Agent)",
+    "Jede Firmierung mit eigenen Kostenstellen, Sachkonten und Adressen",
+    "Nur freigegebene Lieferanten sind für Mitarbeitende sichtbar (Compliance Agent)",
+    "Auswertung nach Firmierung, Warengruppe und Lieferant (Analytics Agent)"
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Objektleiter bestellen selbst über eine einfache Oberfläche, ohne Umweg über den Einkauf (Intake Agent).",
+        "Kataloge und Punch-out-Shops sind an einer Stelle durchsuchbar (Comparison Agent)."
+      ],
+      "impact": "Der Bedarf wird dort erfasst, wo er entsteht, und läuft ohne Rückfragen weiter."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Freigabe und Bestellung laufen regelbasiert, der Einkauf greift nur bei Ausnahmen ein (Approval Agent).",
+        "Nur aktiv freigegebene Lieferanten sind auswählbar (Compliance Agent)."
+      ],
+      "impact": "Die rund 5 Stunden täglicher Bearbeitungszeit fallen zum größten Teil weg."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Sachkonto und Kostenstelle stehen bei der Anforderung fest, vorbelegt aus Oracle (Accounting Agent).",
+        "Bestell- und Wareneingangsdaten gehen automatisch an Oracle, Rechnungen werden abgeglichen (Invoice Agent)."
+      ],
+      "impact": "Die manuelle Rechnungsprüfung wird zur Ausnahme statt zur Regel."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Ausgaben je Firmierung, Warengruppe und Lieferant sind auswertbar (Analytics Agent).",
+        "Jede Bestellung ist eindeutig einer Firmierung zugeordnet, über alle sechs Länder."
+      ],
+      "impact": "Der Einkauf über rund 100 Niederlassungen wird steuerbar und nachvollziehbar."
+    }
+  ],
+  "executive_summary": "Die Götz-Gruppe gibt die Bestellung an die Bedarfsträger zurück, spart den größten Teil der täglich rund 5 Stunden Bearbeitungszeit im Einkauf und erhält je Firmierung auswertbare Zahlen.",
+  "zahlenbasis": [
+    {
+      "text": "über 10.000 Bestellungen pro Jahr, ca. 60 pro Tag",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 5 Minuten manuelle Bearbeitung pro Bestellung",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 5 Stunden pro Tag, hochgerechnet ca. 1.500 Stunden pro Jahr",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 100 Niederlassungen in sechs Ländern, ERP Oracle",
+      "status": "belegt"
+    }
+  ],
+  "annahmen": [
+    "Die Zahl der Systemnutzer ist offen, die Schätzung von 4.000 ist nicht bestätigt.",
+    "Die Preisstaffelung steht noch aus.",
+    "Eine Anbindung von Poolsensa ist noch zu prüfen."
+  ],
+  "naechster_schritt": {
+    "text": "Am Mittwoch zeigen wir Ihnen den Ablauf in der Demo mit Ihren eigenen Bedarfen.",
+    "cta": "Folgetermin vereinbaren",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}

@@ -361,6 +361,9 @@ Offen sind:
 - **Wiedmann &amp; Winz (03.09.2026):** Datei 1pnT3PnOobd2kC6-J4M_ka7Gb7FMVzjsZ liegt beschädigt im
   Ordner (17.751 statt 18.143 Bytes). `trash_file` war in dem Lauf nicht verfügbar. Zu tun: Datei
   in den Papierkorb und `output/2026-09-03-impact-ladder-wiedmann-winz.pptx` neu hochladen.
+- **Götz-Gruppe (04.09.2026):** `output/2026-09-04-impact-ladder-goetz-gruppe.pptx` (18.379 Bytes,
+  24.508 Base64-Zeichen). Ein Versuch, abgelehnt mit "not a valid base64 string". Nach der Regel
+  oben nicht weiter versucht.
 - **Microdul AG (01.09.2026):** `output/2026-09-01-impact-ladder-microdul-ag.pptx`, noch nicht
   hochgeladen.
 - **NAVAX Software (20.08.2026):** Größe prüfen, bei Abweichung neu hochladen.
