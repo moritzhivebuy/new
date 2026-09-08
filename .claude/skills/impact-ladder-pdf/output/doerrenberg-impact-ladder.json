@@ -1,0 +1,105 @@
+{
+  "customer": {
+    "name": "Dörrenberg",
+    "ansprechpartner": "Benjamin Enns",
+    "gespraechsdatum": "07.09.2026"
+  },
+  "date": "07.09.2026",
+  "potenziale": [
+    {
+      "titel": "Jede Bestellung wird von Hand zusammengebaut",
+      "beschreibung": "Rund 50 Bestellungen im Monat laufen einzeln durch den Einkauf."
+    },
+    {
+      "titel": "Vier Positionen bedeuten vier BANF-Nummern",
+      "beschreibung": "Positionen eines Lieferanten lassen sich heute nicht bündeln."
+    },
+    {
+      "titel": "Freigabe läuft über PDF und Archivordner",
+      "beschreibung": "Bestellung speichern, ablegen, freigeben, per Mail versenden, alles manuell."
+    },
+    {
+      "titel": "Hohe Maverick-Buying-Quote",
+      "beschreibung": "Anforderer haben keinen einfachen Weg, Bedarfe im System einzustellen."
+    }
+  ],
+  "painkiller": [
+    "Anforderer starten über Link und SSO, ohne Schulung (Intake Agent)",
+    "Drei Bestellwege: Punchout, interne Kataloge und Freitext",
+    "Freitext ersetzt die Mail an den Einkauf, aber bereits kontiert",
+    "Kostenstelle und Sachkonto stehen am Anfang des Prozesses fest (Accounting Agent)",
+    "Mehrstufige Freigaben mit Kommentarfunktion und Budgetcheck (Approval Agent)",
+    "Automatischer Bestellversand an den Lieferanten nach der letzten Freigabe",
+    "Bestellung wird in Business Central angelegt, BC bleibt führendes System",
+    "Wareneingang buchbar in Hivebuy oder im ERP",
+    "Freigaben direkt aus MS Teams heraus (MS Teams Agent)",
+    "Preisvergleich über die angebundenen Plattformen direkt in Hivebuy (Comparison Agent)"
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Bedarfe werden über Link oder SSO ohne Schulung eingestellt (Intake Agent).",
+        "Punchout, interne Kataloge und Freitext deckten auch Dienstleistungen ab."
+      ],
+      "impact": "Der einfache Weg ist der richtige Weg, damit sinkt das Maverick Buying."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Positionen eines Lieferanten werden gebündelt, statt je BANF einzeln bearbeitet.",
+        "Nach der letzten Freigabe geht die Bestellung automatisch heraus (Approval Agent)."
+      ],
+      "impact": "Die Zahl der manuell bearbeiteten Bestellungen und die Durchlaufzeit halbieren sich."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Kostenstelle und Sachkonto stehen bei der Anforderung fest (Accounting Agent).",
+        "Bestellungen entstehen in Business Central, der Wareneingang ist buchbar."
+      ],
+      "impact": "Business Central bleibt führend, ohne Doppelarbeit und ohne PDF-Ablage."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Budgets je Kategorie und Nutzer begrenzen Ausgaben im Vorfeld (Compliance Agent).",
+        "Ausgaben sind nach Warengruppe und Lieferant auswertbar (Analytics Agent)."
+      ],
+      "impact": "Der indirekte Einkauf wird steuerbar, der Einkauf gewinnt Zeit für Strategie."
+    }
+  ],
+  "executive_summary": "Dörrenberg gibt die Bedarfserfassung an die Anforderer zurück, halbiert Durchlaufzeit und manuellen Bestellaufwand im Einkauf und behält Business Central als führendes System.",
+  "zahlenbasis": [
+    {
+      "text": "ca. 50 Bestellungen pro Monat, nur die vom Einkauf bearbeiteten",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 400 Mitarbeitende, ca. 30 Anforderer als Nutzer, Einkauf 3 Mitarbeiter und 1 Azubi",
+      "status": "belegt"
+    },
+    {
+      "text": "Materialnummer nur in ca. 5% der BANF-Fälle vorhanden",
+      "status": "belegt"
+    },
+    {
+      "text": "Ziel: 70 bis 75% autonomer Beschaffungsprozess",
+      "status": "annahme"
+    }
+  ],
+  "annahmen": [
+    "Die bidirektionale Schnittstelle zu Business Central ist noch zu spezifizieren.",
+    "IT und IT-Security sind noch nicht eingebunden.",
+    "Onboarding inklusive Schnittstelle dauert nach heutiger Planung ca. 6 Wochen."
+  ],
+  "naechster_schritt": {
+    "text": "Im Testaccount prüfen Sie den Ablauf mit eigenen Bedarfen, im Follow-up ordnen wir Preise und Schnittstelle gemeinsam ein.",
+    "cta": "Folgetermin vereinbaren",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}

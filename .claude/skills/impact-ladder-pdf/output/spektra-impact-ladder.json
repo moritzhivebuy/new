@@ -1,0 +1,104 @@
+{
+  "customer": {
+    "name": "Spektra Dresden",
+    "ansprechpartner": "Steve Kalisch",
+    "gespraechsdatum": "04.09.2026"
+  },
+  "date": "07.09.2026",
+  "potenziale": [
+    {
+      "titel": "Webshop-Bestellungen werden zweimal erfasst",
+      "beschreibung": "Erst im Webshop auslösen, dann von Hand im ERP anlegen."
+    },
+    {
+      "titel": "Keine Schnittstelle zwischen Webshop und ERP",
+      "beschreibung": "Zwischen den Systemen läuft kein automatischer Datentransfer."
+    },
+    {
+      "titel": "Bedarfe kommen unvollständig an",
+      "beschreibung": "Sammelartikel statt echter Artikelnummer, dazu Rückfragen im Einkauf."
+    },
+    {
+      "titel": "Bedarfe laufen über drei Kanäle",
+      "beschreibung": "Mail, Teams und ERP-Modul, ohne einen zentralen Standard."
+    }
+  ],
+  "painkiller": [
+    "Nutzerfreundliches Frontend für alle Mitarbeitenden, nur freigegebene Lieferanten sichtbar",
+    "BANF von Anfang an vollständig: Kostenstelle und Sachkonto automatisch hinterlegt",
+    "KI-Suche: erst interne Kataloge, dann externe Webshops (Punchout via OCI)",
+    "Bestellung läuft automatisch aus Hivebuy heraus, kein manuelles Nachtragen im ERP",
+    "ERP-Schnittstelle über die REST-API von ProDat, Bestelldaten laufen automatisch ins ERP",
+    "Freigaben per Microsoft Teams, schnelle Genehmigung ohne Systemwechsel",
+    "Audit Trail: vollständige Dokumentation aller Freigaben und Änderungen",
+    "DATEV-Schnittstelle: Bestelldaten an die Buchhaltung, kein Prozesswechsel nötig",
+    "Bundle-Funktion: eine Laptop-Bestellung löst das passende Zubehör mit aus"
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Bedarfe entstehen im Frontend oder aus Teams heraus, ohne ERP-Kenntnisse (Intake Agent).",
+        "Die KI-Suche findet erst interne Kataloge, dann Conrad, Mercateo und weitere Punchouts."
+      ],
+      "impact": "Der einfache Weg ist der richtige Weg, Sammelartikel und Mailanfragen entfallen."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "BANFn kommen vollständig und kontiert an, statt mit Rückfragen zurückzulaufen.",
+        "Bestellungen gehen automatisch heraus, das Nachtragen im ERP entfällt (Approval Agent)."
+      ],
+      "impact": "Die doppelte Erfassung der Webshop-Bestellungen fällt weg, Rückfragen sinken."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Kostenstelle und Sachkonto stehen bei der Anforderung fest (Accounting Agent).",
+        "Bestelldaten laufen über die REST-API ins ProDat ERP und weiter an DATEV."
+      ],
+      "impact": "Das ERP bleibt führend, der Medienbruch zwischen Webshop und ERP verschwindet."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Vordefinierte Lieferanten verhindern Wildwuchs bei Herstellern (Compliance Agent).",
+        "Ausgaben sind nach Warengruppe und Lieferant auswertbar (Analytics Agent)."
+      ],
+      "impact": "Die Prozesskosten im indirekten Einkauf werden erstmals sichtbar und steuerbar."
+    }
+  ],
+  "executive_summary": "Spektra Dresden erfasst indirekte Bedarfe einmal statt zweimal, erhält vollständige und kontierte BANFn und behält ProDat als führendes ERP, angebunden über die vorhandene REST-API.",
+  "zahlenbasis": [
+    {
+      "text": "ca. 150 Bestellungen pro Jahr, also rund 12 bis 13 pro Monat",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 60.000 Euro Jahresvolumen im indirekten Bedarf",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 250 Euro durchschnittlicher Bestellwert",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 100 Mitarbeitende, die alle im System arbeiten könnten",
+      "status": "belegt"
+    }
+  ],
+  "annahmen": [
+    "Die REST-API von ProDat ist vorhanden, der Schnittstellenumfang ist noch zu spezifizieren.",
+    "IT und Datenschutz sind bisher nicht eingebunden, die KI-Verordnung wurde nur angesprochen.",
+    "Demo und Follow-up sind nach heutigem Stand erst Anfang 2027 realistisch."
+  ],
+  "naechster_schritt": {
+    "text": "Wir halten losen Kontakt bis Jahresende und setzen die Demo auf Anfang 2027, sobald Ihre KI-Strategie steht.",
+    "cta": "Demo-Termin vormerken",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}

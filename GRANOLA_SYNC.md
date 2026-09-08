@@ -259,13 +259,33 @@ Ablauf:
 
    **Die eigentliche Grenze liegt in der Übergabe, nicht bei Drive (geklärt am 03.09.2026).**
    Die Base64-Zeichenkette wird als Argument im Tool-Aufruf übergeben und muss dafür Zeichen
-   für Zeichen ausgegeben werden. Bei rund 24.000 Zeichen und mehr bricht diese Ausgabe
-   zuverlässig ab, und zwar in zwei Varianten: entweder antwortet Drive mit "The file content
-   is not a valid base64 string", oder Drive dekodiert die abgeschnittene Kette stillschweigend
-   zu einer kürzeren, kaputten Datei. Beobachtungen vom 03.09.2026 an Wiedmann &amp; Winz:
-   18.547 Bytes (24.732 Zeichen) und 18.419 Bytes (24.560 Zeichen) scheiterten beide mit der
-   Fehlermeldung, 18.143 Bytes (24.192 Zeichen) kamen als 17.751 Bytes an. Am 26.08.2026 liefen
-   18,3 bis 18,4 KB durch, das ist der Grenzbereich.
+   für Zeichen ausgegeben werden. Dabei geht sie manchmal kaputt, in zwei Varianten: entweder
+   antwortet Drive mit "The file content is not a valid base64 string", oder Drive dekodiert die
+   beschädigte Kette stillschweigend zu einer anderen, kaputten Datei. Beobachtungen vom
+   03.09.2026 an Wiedmann &amp; Winz: 18.547 Bytes (24.732 Zeichen) und 18.419 Bytes
+   (24.560 Zeichen) scheiterten beide mit der Fehlermeldung, 18.143 Bytes (24.192 Zeichen) kamen
+   als 17.751 Bytes an.
+
+   **Korrektur vom 08.09.2026: Es ist keine Größengrenze, sondern Unzuverlässigkeit.** Die
+   frühere Annahme, ab rund 24.000 Zeichen brenne die Übergabe zuverlässig durch, ist widerlegt:
+
+   | Datei | Base64-Zeichen | lokal | in Drive | Ergebnis |
+   |---|---|---|---|---|
+   | Spektra Dresden, 1. Versuch | 24.528 | 18.396 | 18.396 | **exakt, in Ordnung** |
+   | Dörrenberg, 1. Versuch | 24.472 | 18.352 | 19.129 | beschädigt |
+   | Dörrenberg, 2. Versuch | 24.472 | 18.352 | 18.003 | beschädigt, anders |
+
+   Dieselbe Datei kam bei zwei Versuchen mit zwei verschiedenen falschen Größen an, während eine
+   **größere** Kette im selben Zeitraum fehlerfrei durchlief. Die Übergabe ist also nicht
+   größenbegrenzt, sondern schlicht unzuverlässig, und der Fehler ist von außen unsichtbar.
+   Praktische Folgen:
+
+   - Die Größenprüfung nach jedem Upload ist keine Vorsichtsmaßnahme, sondern der einzige Weg,
+     einen Fehlschlag überhaupt zu bemerken. Sie ist Pflicht (siehe unten).
+   - Ein Fehlversuch ist nicht folgenlos: er legt eine kaputte Datei im Ordner ab. Genau das ist
+     der Grund, warum im Ordner Dateien liegen, die sich nicht öffnen lassen.
+   - Wiederholen ist sinnvoll, weil derselbe Inhalt beim nächsten Versuch durchkommen kann, aber
+     jeder Versuch braucht danach die Größenprüfung und im Fehlerfall das Aufräumen.
 
    **Kürzen hilft nicht (geprüft am 03.09.2026).** Am selben Tag wurde versucht, die Datei durch
    deutlich kürzere Texte unter die Grenze zu bringen: zwei Potenziale weniger, `painkiller` von
@@ -333,6 +353,13 @@ Nach jedem Upload deshalb:
    (`ls -l` oder `stat -c%s`). Bei Abweichung ist die Datei kaputt.
 2. Stimmt die Größe nicht, die hochgeladene Datei mit `mcp__Google_Drive__trash_file` entfernen
    und neu hochladen. `update_file` hilft nicht, es ändert nur Metadaten, nicht den Inhalt.
+
+   **Offener Punkt für Moritz (08.09.2026):** Das Werkzeug `trash_file` ist inzwischen verfügbar,
+   aber Aufräumen steht nicht in der Liste der freigegebenen Operationen im Routine-Prompt
+   ("Erlaubt sind ausschließlich ..."). Die Routine räumt deshalb nicht selbst auf und meldet
+   kaputte Dateien nur mit ihrer ID zur Löschung. Wenn der Ordner sauber bleiben soll, ohne dass
+   Moritz jedes Mal von Hand löscht, muss "beschädigte eigene Uploads in den Papierkorb
+   verschieben" in die Erlaubnisliste aufgenommen werden.
 3. Erst danach den Slides-Link weitergeben und den Upload als erledigt melden.
 
 Größengleichheit ist ein starkes, aber kein vollständiges Kriterium: ein einzelnes vertauschtes
@@ -350,8 +377,14 @@ Slides zurück, ist das Archiv intakt.
 | Sonplas | 26.08.2026 | https://docs.google.com/presentation/d/1HURu7ke_zXCAQD5n1wJVe5sA4GkxOEyM/edit | ja (18.376) |
 | Ameos Spital Einsiedeln | 27.08.2026 | https://docs.google.com/presentation/d/1NOCdh60GwuJduZMDLPVo-pA2Gq5MN8G9/edit | ja (18.280) |
 | Schmalz | 27.08.2026 | https://docs.google.com/presentation/d/1q8vdjyAdQh8D2YgByEnnJPcc1RJkisaQ/edit | ja (18.416) |
+| Spektra Dresden | 04.09.2026 | https://docs.google.com/presentation/d/11nxqXbBEspSAc-SCSQbIH4JMwnkwAnov/edit | ja (18.396) |
 
 Offen sind:
+
+- **Dörrenberg (07.09.2026):** Zwei Versuche am 08.09.2026, beide beschädigt und beide noch im
+  Ordner. Bitte löschen: 1gZmYgy9JoNtxDUZPW0mXqolxBX8PRz2T (19.129 Bytes) und
+  1mNdHqIBZk15o5TxTCQImFaaypZ9YxLeU (18.003 Bytes). Lokal:
+  `output/2026-09-07-impact-ladder-doerrenberg.pptx` mit 18.352 Bytes. Danach neu hochladen.
 
 - **CIRCOR IMO ALLWEILER (28.08.2026):** Datei 1u8gi_nn8UZK3qKWoa7WF5A8wziEEcVwx liegt beschädigt
   im Ordner (18.177 statt 18.417 Bytes). Am 03.09.2026 mit `read_file_content` geprüft: die Antwort
