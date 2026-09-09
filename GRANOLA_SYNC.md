@@ -406,9 +406,16 @@ Nach jedem Upload deshalb:
 3. Erst danach den Slides-Link weitergeben und den Upload als erledigt melden.
 
 Größengleichheit ist ein starkes, aber kein vollständiges Kriterium: ein einzelnes vertauschtes
-Base64-Zeichen lässt die Länge unverändert. Zusätzliche Sicherheit gibt
+Base64-Zeichen lässt die Länge unverändert. Zusätzliche Sicherheit gab bisher
 `mcp__Google_Drive__read_file_content` auf die hochgeladene Datei: kommt der Text aller sechs
 Slides zurück, ist das Archiv intakt.
+
+**Stand 09.09.2026: dieser Zweitcheck ist weggefallen.** `read_file_content` wird von der
+Drive-Verbindung nicht mehr angeboten ("does not offer this tool here"), genauso wie
+`slack_send_message`. Der Größenvergleich ist damit die einzige Prüfung, die bleibt. Das ist
+weniger, als es klingt: eine korrekt übertragene Kette ergibt immer exakt die lokale Dateigröße,
+also ist jede Abweichung ein Beweis für einen Fehler. Umgekehrt beweist Gleichheit nichts mehr
+zusätzlich. Bei Microdul waren es nur drei Bytes Unterschied, das reicht als Nachweis.
 
 **Bereits hochgeladen** (nicht erneut hochladen):
 
@@ -450,8 +457,11 @@ Offen sind:
 - **Götz-Gruppe (04.09.2026):** `output/2026-09-04-impact-ladder-goetz-gruppe.pptx` (18.379 Bytes,
   24.508 Base64-Zeichen). Ein Versuch, abgelehnt mit "not a valid base64 string". Nach der Regel
   oben nicht weiter versucht.
-- **Microdul AG (01.09.2026):** `output/2026-09-01-impact-ladder-microdul-ag.pptx`, noch nicht
-  hochgeladen.
+- **Microdul AG (01.09.2026):** `output/2026-09-01-impact-ladder-microdul-ag.pptx` (18.498 Bytes).
+  Erster Versuch am 09.09.2026: angenommen, aber beschädigt. Bitte löschen:
+  1xS7vixEjXSOU8YbkkeELQMe0t72zo4wD mit 18.501 statt 18.498 Bytes. Die Abweichung ist mit drei
+  Bytes klein, aber eindeutig: eine korrekt übertragene Base64-Kette ergibt exakt dieselbe
+  Dateigröße. Danach neu hochladen.
 - **NAVAX Software (20.08.2026):** Größe prüfen, bei Abweichung neu hochladen.
 - **Wesemann (21.08.2026):** `output/2026-08-21-impact-ladder-wesemann.pptx` stammt aus der Zeit vor
   der Sechs-Slide-Struktur und hat nur fünf Slides, weil im JSON die Liste `painkiller` fehlt. Sie
