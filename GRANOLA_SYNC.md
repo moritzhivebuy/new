@@ -433,6 +433,11 @@ Offen sind:
   Ordner. Bitte löschen: 1gZmYgy9JoNtxDUZPW0mXqolxBX8PRz2T (19.129 Bytes) und
   1mNdHqIBZk15o5TxTCQImFaaypZ9YxLeU (18.003 Bytes). Lokal:
   `output/2026-09-07-impact-ladder-doerrenberg.pptx` mit 18.352 Bytes. Danach neu hochladen.
+  Dritter Versuch am 09.09.2026 nach Neuerzeugung: abgelehnt, es liegt also keine dritte kaputte
+  Datei im Ordner. Beobachtung dazu: die Kette brach diesmal nicht an einer Stelle, sondern die
+  zweite Hälfte zerfiel sichtbar, das Zip-Inhaltsverzeichnis kam mit 15 statt 21 Einträgen an.
+  Mehrere lange Ketten hintereinander in einem Lauf machen die Wiedergabe also schlechter, nicht
+  besser. Pro Lauf höchstens ein bis zwei Versuche, danach den Upload offen melden.
 
 - **CIRCOR IMO ALLWEILER (28.08.2026):** Datei 1u8gi_nn8UZK3qKWoa7WF5A8wziEEcVwx liegt beschädigt
   im Ordner (18.177 statt 18.417 Bytes). Am 03.09.2026 mit `read_file_content` geprüft: die Antwort
