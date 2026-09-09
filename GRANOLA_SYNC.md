@@ -457,6 +457,16 @@ Offen sind:
 
 Nach dem Anlegen des Antwortvorschlags erhält der Kontakt-Owner eine Slack-DM.
 
+**Achtung, Befund vom 09.09.2026: Lesen geht, Senden nicht.** Die Slack-Verbindung ist in den
+Trigger-Läufen da, bietet aber nicht alle Werkzeuge an. `slack_search_users` funktioniert (die
+Suche nach dennis@hivebuy.de liefert korrekt U08G4AB71QR), `slack_send_message` dagegen bricht ab
+mit "Its MCP server 'Slack' is connected but does not offer this tool here". Das Schema lädt sich
+über ToolSearch trotzdem, die Nichtverfügbarkeit zeigt sich also erst beim Senden. Solange das so
+ist, endet jeder Lauf mit dem Benachrichtigungstext in der Log-Notiz unter der Überschrift
+"Slack-Benachrichtigung (nicht gesendet)". Damit ein Owner die Meldung wieder in Slack bekommt,
+muss die Sendeberechtigung für den Slack-Connector in der Environment-Konfiguration der Session
+freigegeben werden; das liegt bei Moritz.
+
 **Owner zu Slack:** Owner-E-Mail über `GET /crm/v3/owners/{ownerId}` lesen, dann per
 `slack_search_users` die Slack-User-ID zur E-Mail suchen (Schreibweise der E-Mail kann abweichen,
 Vergleich in Kleinbuchstaben). Bekannte Zuordnungen:
