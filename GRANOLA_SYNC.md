@@ -322,8 +322,20 @@ Ablauf:
    null Bytes. **Rund 18 KB ist der Boden für die vorgegebene Sechs-Slide-Struktur.** Texte
    werden deshalb nicht mehr wegen der Dateigröße gekürzt, das verschlechtert nur den Inhalt.
 
-   Konsequenz: Über diesen Connector ist der Upload nicht zuverlässig zu schaffen. Bis eine
-   andere Übertragung eingerichtet ist, gilt: Länge und Teilbarkeit prüfen mit
+   **Entscheidung vom 09.09.2026: die Nachhol-Versuche sind ausgesetzt.** Am 09.09.2026 liefen
+   sechs Versuche (AMW dreimal, Dörrenberg, Microdul, Götz-Gruppe, Wesemann) mit null Erfolgen:
+   vier abgelehnt, einer abgelehnt nach sichtbarem Zerfall der zweiten Hälfte, einer angenommen
+   und beschädigt. Bei sechs von sechs ist das keine Pechserie, sondern das erwartbare Ergebnis
+   dieses Transportwegs. Jeder Versuch kostet die Hälfte eines Laufs und kann eine weitere
+   unlesbare Datei im Ordner hinterlassen, die die Routine nicht entfernen darf. Deshalb macht
+   die Routine bis auf Weiteres **keine** Upload-Versuche mehr, sondern meldet die offenen
+   Uploads nur. Neue Präsentationen werden weiter erzeugt und liegen im Repo.
+
+   Das ist eine Einschränkung gegenüber Schritt 9 des Routine-Prompts ("offene Google-Drive-Uploads
+   nachholen") und bewusst so getroffen; Moritz kann sie mit einem Satz aufheben. Sie entfällt
+   automatisch, sobald der Service-Account-Key da ist, denn dann läuft der Upload per `curl`.
+
+   Falls doch wieder Versuche gemacht werden, gilt: Länge und Teilbarkeit prüfen mit
    `python3 -c "import base64;b=base64.b64encode(open(PFAD,'rb').read());print(len(b),len(b)%4)"`,
    die Kette in einer Zeile übergeben, danach `fileSize` mit der lokalen Größe vergleichen und
    höchstens zweimal wiederholen. Danach den Upload als offen melden statt weiter zu versuchen.
