@@ -455,8 +455,9 @@ Offen sind:
   Ordner (17.751 statt 18.143 Bytes). `trash_file` war in dem Lauf nicht verfügbar. Zu tun: Datei
   in den Papierkorb und `output/2026-09-03-impact-ladder-wiedmann-winz.pptx` neu hochladen.
 - **Götz-Gruppe (04.09.2026):** `output/2026-09-04-impact-ladder-goetz-gruppe.pptx` (18.379 Bytes,
-  24.508 Base64-Zeichen). Ein Versuch, abgelehnt mit "not a valid base64 string". Nach der Regel
-  oben nicht weiter versucht.
+  24.508 Base64-Zeichen). Zwei Versuche, beide abgelehnt mit "not a valid base64 string". Beim
+  zweiten am 09.09.2026 brach die Ausgabe mitten in `ppt/slides/slide3.xml` ab, die Kette kam also
+  nicht einmal vollständig an. Es liegt keine kaputte Datei im Ordner.
 - **Microdul AG (01.09.2026):** `output/2026-09-01-impact-ladder-microdul-ag.pptx` (18.498 Bytes).
   Erster Versuch am 09.09.2026: angenommen, aber beschädigt. Bitte löschen:
   1xS7vixEjXSOU8YbkkeELQMe0t72zo4wD mit 18.501 statt 18.498 Bytes. Die Abweichung ist mit drei
