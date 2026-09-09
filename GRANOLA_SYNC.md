@@ -421,7 +421,7 @@ zusätzlich. Bei Microdul waren es nur drei Bytes Unterschied, das reicht als Na
 
 | Kunde | Gespräch | Slides-Link | Größe geprüft |
 |---|---|---|---|
-| NAVAX Software | 20.08.2026 | https://docs.google.com/presentation/d/1FxoiYDq3oZmaxHocy68g9vFpTw2-Rhj7/edit | nein, Verdacht (Drive 18.341, lokal 18.755) |
+| NAVAX Software | 20.08.2026 | https://docs.google.com/presentation/d/1FxoiYDq3oZmaxHocy68g9vFpTw2-Rhj7/edit | **nein, beschädigt** (Drive 18.341, lokal 18.755) |
 | Techniropa | 24.08.2026 | https://docs.google.com/presentation/d/1zhEzmoGRifqd8OHmrh5gLOiALo05aQVP/edit | ja (18.446) |
 | Dalli-Group | 25.08.2026 | https://docs.google.com/presentation/d/1A0AKPSazd6ZwNTbTCbMHHnwZ_k8vEKph/edit | ja (18.369) |
 | Sonplas | 26.08.2026 | https://docs.google.com/presentation/d/1HURu7ke_zXCAQD5n1wJVe5sA4GkxOEyM/edit | ja (18.376) |
@@ -463,11 +463,15 @@ Offen sind:
   1xS7vixEjXSOU8YbkkeELQMe0t72zo4wD mit 18.501 statt 18.498 Bytes. Die Abweichung ist mit drei
   Bytes klein, aber eindeutig: eine korrekt übertragene Base64-Kette ergibt exakt dieselbe
   Dateigröße. Danach neu hochladen.
-- **NAVAX Software (20.08.2026):** Größe prüfen, bei Abweichung neu hochladen.
-- **Wesemann (21.08.2026):** `output/2026-08-21-impact-ladder-wesemann.pptx` stammt aus der Zeit vor
-  der Sechs-Slide-Struktur und hat nur fünf Slides, weil im JSON die Liste `painkiller` fehlt. Sie
-  muss erst aus dem Pain-Killer-Abschnitt des Granola-Eintrags ergänzt und die Präsentation neu
-  erzeugt werden, dann hochgeladen.
+- **NAVAX Software (20.08.2026):** Am 09.09.2026 geprüft, der Verdacht ist bestätigt: Drive hat
+  18.341 Bytes, lokal sind es 18.755. Die lokale Datei wurde zuletzt am 25.08.2026 geändert
+  (Commit 1a7b1b5), der Upload lief am 26.08.2026, also lag beim Upload dieselbe Datei vor wie
+  heute. Die Abweichung kommt damit sicher aus der Übertragung. Bitte löschen:
+  1FxoiYDq3oZmaxHocy68g9vFpTw2-Rhj7. Danach neu hochladen.
+- **Wesemann (21.08.2026):** Nur der Upload fehlt noch. Der hier früher notierte Blocker ist
+  erledigt: `painkiller` steht mit zehn Punkten im JSON und
+  `output/2026-08-21-impact-ladder-wesemann.pptx` hat sechs Slides (Commit 50d47f7 vom
+  02.09.2026). Am 09.09.2026 nachgeprüft, der Eintrag hier war nur nicht mitgezogen.
 
 ## Slack-Benachrichtigung (Teil e)
 
