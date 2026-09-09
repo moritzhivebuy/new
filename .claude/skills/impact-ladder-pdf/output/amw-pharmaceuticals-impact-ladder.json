@@ -1,0 +1,104 @@
+{
+  "customer": {
+    "name": "AMW Pharmaceuticals",
+    "ansprechpartner": "Alfons Ettinger",
+    "gespraechsdatum": "08.09.2026"
+  },
+  "date": "08.09.2026",
+  "potenziale": [
+    {
+      "titel": "Indirekter Spend läuft über Excel",
+      "beschreibung": "Excel und Zuruf sind heute die einzigen Werkzeuge."
+    },
+    {
+      "titel": "Spend-Daten sind nicht auswertbar",
+      "beschreibung": "Es gibt keine zentrale Sicht auf Lieferanten und Warengruppen."
+    },
+    {
+      "titel": "Fachbereiche können nicht selbst bestellen",
+      "beschreibung": "Ohne Katalog überführt der Einkauf jede Anfrage von Hand."
+    },
+    {
+      "titel": "Kataloge über BC werden sperrig",
+      "beschreibung": "Konditionen einpflegen und manuell übertragen, ohne Punchout."
+    }
+  ],
+  "painkiller": [
+    "Zentrales Frontend für Fachbereiche, Kostenstelle und Sachkonto direkt beim Anlegen",
+    "Mehrstufiger Freigabe-Workflow, Genehmigung auch aus Microsoft Teams",
+    "Punchout zu Amazon Business, Unite und weiteren, der eigene Account bleibt erhalten",
+    "Interne Kataloge: Artikel sind für Endnutzer sichtbar und direkt bestellbar",
+    "Freitextbestellung als Auffanglösung für alles ohne Katalog",
+    "Wareneingang in Hivebuy buchbar, über die bidirektionale BC-Schnittstelle",
+    "Bestellungen entstehen automatisch in Business Central, kein manueller Transfer",
+    "Reporting bis auf Nutzerebene: Top-Lieferanten und Top-Warengruppen",
+    "KI-Chatbot für Spend-Fragen und Bündelungspotenziale (optional)"
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Bedarfe entstehen im Frontend, Kostenstelle und Sachkonto stehen sofort fest.",
+        "Artikelkacheln aus internen Katalogen und Punchout ersetzen die Anfrage per Mail."
+      ],
+      "impact": "Die Fachbereiche bestellen selbst, statt den Einkauf als Durchlauf zu nutzen."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Anfragen kommen vollständig an, statt in Excel und per Zuruf zusammenzulaufen.",
+        "Freigaben laufen mehrstufig und aus Teams heraus (Approval Agent)."
+      ],
+      "impact": "Der Einkauf verliert die manuelle Überführung und gewinnt Zeit für Verhandlungen."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Bestellungen entstehen automatisch in Business Central, ohne Doppelerfassung.",
+        "Wareneingang ist in Hivebuy oder im ERP buchbar, der Zahlungslauf bleibt in BC."
+      ],
+      "impact": "Business Central bleibt führend, ohne den sperrigen Katalogprozess."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Spend ist nach Lieferant, Warengruppe und Nutzer auswertbar (Analytics Agent).",
+        "Der KI-Chatbot beantwortet Spend-Fragen und zeigt Bündelungspotenziale."
+      ],
+      "impact": "Datentransparenz entsteht sofort und wird die Basis der Bedarfsplanung."
+    }
+  ],
+  "executive_summary": "AMW Pharmaceuticals bekommt Datentransparenz im indirekten Spend, gibt die Bedarfserfassung an die Fachbereiche zurück und umgeht den sperrigen Katalogprozess in Business Central, das als führendes System bleibt.",
+  "zahlenbasis": [
+    {
+      "text": "ca. 5.000 Rechnungsposten pro Jahr, bereinigt auf relevante Positionen",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 150 Mitarbeitende, davon höchstens 50 als Nutzer",
+      "status": "belegt"
+    },
+    {
+      "text": "indirekter Spend heute vollständig in Excel, ohne Katalog",
+      "status": "belegt"
+    },
+    {
+      "text": "Datentransparenz ist laut Gespräch die oberste Priorität",
+      "status": "belegt"
+    }
+  ],
+  "annahmen": [
+    "Das Einkaufsmodul von Business Central ist noch nicht im Einsatz, nur die Buchhaltung.",
+    "IT und IT-Security sind bisher nicht eingebunden.",
+    "Ein Folgegespräch ist für Mitte bis Ende Oktober 2026 vorgesehen, ohne festen Termin."
+  ],
+  "naechster_schritt": {
+    "text": "Sie prüfen den Katalogprozess in Business Central, im Folgegespräch vergleichen wir ihn Schritt für Schritt mit dem Ablauf in Hivebuy.",
+    "cta": "Folgetermin ab KW42 abstimmen",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}

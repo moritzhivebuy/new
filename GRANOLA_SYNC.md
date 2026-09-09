@@ -274,10 +274,33 @@ Ablauf:
    | Spektra Dresden, 1. Versuch | 24.528 | 18.396 | 18.396 | **exakt, in Ordnung** |
    | Dörrenberg, 1. Versuch | 24.472 | 18.352 | 19.129 | beschädigt |
    | Dörrenberg, 2. Versuch | 24.472 | 18.352 | 18.003 | beschädigt, anders |
+   | AMW Pharmaceuticals, 1. Versuch | 24.456 | 18.340 | keine Datei | abgelehnt |
+   | AMW Pharmaceuticals, 2. Versuch | 24.456 | 18.340 | keine Datei | abgelehnt, gleiche Stelle |
+   | AMW Pharmaceuticals, 3. Versuch | 24.456 | 18.340 | 17.836 | beschädigt |
 
    Dieselbe Datei kam bei zwei Versuchen mit zwei verschiedenen falschen Größen an, während eine
    **größere** Kette im selben Zeitraum fehlerfrei durchlief. Die Übergabe ist also nicht
    größenbegrenzt, sondern schlicht unzuverlässig, und der Fehler ist von außen unsichtbar.
+
+   **Ursache, gemessen am 09.09.2026.** Der Dekoder auf der Gegenseite ist strikt: ein
+   Testupload mit einer gültigen, aber über zwei Zeilen umgebrochenen Base64-Kette
+   (`SGFsbG8gV2Vs` + Zeilenumbruch + Rest) wurde mit derselben Meldung "The file content is not
+   a valid base64 string" abgelehnt. Ein einziges Leerzeichen genügt also. Genau das passiert:
+   die Kette muss als 24.456 Zeichen durch die Modellausgabe, und in einer so langen Zeichenkette
+   entstehen Leerzeichen und Umbrüche. Zwei Befunde dazu:
+
+   - **Die Abweichung ist teilweise deterministisch.** Versuch 1 und 2 waren dieselbe Kette und
+     brachen an derselben Stelle (im Bereich `ppt/slides/slide5.xml`). Denselben String erneut zu
+     senden ist deshalb sinnlos. Erst nach `render_pptx.py` + `slim_pptx.py` (gleicher Inhalt,
+     neue Zip-Zeitstempel, wieder 18.340 Bytes) war die Kette anders und der Upload lief durch,
+     dann allerdings in die stille Variante mit 17.836 Bytes.
+   - **Es gibt keinen Weg in Stücken.** `mcp__Google_Drive__update_file` ändert nur Metadaten
+     (Titel, parentId), nicht den Inhalt. `create_file` mit `base64Content` ist der einzige
+     Kanal, und er nimmt die Datei nur als einen zusammenhängenden String.
+
+   Damit sind alle drei Ausgänge für eine einzige Datei in einem Lauf belegt: abgelehnt,
+   abgelehnt an gleicher Stelle, angenommen und beschädigt.
+
    Praktische Folgen:
 
    - Die Größenprüfung nach jedem Upload ist keine Vorsichtsmaßnahme, sondern der einzige Weg,
@@ -286,6 +309,9 @@ Ablauf:
      der Grund, warum im Ordner Dateien liegen, die sich nicht öffnen lassen.
    - Wiederholen ist sinnvoll, weil derselbe Inhalt beim nächsten Versuch durchkommen kann, aber
      jeder Versuch braucht danach die Größenprüfung und im Fehlerfall das Aufräumen.
+   - Wiederholen heißt nicht "denselben String nochmal senden". Nach einer Ablehnung erst die
+     Präsentation neu erzeugen (`render_pptx.py`, dann `slim_pptx.py`), damit die Base64-Kette
+     eine andere ist. Sonst bricht sie an derselben Stelle wieder.
 
    **Kürzen hilft nicht (geprüft am 03.09.2026).** Am selben Tag wurde versucht, die Datei durch
    deutlich kürzere Texte unter die Grenze zu bringen: zwei Potenziale weniger, `painkiller` von
@@ -307,6 +333,23 @@ Ablauf:
    `curl` direkt an die Drive-API hoch, die Base64-Kette läuft nicht mehr durch die
    Modellausgabe, und die Trigger-Läufe sind zugleich nicht mehr vom wackeligen
    MCP-Connector abhängig.
+
+   Nach den Messungen vom 09.09.2026 ist das nicht eine von mehreren Möglichkeiten, sondern die
+   einzige. Alles andere ist geprüft und ausgeschlossen: kürzen bringt nichts (rund 18 KB ist der
+   strukturelle Boden, 15.576 Bytes komprimierte Teile plus rund 2,8 KB Zip-Verwaltung über die
+   21 Pflichteinträge des OOXML-Formats), stückweise Übertragung gibt es nicht (`update_file`
+   ändert nur Metadaten), und Leerzeichen in der Kette werden hart abgelehnt. Solange die Datei
+   als ein 24.000-Zeichen-String durch die Modellausgabe muss, bleibt jeder Upload ein
+   Glücksspiel mit drei Ausgängen, von denen einer eine unlesbare Datei im Ordner hinterlässt.
+   Im Container liegen derzeit keine Google-Zugangsdaten (geprüft: keine passenden
+   Umgebungsvariablen, kein `gcloud` in `~/.config`), deshalb kann die Routine diesen Weg nicht
+   selbst einrichten.
+
+   **Was Moritz dafür tun muss:** in der Google Cloud Console einen Service-Account anlegen, ihm
+   Schreibrechte auf den Ordner `0APJQKQ-OeVKNUk9PVA` geben (Ordner für die Service-Account-Mail
+   freigeben) und den JSON-Key als Secret in die Environment-Konfiguration der Session legen,
+   zum Beispiel als `GOOGLE_SERVICE_ACCOUNT_JSON`. Danach kann die Routine den Upload wie die
+   HubSpot-Arbeit per `curl` erledigen.
 3. Upload per `mcp__Google_Drive__create_file` mit
    `contentMimeType=application/vnd.openxmlformats-officedocument.presentationml.presentation`,
    `parentId=0APJQKQ-OeVKNUk9PVA` und **`disableConversionToGoogleType=true`**. Der Dateiname
@@ -380,6 +423,11 @@ Slides zurück, ist das Archiv intakt.
 | Spektra Dresden | 04.09.2026 | https://docs.google.com/presentation/d/11nxqXbBEspSAc-SCSQbIH4JMwnkwAnov/edit | ja (18.396) |
 
 Offen sind:
+
+- **AMW Pharmaceuticals (08.09.2026):** Drei Versuche am 09.09.2026 (siehe die Tabelle oben).
+  Der dritte wurde angenommen, ist aber beschädigt. Bitte löschen:
+  1StR-IY8g4Li2IpFhnc-5wqhuTsGJifEb (17.836 statt 18.340 Bytes). Lokal:
+  `output/2026-09-08-impact-ladder-amw-pharmaceuticals.pptx`. Danach neu hochladen.
 
 - **Dörrenberg (07.09.2026):** Zwei Versuche am 08.09.2026, beide beschädigt und beide noch im
   Ordner. Bitte löschen: 1gZmYgy9JoNtxDUZPW0mXqolxBX8PRz2T (19.129 Bytes) und
