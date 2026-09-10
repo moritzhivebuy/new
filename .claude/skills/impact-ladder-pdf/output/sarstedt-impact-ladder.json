@@ -1,0 +1,104 @@
+{
+  "customer": {
+    "name": "Sarstedt",
+    "ansprechpartner": "Joschka Marx",
+    "gespraechsdatum": "10.09.2026"
+  },
+  "date": "10.09.2026",
+  "potenziale": [
+    {
+      "titel": "Angebotspositionen werden von Hand eingetippt",
+      "beschreibung": "Dienstleistungsangebote als PDF verarbeitet der Einkauf manuell."
+    },
+    {
+      "titel": "Nicht gelistete Shops nur über den Mittelsmann",
+      "beschreibung": "Der Systemlieferant beschafft sie gegen rund 10 Prozent Aufschlag."
+    },
+    {
+      "titel": "OCI-Shops liegen noch in SAP",
+      "beschreibung": "Bis zur Migration müssen Mitarbeitende zwei Systeme kennen."
+    },
+    {
+      "titel": "Orientierung wächst mit jedem Shop",
+      "beschreibung": "Je mehr Shops angebunden sind, desto mehr Wissen ist nötig."
+    }
+  ],
+  "painkiller": [
+    "Ein Suchfeld für alles: Hivebuy routet automatisch durch Kataloge und 60 bis 70 Onlineshops",
+    "Angebote als PDF, Excel oder Screenshot werden automatisch ausgelesen",
+    "Positionen entstehen in Sekunden als vorkontierte Bedarfsanforderung",
+    "KI-Kontierung auf Basis des Kontenrahmens, unabhängig von E-Class-Mapping",
+    "Einheitliches Datenformat für Katalog-, Freitext- und Shopbestellungen",
+    "Freigabe per Microsoft Teams mit einem Klick, ohne SAP-Login",
+    "Wareneingang auf Positionsebene, auch Teillieferungen und Dienstleistungsstunden",
+    "Preisvergleich über die integrierten Shops in Echtzeit, ohne Mittelsmann",
+    "SAP bleibt führend für Rechnungsprüfung und Kontierungsobjekte"
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Ein Suchfeld statt der Frage, in welchem System oder Shop bestellt wird (Intake Agent).",
+        "Nicht gelistete Artikel sind direkt bestellbar, ohne Umweg über den Mittelsmann."
+      ],
+      "impact": "Orientierungswissen wird nicht mehr gebraucht, auch bei mehr Shops."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Angebote werden ausgelesen, statt Position für Position eingetippt zu werden.",
+        "Freigaben laufen aus Microsoft Teams heraus (Approval Agent)."
+      ],
+      "impact": "Die Kapazität für nicht wertschöpfende Dateneingabe wird frei."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "KI-Kontierung auf Basis des Kontenrahmens, ohne E-Class-Mapping (Accounting Agent).",
+        "Ein Datenformat für Katalog, Freitext und Shop, SAP bleibt für die Rechnungsprüfung führend."
+      ],
+      "impact": "Auch Freitextbestellungen kommen kontiert an, nicht nur Katalogartikel."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Preisvergleich in Echtzeit statt Aufschlag von rund 10 Prozent über den Mittelsmann.",
+        "Ausgaben sind über alle Bestellarten hinweg auswertbar (Analytics Agent)."
+      ],
+      "impact": "Der Aufschlag entfällt und die Beschaffung wird über alle Wege vergleichbar."
+    }
+  ],
+  "executive_summary": "Sarstedt könnte die manuelle Verarbeitung von Angebotspositionen und den Umweg über den Systemlieferanten einsparen, ohne OnVentus oder SAP anzutasten. Das Gespräch am 10.09.2026 war nicht qualifiziert, dieses Dokument dient einem späteren Anlauf.",
+  "zahlenbasis": [
+    {
+      "text": "ca. 1.000 Bestellungen pro Monat (aus einer früheren manuellen Notiz vom 24.08.2026)",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 10 Prozent Aufschlag des Systemlieferanten für nicht gelistete Shops",
+      "status": "belegt"
+    },
+    {
+      "text": "60 bis 70 in Hivebuy integrierte Onlineshops",
+      "status": "belegt"
+    },
+    {
+      "text": "Häufigkeit der Angebote mit mehreren Positionen pro Monat",
+      "status": "offen"
+    }
+  ],
+  "annahmen": [
+    "OnVentus bleibt die Procurement-Plattform, Hivebuy wäre eine Ergänzung, kein Ersatz.",
+    "Der Pain rund um Angebotspositionen kam von Hivebuy und ist vom Kunden nicht bestätigt.",
+    "Ein neuer Anlauf ist erst nach der Migration der OCI-Shops nach OnVentus sinnvoll."
+  ],
+  "naechster_schritt": {
+    "text": "Aktuell kein Schritt vereinbart. Wir melden uns nicht von allein, sondern erst wenn Sie nach der OnVentus-Migration auf uns zukommen.",
+    "cta": "Kein Termin vereinbart",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}

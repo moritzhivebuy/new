@@ -446,6 +446,10 @@ Offen sind:
 - **Frosta (10.09.2026):** `output/2026-09-10-impact-ladder-frosta.pptx` (18.376 Bytes). Kein Versuch,
   die Upload-Versuche sind ausgesetzt. Keine beschädigte Datei im Ordner.
 
+- **Sarstedt (10.09.2026):** `output/2026-09-10-impact-ladder-sarstedt.pptx` (18.402 Bytes). Kein
+  Versuch. Das Gespräch war nicht qualifiziert, die Präsentation ist ein Argumentationspapier für
+  einen späteren Anlauf und hat keine Eile.
+
 - **AMW Pharmaceuticals (08.09.2026):** Drei Versuche am 09.09.2026 (siehe die Tabelle oben).
   Der dritte wurde angenommen, ist aber beschädigt. Bitte löschen:
   1StR-IY8g4Li2IpFhnc-5wqhuTsGJifEb (17.836 statt 18.340 Bytes). Lokal:
