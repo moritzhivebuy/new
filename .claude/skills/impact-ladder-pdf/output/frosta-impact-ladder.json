@@ -1,0 +1,104 @@
+{
+  "customer": {
+    "name": "Frosta",
+    "ansprechpartner": "Christoph Buck",
+    "gespraechsdatum": "10.09.2026"
+  },
+  "date": "10.09.2026",
+  "potenziale": [
+    {
+      "titel": "Indirekter Einkauf läuft dezentral",
+      "beschreibung": "Jede Abteilung bestellt selbst, nach eigenem Ermessen."
+    },
+    {
+      "titel": "Keine Transparenz über die Ausgaben",
+      "beschreibung": "Ohne harmonisierten Prozess fehlt die Sicht auf den Spend."
+    },
+    {
+      "titel": "Bedarfe werden von Hand in SAP getippt",
+      "beschreibung": "Amazon-Warenkörbe werden als BANF nacherfasst, dann freigegeben."
+    },
+    {
+      "titel": "Zuständigkeit ist ungeklärt",
+      "beschreibung": "Für den indirekten Einkauf gibt es bisher keinen Verantwortlichen."
+    }
+  ],
+  "painkiller": [
+    "Einheitliches Frontend für alle Bedarfsträger, Lieferanten je Abteilung hinterlegt",
+    "Punchout zu Amazon, Engelbert Strauss und weiteren: Warenkorb geht direkt in die Freigabe",
+    "BANF und Bestellung entstehen nach der Freigabe automatisch in SAP S/4HANA",
+    "Wareneingang ist gegenbuchbar, SAP bleibt das führende System",
+    "Freigabehierarchien selbst konfigurierbar nach Betrag, Abteilung und Stufe",
+    "Kostenstelle und Sachkonto sind automatisch hinterlegt",
+    "Budgetcheck integrierbar, Freigaben auch aus Microsoft Teams",
+    "KI-Chatbot für Produktsuche und Ausgaben nach Abteilung und Quartal",
+    "Englisch als Arbeitssprache, dazu Deutsch, Spanisch, Französisch, Finnisch, Türkisch"
+  ],
+  "ladder": [
+    {
+      "nummer": 1,
+      "ebene": "Mitarbeitende / Bedarfsträger",
+      "bullets": [
+        "Bedarfe entstehen im Frontend, ohne SAP-Kenntnisse und ohne Umweg (Intake Agent).",
+        "Der Amazon-Warenkorb wandert direkt in die Freigabe, statt neu getippt zu werden."
+      ],
+      "impact": "Jede Abteilung nutzt denselben Weg, statt sich einen eigenen zu bauen."
+    },
+    {
+      "nummer": 2,
+      "ebene": "Einkauf / Administration",
+      "bullets": [
+        "Freigabestufen sind nach Betrag und Abteilung selbst konfigurierbar (Approval Agent).",
+        "Die manuelle Übertragung der Bedarfe nach SAP entfällt vollständig."
+      ],
+      "impact": "Der indirekte Einkauf wird steuerbar, bevor die neue Zuständigkeit greift."
+    },
+    {
+      "nummer": 3,
+      "ebene": "Finance / Controlling",
+      "bullets": [
+        "Kostenstelle und Sachkonto stehen bei der Anforderung fest (Accounting Agent).",
+        "BANF und Bestellung entstehen automatisch in S/4HANA, Wareneingang gegenbuchbar."
+      ],
+      "impact": "Keine Doppelerfassung, SAP bleibt führend und der Budgetcheck greift vorher."
+    },
+    {
+      "nummer": 4,
+      "ebene": "Geschäftsführung / Management",
+      "bullets": [
+        "Ausgaben sind nach Abteilung, Quartal und Lieferant auswertbar (Analytics Agent).",
+        "Der Rollout startet in Deutschland und wächst auf die weiteren Standorte."
+      ],
+      "impact": "Die Prozesse entstehen auf der grünen Wiese, statt das Chaos zu digitalisieren."
+    }
+  ],
+  "executive_summary": "Frosta bekommt einen einheitlichen Weg für den indirekten Einkauf, spart die manuelle Erfassung der Bedarfe in SAP und gewinnt Transparenz über die Ausgaben, ohne SAP S/4HANA anzutasten.",
+  "zahlenbasis": [
+    {
+      "text": "max. 400 Nutzer im System, Produktionsmitarbeitende ohne Zugriff",
+      "status": "belegt"
+    },
+    {
+      "text": "ca. 1.600 Mitarbeitende weltweit, 4 Werke und 5 Vertriebsbüros",
+      "status": "belegt"
+    },
+    {
+      "text": "indirekter Einkauf heute dezentral, ohne harmonisierten Prozess",
+      "status": "belegt"
+    },
+    {
+      "text": "Anzahl Bestellungen pro Monat wurde nicht genannt",
+      "status": "offen"
+    }
+  ],
+  "annahmen": [
+    "SAP Ariba bleibt beim Supplier Onboarding, das Frontend für Bedarfe ist noch offen.",
+    "IT und IT-Security sind bisher nicht eingebunden, werden für die S/4-Schnittstelle gebraucht.",
+    "Die verantwortliche Person für den indirekten Einkauf steht im Oktober 2026 fest."
+  ],
+  "naechster_schritt": {
+    "text": "Sie geben die Empfehlung intern weiter, im Folgetermin am 1. Oktober klären wir den Stand zur neuen Verantwortlichkeit und die nächsten Schritte.",
+    "cta": "Folgetermin am 01.10.2026",
+    "link": "https://www.hivebuy.com/kontakt"
+  }
+}
