@@ -443,6 +443,9 @@ zusätzlich. Bei Microdul waren es nur drei Bytes Unterschied, das reicht als Na
 
 Offen sind:
 
+- **Frosta (10.09.2026):** `output/2026-09-10-impact-ladder-frosta.pptx` (18.376 Bytes). Kein Versuch,
+  die Upload-Versuche sind ausgesetzt. Keine beschädigte Datei im Ordner.
+
 - **AMW Pharmaceuticals (08.09.2026):** Drei Versuche am 09.09.2026 (siehe die Tabelle oben).
   Der dritte wurde angenommen, ist aber beschädigt. Bitte löschen:
   1StR-IY8g4Li2IpFhnc-5wqhuTsGJifEb (17.836 statt 18.340 Bytes). Lokal:
